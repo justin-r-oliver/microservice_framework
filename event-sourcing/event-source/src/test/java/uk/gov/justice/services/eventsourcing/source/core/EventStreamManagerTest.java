@@ -14,16 +14,16 @@ import uk.gov.justice.services.eventsourcing.source.core.exception.InvalidStream
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.Metadata;
 
+import java.util.Collections;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Stream;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Collections;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Stream;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventStreamManagerTest {

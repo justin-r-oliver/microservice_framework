@@ -18,15 +18,15 @@ import uk.gov.justice.services.core.annotation.exception.MissingAnnotationExcept
 import uk.gov.justice.services.core.jms.JmsSender;
 import uk.gov.justice.services.core.jms.JmsSenderFactory;
 
+import java.lang.reflect.Member;
+
+import javax.enterprise.inject.spi.InjectionPoint;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.lang.reflect.Member;
-
-import javax.enterprise.inject.spi.InjectionPoint;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SenderProducerTest {

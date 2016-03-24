@@ -11,12 +11,12 @@ import uk.gov.justice.services.core.handler.registry.exception.DuplicateHandlerE
 import uk.gov.justice.services.core.handler.registry.exception.InvalidHandlerException;
 import uk.gov.justice.services.messaging.Envelope;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Arrays;
 
 /**
  * Unit tests for the HandlerRegistry class.

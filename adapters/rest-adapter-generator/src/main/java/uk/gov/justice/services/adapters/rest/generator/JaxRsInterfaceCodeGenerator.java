@@ -12,22 +12,6 @@ import static uk.gov.justice.services.adapters.rest.generator.Names.resourceInte
 
 import uk.gov.justice.raml.core.GeneratorConfig;
 
-import com.google.common.collect.ImmutableList;
-import com.sun.codemodel.JAnnotatable;
-import com.sun.codemodel.JClass;
-import com.sun.codemodel.JClassAlreadyExistsException;
-import com.sun.codemodel.JCodeModel;
-import com.sun.codemodel.JDefinedClass;
-import com.sun.codemodel.JMethod;
-import com.sun.codemodel.JMod;
-import com.sun.codemodel.JPackage;
-import com.sun.codemodel.JVar;
-
-import org.raml.model.Action;
-import org.raml.model.MimeType;
-import org.raml.model.Resource;
-import org.raml.model.parameter.UriParameter;
-
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,6 +26,21 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+
+import com.google.common.collect.ImmutableList;
+import com.sun.codemodel.JAnnotatable;
+import com.sun.codemodel.JClass;
+import com.sun.codemodel.JClassAlreadyExistsException;
+import com.sun.codemodel.JCodeModel;
+import com.sun.codemodel.JDefinedClass;
+import com.sun.codemodel.JMethod;
+import com.sun.codemodel.JMod;
+import com.sun.codemodel.JPackage;
+import com.sun.codemodel.JVar;
+import org.raml.model.Action;
+import org.raml.model.MimeType;
+import org.raml.model.Resource;
+import org.raml.model.parameter.UriParameter;
 
 class JaxRsInterfaceCodeGenerator {
 

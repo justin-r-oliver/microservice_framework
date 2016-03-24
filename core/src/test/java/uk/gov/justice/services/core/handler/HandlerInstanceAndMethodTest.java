@@ -11,18 +11,17 @@ import uk.gov.justice.services.core.handler.exception.HandlerExecutionException;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonObjectEnvelopeConverter;
 
-import com.google.common.io.Resources;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.nio.charset.Charset;
+import java.util.List;
 
+import com.google.common.io.Resources;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.nio.charset.Charset;
-import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HandlerInstanceAndMethodTest {

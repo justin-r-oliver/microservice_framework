@@ -5,12 +5,12 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import javax.jms.Queue;
+import javax.jms.Topic;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import javax.jms.Queue;
-import javax.jms.Topic;
 
 public class ComponentTest {
 

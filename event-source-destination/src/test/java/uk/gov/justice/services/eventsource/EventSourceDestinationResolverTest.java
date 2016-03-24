@@ -8,13 +8,13 @@ import static uk.gov.justice.services.core.annotation.Component.EVENT_LISTENER;
 import uk.gov.justice.services.core.jms.JmsDestinations;
 import uk.gov.justice.services.messaging.context.ContextName;
 
+import javax.jms.Destination;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import javax.jms.Destination;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventSourceDestinationResolverTest {

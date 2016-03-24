@@ -6,10 +6,6 @@ import static org.junit.Assert.assertThat;
 
 import uk.gov.justice.services.common.converter.JsonObjectConverter;
 
-import com.google.common.io.Resources;
-
-import org.junit.Test;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
@@ -19,6 +15,9 @@ import java.util.UUID;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+
+import com.google.common.io.Resources;
+import org.junit.Test;
 
 public class JsonObjectEnvelopeConverterTest {
 

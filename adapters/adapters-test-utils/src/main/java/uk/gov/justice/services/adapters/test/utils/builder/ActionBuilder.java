@@ -1,11 +1,11 @@
 package uk.gov.justice.services.adapters.test.utils.builder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.raml.model.Action;
 import org.raml.model.ActionType;
 import org.raml.model.MimeType;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ActionBuilder {
     private final Map<String, MimeType> body = new HashMap<>();

@@ -16,12 +16,6 @@ import uk.gov.justice.raml.jms.validation.RamlValidator;
 import uk.gov.justice.raml.jms.validation.UriRamlValidator;
 import uk.gov.justice.services.core.annotation.Component;
 
-import org.apache.commons.lang.StringUtils;
-import org.raml.model.Action;
-import org.raml.model.ActionType;
-import org.raml.model.Raml;
-import org.raml.model.Resource;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +26,12 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
+import org.raml.model.Action;
+import org.raml.model.ActionType;
+import org.raml.model.Raml;
+import org.raml.model.Resource;
 
 /**
  * Generates JMS endpoint classes out of RAML object

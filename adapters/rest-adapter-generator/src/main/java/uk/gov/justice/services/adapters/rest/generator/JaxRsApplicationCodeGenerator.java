@@ -7,6 +7,13 @@ import static uk.gov.justice.services.adapters.rest.generator.Names.baseUriPathW
 
 import uk.gov.justice.raml.core.GeneratorConfig;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JClassAlreadyExistsException;
 import com.sun.codemodel.JCodeModel;
@@ -16,15 +23,7 @@ import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JPackage;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
-
 import org.raml.model.Raml;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
 
 /**
  * Internal code generation class for generating the JAX-RS {@link Application} that ties the

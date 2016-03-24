@@ -8,12 +8,12 @@ import static org.apache.commons.lang.Validate.notNull;
 import uk.gov.justice.raml.core.Generator;
 import uk.gov.justice.raml.core.GeneratorConfig;
 
-import org.raml.model.Raml;
-import org.raml.model.Resource;
-
 import java.io.File;
 import java.util.Collection;
 import java.util.stream.Collectors;
+
+import org.raml.model.Raml;
+import org.raml.model.Resource;
 
 public class RestAdapterGenerator implements Generator {
 

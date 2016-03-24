@@ -2,7 +2,6 @@ package uk.gov.justice.services.adapters.rest.generator;
 
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
-
 import org.junit.Test;
 
 /**

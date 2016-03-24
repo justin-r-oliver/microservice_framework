@@ -11,16 +11,15 @@ import uk.gov.justice.services.messaging.Metadata;
 import uk.gov.justice.services.messaging.context.ContextName;
 import uk.gov.justice.services.messaging.jms.JmsEnvelopeSender;
 
-import com.google.common.testing.EqualsTester;
+import javax.jms.Destination;
+import javax.naming.NamingException;
 
+import com.google.common.testing.EqualsTester;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import javax.jms.Destination;
-import javax.naming.NamingException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JmsSenderTest {

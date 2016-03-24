@@ -9,7 +9,6 @@ import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilde
 import uk.gov.justice.raml.core.GeneratorConfig;
 
 import com.sun.codemodel.JCodeModel;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;

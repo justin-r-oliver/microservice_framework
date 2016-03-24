@@ -3,15 +3,6 @@ package uk.gov.justice.services.adapters.test.utils.compiler;
 import static java.lang.String.join;
 import static java.text.MessageFormat.format;
 
-import com.google.common.collect.Sets;
-
-import org.apache.commons.io.FileUtils;
-import org.reflections.ReflectionUtils;
-import org.reflections.Reflections;
-import org.reflections.util.ClasspathHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -34,6 +25,14 @@ import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
+
+import com.google.common.collect.Sets;
+import org.apache.commons.io.FileUtils;
+import org.reflections.ReflectionUtils;
+import org.reflections.Reflections;
+import org.reflections.util.ClasspathHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Compiles and loads classes and interfaces from the specified folders

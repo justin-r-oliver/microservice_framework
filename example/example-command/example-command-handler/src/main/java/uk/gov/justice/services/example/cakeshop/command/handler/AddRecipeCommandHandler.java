@@ -10,12 +10,12 @@ import uk.gov.justice.services.eventsourcing.source.core.EventStream;
 import uk.gov.justice.services.eventsourcing.source.core.exception.EventStreamException;
 import uk.gov.justice.services.messaging.Envelope;
 
-import org.slf4j.Logger;
-
 import java.util.UUID;
 import java.util.stream.Stream;
 
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
 
 @ServiceComponent(COMMAND_HANDLER)
 public class AddRecipeCommandHandler {

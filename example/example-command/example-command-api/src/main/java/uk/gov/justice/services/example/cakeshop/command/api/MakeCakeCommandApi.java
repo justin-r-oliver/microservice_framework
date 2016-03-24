@@ -8,9 +8,9 @@ import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 
-import org.slf4j.Logger;
-
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
 
 @ServiceComponent(COMMAND_API)
 public class MakeCakeCommandApi {

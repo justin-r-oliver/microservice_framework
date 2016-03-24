@@ -7,12 +7,12 @@ import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.Metadata;
 import uk.gov.justice.services.messaging.jms.JmsEnvelopeSender;
 
+import javax.jms.Destination;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import javax.jms.Destination;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JmsEventPublisherTest {

@@ -9,14 +9,6 @@ import static org.mockito.Mockito.when;
 import uk.gov.justice.services.adapter.rest.HeaderConstants;
 import uk.gov.justice.services.messaging.Envelope;
 
-import com.google.common.collect.ImmutableMap;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
 import java.util.UUID;
 
 import javax.json.Json;
@@ -24,6 +16,13 @@ import javax.json.JsonObject;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
+
+import com.google.common.collect.ImmutableMap;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * Unit tests for the {@link RestEnvelopeBuilder} class.

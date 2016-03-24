@@ -10,16 +10,16 @@ import uk.gov.justice.services.eventsourcing.source.core.EventStream;
 import uk.gov.justice.services.messaging.DefaultEnvelope;
 import uk.gov.justice.services.messaging.Envelope;
 
+import java.util.UUID;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.UUID;
-
-import javax.json.Json;
-import javax.json.JsonObject;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MakeCakeCommandHandlerTest {

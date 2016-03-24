@@ -9,17 +9,17 @@ import uk.gov.justice.services.adapter.messaging.exception.InvalildJmsMessageTyp
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.jms.EnvelopeConverter;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
 import java.io.IOException;
 
 import javax.jms.JMSException;
 import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JmsProcessorTest {

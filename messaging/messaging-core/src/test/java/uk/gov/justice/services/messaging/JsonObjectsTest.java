@@ -7,10 +7,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 
-import com.google.common.collect.ImmutableList;
-
-import org.junit.Test;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,6 +17,9 @@ import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonString;
+
+import com.google.common.collect.ImmutableList;
+import org.junit.Test;
 
 /**
  * Unit tests for the {@link JsonObjects} class.

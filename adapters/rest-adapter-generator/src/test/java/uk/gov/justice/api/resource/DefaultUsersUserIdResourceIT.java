@@ -10,6 +10,10 @@ import uk.gov.justice.services.adapter.rest.RestProcessor;
 import uk.gov.justice.services.adapter.rest.envelope.RestEnvelopeBuilderFactory;
 import uk.gov.justice.services.example.DummyDispatcher;
 
+import java.util.Properties;
+
+import javax.ws.rs.core.Response;
+
 import org.apache.openejb.OpenEjbContainer;
 import org.apache.openejb.jee.Application;
 import org.apache.openejb.jee.WebApp;
@@ -23,10 +27,6 @@ import org.apache.openejb.util.NetworkUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.Properties;
-
-import javax.ws.rs.core.Response;
 
 /**
  * Integration tests for the generated JAX-RS classes.

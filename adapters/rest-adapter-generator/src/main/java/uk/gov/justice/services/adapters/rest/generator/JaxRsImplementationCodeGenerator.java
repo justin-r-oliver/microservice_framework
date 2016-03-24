@@ -7,6 +7,14 @@ import uk.gov.justice.services.core.annotation.Adapter;
 import uk.gov.justice.services.core.annotation.Component;
 import uk.gov.justice.services.core.dispatcher.Dispatcher;
 
+import java.lang.annotation.Annotation;
+import java.util.List;
+import java.util.Map;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.ws.rs.core.HttpHeaders;
+
 import com.google.common.collect.ImmutableMap;
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JBlock;
@@ -21,14 +29,6 @@ import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JPackage;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
-
-import java.lang.annotation.Annotation;
-import java.util.List;
-import java.util.Map;
-
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.ws.rs.core.HttpHeaders;
 
 /**
  * Internal code generation class for generating JAX-RS resource implementation classes.

@@ -17,16 +17,15 @@ import static uk.gov.justice.services.messaging.JsonObjectMetadata.USER_ID;
 import static uk.gov.justice.services.messaging.JsonObjectMetadata.VERSION;
 import static uk.gov.justice.services.messaging.JsonObjectMetadata.metadataFrom;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.testing.EqualsTester;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.UUID;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.testing.EqualsTester;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Unit tests for the {@link JsonObjectMetadata} class.

@@ -18,16 +18,16 @@ import uk.gov.justice.services.eventsourcing.repository.jdbc.exception.InvalidSt
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.Metadata;
 
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Stream;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Stream;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JdbcEventRepositoryTest {

@@ -2,8 +2,6 @@ package uk.gov.justice.services.messaging;
 
 import static javax.json.JsonValue.ValueType;
 
-import com.google.common.collect.ImmutableList;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +19,8 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonString;
 import javax.json.JsonValue;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * Collection of static utility methods for getting deep values from a {@link JsonObject}.

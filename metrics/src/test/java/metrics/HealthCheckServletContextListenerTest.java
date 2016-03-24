@@ -3,10 +3,10 @@ package metrics;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
+import javax.servlet.annotation.WebListener;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import javax.servlet.annotation.WebListener;
 
 /**
  * Unit tests for the{@link HealthCheckServletContextListener} class.
