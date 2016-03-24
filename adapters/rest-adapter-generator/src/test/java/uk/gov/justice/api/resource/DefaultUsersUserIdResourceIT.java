@@ -1,5 +1,10 @@
 package uk.gov.justice.api.resource;
 
+import static javax.ws.rs.client.Entity.entity;
+import static org.apache.cxf.jaxrs.client.WebClient.create;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
 import uk.gov.justice.api.RestApplication;
 import uk.gov.justice.services.adapter.rest.RestProcessor;
 import uk.gov.justice.services.adapter.rest.envelope.RestEnvelopeBuilderFactory;
@@ -22,11 +27,6 @@ import org.junit.runner.RunWith;
 import java.util.Properties;
 
 import javax.ws.rs.core.Response;
-
-import static javax.ws.rs.client.Entity.entity;
-import static org.apache.cxf.jaxrs.client.WebClient.create;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
 /**
  * Integration tests for the generated JAX-RS classes.

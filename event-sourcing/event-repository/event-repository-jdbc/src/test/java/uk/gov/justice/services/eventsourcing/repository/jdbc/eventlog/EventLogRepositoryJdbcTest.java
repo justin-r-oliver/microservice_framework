@@ -1,5 +1,24 @@
 package uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.COL_METADATA;
+import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.COL_NAME;
+import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.COL_PAYLOAD;
+import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.COL_SEQUENCE_ID;
+import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.COL_STREAM_ID;
+import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.JNDI_APP_NAME_LOOKUP;
+import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.JNDI_DS_EVENT_STORE_PATTERN;
+import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.PRIMARY_KEY_ID;
+import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.SQL_FIND_BY_STREAM_ID;
+import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.SQL_FIND_BY_STREAM_ID_AND_SEQUENCE_ID;
+import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.SQL_FIND_LATEST_SEQUENCE_ID;
+import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.SQL_INSERT_EVENT_LOG;
+
 import uk.gov.justice.services.eventsourcing.repository.jdbc.exception.EventLogRepositoryException;
 import uk.gov.justice.services.eventsourcing.repository.jdbc.exception.InvalidSequenceIdException;
 
@@ -22,25 +41,6 @@ import java.util.stream.Stream;
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.COL_METADATA;
-import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.COL_NAME;
-import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.COL_PAYLOAD;
-import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.COL_SEQUENCE_ID;
-import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.COL_STREAM_ID;
-import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.JNDI_APP_NAME_LOOKUP;
-import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.JNDI_DS_EVENT_STORE_PATTERN;
-import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.PRIMARY_KEY_ID;
-import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.SQL_FIND_BY_STREAM_ID;
-import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.SQL_FIND_BY_STREAM_ID_AND_SEQUENCE_ID;
-import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.SQL_FIND_LATEST_SEQUENCE_ID;
-import static uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.JdbcEventLogRepository.SQL_INSERT_EVENT_LOG;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventLogRepositoryJdbcTest {

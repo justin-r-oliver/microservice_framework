@@ -1,5 +1,8 @@
 package uk.gov.justice.services.adapter.rest;
 
+import static javax.ws.rs.core.Response.Status.ACCEPTED;
+import static javax.ws.rs.core.Response.status;
+
 import uk.gov.justice.services.adapter.rest.envelope.RestEnvelopeBuilderFactory;
 import uk.gov.justice.services.messaging.Envelope;
 
@@ -10,9 +13,6 @@ import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
-
-import static javax.ws.rs.core.Response.Status.ACCEPTED;
-import static javax.ws.rs.core.Response.status;
 
 /**
  * In order to minimise the amount of generated code in the JAX-RS implementation classes, this

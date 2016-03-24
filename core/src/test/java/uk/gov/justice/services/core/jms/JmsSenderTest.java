@@ -1,5 +1,10 @@
 package uk.gov.justice.services.core.jms;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_API;
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_CONTROLLER;
+
 import uk.gov.justice.services.core.annotation.Component;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.Metadata;
@@ -16,11 +21,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.jms.Destination;
 import javax.naming.NamingException;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_API;
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_CONTROLLER;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JmsSenderTest {

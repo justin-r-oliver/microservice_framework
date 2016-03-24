@@ -1,12 +1,12 @@
 package uk.gov.justice.services.adapters.rest.generator;
 
+import static java.nio.file.Paths.get;
+
 import uk.gov.justice.raml.core.GeneratorConfig;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
-import static java.nio.file.Paths.get;
 
 /**
  * Unit tests for the {@link JaxRsCodeGenerator} class.

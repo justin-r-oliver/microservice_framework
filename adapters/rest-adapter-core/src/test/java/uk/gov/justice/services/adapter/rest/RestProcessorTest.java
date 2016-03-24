@@ -1,5 +1,11 @@
 package uk.gov.justice.services.adapter.rest;
 
+import static javax.ws.rs.core.Response.Status.ACCEPTED;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import uk.gov.justice.services.adapter.rest.envelope.RestEnvelopeBuilder;
 import uk.gov.justice.services.adapter.rest.envelope.RestEnvelopeBuilderFactory;
 import uk.gov.justice.services.messaging.Envelope;
@@ -16,12 +22,6 @@ import java.util.function.Consumer;
 import javax.json.JsonObject;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
-
-import static javax.ws.rs.core.Response.Status.ACCEPTED;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Unit tests for the {@link RestProcessor} class.

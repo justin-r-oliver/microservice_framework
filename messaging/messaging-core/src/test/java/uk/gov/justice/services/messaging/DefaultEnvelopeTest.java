@@ -1,5 +1,9 @@
 package uk.gov.justice.services.messaging;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static uk.gov.justice.services.messaging.DefaultEnvelope.envelopeFrom;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,10 +11,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.json.JsonObject;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static uk.gov.justice.services.messaging.DefaultEnvelope.envelopeFrom;
 
 /**
  * Unit tests for the {@link DefaultEnvelope} class.

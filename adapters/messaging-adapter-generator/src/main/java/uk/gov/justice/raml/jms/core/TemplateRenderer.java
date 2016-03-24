@@ -1,10 +1,10 @@
 package uk.gov.justice.raml.jms.core;
 
+import static java.lang.String.format;
+
 import org.apache.commons.lang.text.StrBuilder;
 
 import java.util.Map;
-
-import static java.lang.String.format;
 
 /**
  * Basic template rendering class

@@ -1,5 +1,14 @@
 package uk.gov.justice.api.resource;
 
+import static javax.json.Json.createObjectBuilder;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static uk.gov.justice.services.messaging.DefaultEnvelope.envelopeFrom;
+
 import uk.gov.justice.services.adapter.rest.RestProcessor;
 import uk.gov.justice.services.core.dispatcher.Dispatcher;
 import uk.gov.justice.services.messaging.Envelope;
@@ -17,15 +26,6 @@ import java.util.function.Consumer;
 import javax.json.JsonObject;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
-
-import static javax.json.Json.createObjectBuilder;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static uk.gov.justice.services.messaging.DefaultEnvelope.envelopeFrom;
 
 /**
  * Unit tests for the generated {@link DefaultUsersUserIdResource} class.

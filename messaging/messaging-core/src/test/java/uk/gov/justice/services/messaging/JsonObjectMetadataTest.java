@@ -1,16 +1,5 @@
 package uk.gov.justice.services.messaging;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.testing.EqualsTester;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.UUID;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-
 import static javax.json.JsonValue.NULL;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -27,6 +16,17 @@ import static uk.gov.justice.services.messaging.JsonObjectMetadata.STREAM_ID;
 import static uk.gov.justice.services.messaging.JsonObjectMetadata.USER_ID;
 import static uk.gov.justice.services.messaging.JsonObjectMetadata.VERSION;
 import static uk.gov.justice.services.messaging.JsonObjectMetadata.metadataFrom;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.testing.EqualsTester;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.UUID;
+
+import javax.json.Json;
+import javax.json.JsonObject;
 
 /**
  * Unit tests for the {@link JsonObjectMetadata} class.

@@ -1,5 +1,10 @@
 package uk.gov.justice.services.adapters.rest.generator;
 
+import static java.lang.String.format;
+import static org.apache.commons.lang.Validate.isTrue;
+import static org.apache.commons.lang.Validate.notEmpty;
+import static org.apache.commons.lang.Validate.notNull;
+
 import uk.gov.justice.raml.core.Generator;
 import uk.gov.justice.raml.core.GeneratorConfig;
 
@@ -9,11 +14,6 @@ import org.raml.model.Resource;
 import java.io.File;
 import java.util.Collection;
 import java.util.stream.Collectors;
-
-import static java.lang.String.format;
-import static org.apache.commons.lang.Validate.isTrue;
-import static org.apache.commons.lang.Validate.notEmpty;
-import static org.apache.commons.lang.Validate.notNull;
 
 public class RestAdapterGenerator implements Generator {
 

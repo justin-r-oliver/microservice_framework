@@ -1,5 +1,12 @@
 package uk.gov.justice.services.example.cakeshop.command.handler;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertThat;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.ID;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.NAME;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.metadataFrom;
+
 import uk.gov.justice.services.messaging.DefaultEnvelope;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.Metadata;
@@ -11,13 +18,6 @@ import java.util.stream.Stream;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
-import static uk.gov.justice.services.messaging.JsonObjectMetadata.ID;
-import static uk.gov.justice.services.messaging.JsonObjectMetadata.NAME;
-import static uk.gov.justice.services.messaging.JsonObjectMetadata.metadataFrom;
 
 public class TemporaryEventUtilTest {
 

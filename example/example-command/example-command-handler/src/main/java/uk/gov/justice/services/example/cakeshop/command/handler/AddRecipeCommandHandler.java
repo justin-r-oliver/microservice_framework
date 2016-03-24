@@ -1,5 +1,8 @@
 package uk.gov.justice.services.example.cakeshop.command.handler;
 
+import static org.slf4j.LoggerFactory.getLogger;
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_HANDLER;
+
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.eventsourcing.source.core.EventSource;
@@ -13,9 +16,6 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import javax.inject.Inject;
-
-import static org.slf4j.LoggerFactory.getLogger;
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_HANDLER;
 
 @ServiceComponent(COMMAND_HANDLER)
 public class AddRecipeCommandHandler {

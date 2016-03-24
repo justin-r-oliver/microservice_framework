@@ -1,5 +1,9 @@
 package uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.metadataFrom;
+
 import uk.gov.justice.services.common.converter.JsonObjectConverter;
 import uk.gov.justice.services.eventsourcing.repository.jdbc.exception.InvalidStreamIdException;
 import uk.gov.justice.services.messaging.DefaultEnvelope;
@@ -18,10 +22,6 @@ import java.util.UUID;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static uk.gov.justice.services.messaging.JsonObjectMetadata.metadataFrom;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventLogConverterTest {

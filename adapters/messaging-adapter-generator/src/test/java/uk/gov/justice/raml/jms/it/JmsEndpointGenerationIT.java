@@ -1,5 +1,11 @@
 package uk.gov.justice.raml.jms.it;
 
+import static com.jayway.awaitility.Awaitility.await;
+import static javax.json.Json.createObjectBuilder;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+
 import uk.gov.justice.api.StructureControllerCommandsJmsListener;
 import uk.gov.justice.api.StructureEventsJmsListener;
 import uk.gov.justice.api.StructureHandlerCommandsJmsListener;
@@ -42,12 +48,6 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 import javax.naming.NamingException;
-
-import static com.jayway.awaitility.Awaitility.await;
-import static javax.json.Json.createObjectBuilder;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
 
 /**
  * Integration tests for the generated JAX-RS classes.

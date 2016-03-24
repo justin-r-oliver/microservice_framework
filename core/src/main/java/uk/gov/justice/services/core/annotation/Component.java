@@ -1,12 +1,12 @@
 package uk.gov.justice.services.core.annotation;
 
+import static java.util.Arrays.stream;
+
 import java.util.Optional;
 
 import javax.jms.Destination;
 import javax.jms.Queue;
 import javax.jms.Topic;
-
-import static java.util.Arrays.stream;
 
 /**
  * Enum representing all the service components.

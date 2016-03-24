@@ -1,5 +1,16 @@
 package uk.gov.justice.services.adapter.rest.envelope;
 
+import static java.util.Collections.emptyMap;
+import static uk.gov.justice.services.adapter.rest.HeaderConstants.CLIENT_CORRELATION_ID;
+import static uk.gov.justice.services.adapter.rest.HeaderConstants.SESSION_ID;
+import static uk.gov.justice.services.adapter.rest.HeaderConstants.USER_ID;
+import static uk.gov.justice.services.messaging.DefaultEnvelope.envelopeFrom;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.CLIENT_ID;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.CONTEXT;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.CORRELATION;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.ID;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.metadataFrom;
+
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonObjectMetadata;
 import uk.gov.justice.services.messaging.JsonObjects;
@@ -13,17 +24,6 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.core.HttpHeaders;
-
-import static java.util.Collections.emptyMap;
-import static uk.gov.justice.services.adapter.rest.HeaderConstants.CLIENT_CORRELATION_ID;
-import static uk.gov.justice.services.adapter.rest.HeaderConstants.SESSION_ID;
-import static uk.gov.justice.services.adapter.rest.HeaderConstants.USER_ID;
-import static uk.gov.justice.services.messaging.DefaultEnvelope.envelopeFrom;
-import static uk.gov.justice.services.messaging.JsonObjectMetadata.CLIENT_ID;
-import static uk.gov.justice.services.messaging.JsonObjectMetadata.CONTEXT;
-import static uk.gov.justice.services.messaging.JsonObjectMetadata.CORRELATION;
-import static uk.gov.justice.services.messaging.JsonObjectMetadata.ID;
-import static uk.gov.justice.services.messaging.JsonObjectMetadata.metadataFrom;
 
 /**
  * Utility class for building envelopes from a payload, headers, and path parameters.

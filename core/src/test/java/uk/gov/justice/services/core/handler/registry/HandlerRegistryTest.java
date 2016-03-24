@@ -1,5 +1,10 @@
 package uk.gov.justice.services.core.handler.registry;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_HANDLER;
+
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.handler.registry.exception.DuplicateHandlerException;
@@ -12,11 +17,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_HANDLER;
 
 /**
  * Unit tests for the HandlerRegistry class.

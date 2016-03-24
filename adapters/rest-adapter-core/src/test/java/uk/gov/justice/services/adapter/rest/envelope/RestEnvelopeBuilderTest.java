@@ -1,5 +1,11 @@
 package uk.gov.justice.services.adapter.rest.envelope;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
+
 import uk.gov.justice.services.adapter.rest.HeaderConstants;
 import uk.gov.justice.services.messaging.Envelope;
 
@@ -18,12 +24,6 @@ import javax.json.JsonObject;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
 
 /**
  * Unit tests for the {@link RestEnvelopeBuilder} class.

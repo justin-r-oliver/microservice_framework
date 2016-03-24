@@ -1,5 +1,12 @@
 package uk.gov.justice.services.messaging;
 
+import static javax.json.JsonValue.NULL;
+import static net.trajano.commons.testing.UtilityClassTestUtil.assertUtilityClassWellDefined;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+
 import com.google.common.collect.ImmutableList;
 
 import org.junit.Test;
@@ -14,13 +21,6 @@ import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonString;
-
-import static javax.json.JsonValue.NULL;
-import static net.trajano.commons.testing.UtilityClassTestUtil.assertUtilityClassWellDefined;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
 
 /**
  * Unit tests for the {@link JsonObjects} class.

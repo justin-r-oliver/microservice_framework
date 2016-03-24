@@ -1,5 +1,18 @@
 package uk.gov.justice.services.core.sender;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_API;
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_CONTROLLER;
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_HANDLER;
+
 import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.annotation.exception.MissingAnnotationException;
 import uk.gov.justice.services.core.jms.JmsSender;
@@ -14,19 +27,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.lang.reflect.Member;
 
 import javax.enterprise.inject.spi.InjectionPoint;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_API;
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_CONTROLLER;
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_HANDLER;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SenderProducerTest {

@@ -1,5 +1,10 @@
 package uk.gov.justice.services.adapters.rest.generator;
 
+import static com.sun.codemodel.JMod.PUBLIC;
+import static org.apache.commons.lang.StringUtils.defaultIfBlank;
+import static uk.gov.justice.services.adapters.rest.generator.Names.applicationNameOf;
+import static uk.gov.justice.services.adapters.rest.generator.Names.baseUriPathWithoutContext;
+
 import uk.gov.justice.raml.core.GeneratorConfig;
 
 import com.sun.codemodel.JBlock;
@@ -20,11 +25,6 @@ import java.util.Set;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
-
-import static com.sun.codemodel.JMod.PUBLIC;
-import static org.apache.commons.lang.StringUtils.defaultIfBlank;
-import static uk.gov.justice.services.adapters.rest.generator.Names.applicationNameOf;
-import static uk.gov.justice.services.adapters.rest.generator.Names.baseUriPathWithoutContext;
 
 /**
  * Internal code generation class for generating the JAX-RS {@link Application} that ties the

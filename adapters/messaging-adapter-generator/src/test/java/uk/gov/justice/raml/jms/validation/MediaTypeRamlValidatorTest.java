@@ -1,10 +1,5 @@
 package uk.gov.justice.raml.jms.validation;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.raml.model.ActionType;
-
 import static org.raml.model.ActionType.GET;
 import static org.raml.model.ActionType.HEAD;
 import static org.raml.model.ActionType.OPTIONS;
@@ -13,6 +8,11 @@ import static org.raml.model.ActionType.PUT;
 import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.raml;
 import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.raml.model.ActionType;
 
 public class MediaTypeRamlValidatorTest {
 

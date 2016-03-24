@@ -1,5 +1,11 @@
 package uk.gov.justice.services.adapters.rest.generator;
 
+import static net.trajano.commons.testing.UtilityClassTestUtil.assertUtilityClassWellDefined;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
+import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
+
 import uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder;
 
 import org.junit.Test;
@@ -8,12 +14,6 @@ import org.raml.model.ActionType;
 import org.raml.model.MimeType;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
-
-import static net.trajano.commons.testing.UtilityClassTestUtil.assertUtilityClassWellDefined;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
-import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
 
 public class NamesTest {
 

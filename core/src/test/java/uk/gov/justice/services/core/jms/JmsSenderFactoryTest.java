@@ -1,11 +1,11 @@
 package uk.gov.justice.services.core.jms;
 
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
 import uk.gov.justice.services.core.annotation.Component;
 
 import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
 
 public class JmsSenderFactoryTest {
 

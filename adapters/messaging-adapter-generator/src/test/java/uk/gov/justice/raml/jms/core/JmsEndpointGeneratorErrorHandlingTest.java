@@ -1,5 +1,11 @@
 package uk.gov.justice.raml.jms.core;
 
+import static org.raml.model.ActionType.POST;
+import static uk.gov.justice.raml.jms.core.GeneratorConfigUtil.configurationWithBasePackage;
+import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
+import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.raml;
+import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
+
 import uk.gov.justice.raml.core.Generator;
 import uk.gov.justice.raml.jms.validation.RamlValidationException;
 
@@ -8,12 +14,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 import org.raml.model.ActionType;
-
-import static org.raml.model.ActionType.POST;
-import static uk.gov.justice.raml.jms.core.GeneratorConfigUtil.configurationWithBasePackage;
-import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
-import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.raml;
-import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
 
 public class JmsEndpointGeneratorErrorHandlingTest {
 

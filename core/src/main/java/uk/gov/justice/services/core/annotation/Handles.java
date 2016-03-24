@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Identifies handler methods for commands, queries and events. <p> Usage:
+ *
  * @Handles("context.commands.do-something")
  */
 

@@ -1,13 +1,13 @@
 package uk.gov.justice.raml.jms.core;
 
+import static net.trajano.commons.testing.UtilityClassTestUtil.assertUtilityClassWellDefined;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static net.trajano.commons.testing.UtilityClassTestUtil.assertUtilityClassWellDefined;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
 
 
 public class TemplateRendererTest {

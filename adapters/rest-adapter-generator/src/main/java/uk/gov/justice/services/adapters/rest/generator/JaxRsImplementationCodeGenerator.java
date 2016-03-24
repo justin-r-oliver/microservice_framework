@@ -1,5 +1,7 @@
 package uk.gov.justice.services.adapters.rest.generator;
 
+import static com.sun.codemodel.JMod.PUBLIC;
+
 import uk.gov.justice.services.adapter.rest.RestProcessor;
 import uk.gov.justice.services.core.annotation.Adapter;
 import uk.gov.justice.services.core.annotation.Component;
@@ -27,8 +29,6 @@ import java.util.Map;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.core.HttpHeaders;
-
-import static com.sun.codemodel.JMod.PUBLIC;
 
 /**
  * Internal code generation class for generating JAX-RS resource implementation classes.

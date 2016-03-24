@@ -1,5 +1,7 @@
 package uk.gov.justice.services.messaging.jms;
 
+import static javax.jms.Session.AUTO_ACKNOWLEDGE;
+
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.jms.exception.JmsEnvelopeSenderException;
 
@@ -11,8 +13,6 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
-
-import static javax.jms.Session.AUTO_ACKNOWLEDGE;
 
 /**
  * An envelope producer that sends or publishes an envelope to a queue or topic respectively

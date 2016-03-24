@@ -1,6 +1,10 @@
 package uk.gov.justice.services.common.converter;
 
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
 import com.google.common.io.Resources;
 
 import org.junit.Test;
@@ -12,10 +16,6 @@ import java.nio.charset.Charset;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
 
 public class JsonObjectConverterTest {
 

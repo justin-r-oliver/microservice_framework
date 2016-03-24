@@ -1,6 +1,13 @@
 package uk.gov.justice.services.messaging.jms;
 
 
+import static javax.jms.Session.AUTO_ACKNOWLEDGE;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.Metadata;
 import uk.gov.justice.services.messaging.jms.exception.JmsEnvelopeSenderException;
@@ -19,13 +26,6 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.json.JsonObject;
-
-import static javax.jms.Session.AUTO_ACKNOWLEDGE;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JmsEnvelopeSenderTest {

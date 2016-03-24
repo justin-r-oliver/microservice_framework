@@ -1,8 +1,8 @@
 package uk.gov.justice.raml.jms.validation;
 
-import org.raml.model.Raml;
-
 import static java.util.Arrays.stream;
+
+import org.raml.model.Raml;
 
 /**
  * Used to compose raml validators

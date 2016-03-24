@@ -1,5 +1,15 @@
 package uk.gov.justice.services.adapters.rest.generator;
 
+import static java.lang.String.join;
+import static org.apache.commons.lang.StringUtils.defaultIfBlank;
+import static org.apache.commons.lang.StringUtils.isNotBlank;
+import static org.apache.commons.lang.StringUtils.strip;
+import static org.apache.commons.lang.StringUtils.substringAfter;
+import static uk.gov.justice.services.adapters.rest.generator.Names.GENERIC_PAYLOAD_ARGUMENT_NAME;
+import static uk.gov.justice.services.adapters.rest.generator.Names.buildResourceMethodName;
+import static uk.gov.justice.services.adapters.rest.generator.Names.buildVariableName;
+import static uk.gov.justice.services.adapters.rest.generator.Names.resourceInterfaceNameOf;
+
 import uk.gov.justice.raml.core.GeneratorConfig;
 
 import com.google.common.collect.ImmutableList;
@@ -32,16 +42,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-
-import static java.lang.String.join;
-import static org.apache.commons.lang.StringUtils.defaultIfBlank;
-import static org.apache.commons.lang.StringUtils.isNotBlank;
-import static org.apache.commons.lang.StringUtils.strip;
-import static org.apache.commons.lang.StringUtils.substringAfter;
-import static uk.gov.justice.services.adapters.rest.generator.Names.GENERIC_PAYLOAD_ARGUMENT_NAME;
-import static uk.gov.justice.services.adapters.rest.generator.Names.buildResourceMethodName;
-import static uk.gov.justice.services.adapters.rest.generator.Names.buildVariableName;
-import static uk.gov.justice.services.adapters.rest.generator.Names.resourceInterfaceNameOf;
 
 class JaxRsInterfaceCodeGenerator {
 

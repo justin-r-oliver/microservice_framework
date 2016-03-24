@@ -1,5 +1,10 @@
 package uk.gov.justice.services.eventsource;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
+import static uk.gov.justice.services.core.annotation.Component.EVENT_LISTENER;
+
 import uk.gov.justice.services.core.jms.JmsDestinations;
 import uk.gov.justice.services.messaging.context.ContextName;
 
@@ -10,11 +15,6 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.jms.Destination;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
-import static uk.gov.justice.services.core.annotation.Component.EVENT_LISTENER;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventSourceDestinationResolverTest {

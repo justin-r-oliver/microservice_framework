@@ -1,5 +1,12 @@
 package uk.gov.justice.services.example.cakeshop.command.handler;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.ID;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.NAME;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.metadataFrom;
+
 import uk.gov.justice.services.eventsourcing.source.core.EventSource;
 import uk.gov.justice.services.eventsourcing.source.core.EventStream;
 import uk.gov.justice.services.messaging.DefaultEnvelope;
@@ -16,13 +23,6 @@ import java.util.stream.Stream;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static uk.gov.justice.services.messaging.JsonObjectMetadata.ID;
-import static uk.gov.justice.services.messaging.JsonObjectMetadata.NAME;
-import static uk.gov.justice.services.messaging.JsonObjectMetadata.metadataFrom;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AddRecipeCommandHandlerTest {

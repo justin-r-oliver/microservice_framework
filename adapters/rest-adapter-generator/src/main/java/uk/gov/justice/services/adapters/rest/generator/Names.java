@@ -1,5 +1,12 @@
 package uk.gov.justice.services.adapters.rest.generator;
 
+import static org.apache.commons.lang.StringUtils.defaultIfBlank;
+import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.apache.commons.lang.StringUtils.remove;
+import static org.apache.commons.lang.StringUtils.substringAfter;
+import static org.apache.commons.lang.StringUtils.uncapitalize;
+import static org.apache.commons.lang.WordUtils.capitalize;
+
 import org.apache.commons.lang.StringUtils;
 import org.raml.model.Action;
 import org.raml.model.MimeType;
@@ -13,13 +20,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
-
-import static org.apache.commons.lang.StringUtils.defaultIfBlank;
-import static org.apache.commons.lang.StringUtils.isBlank;
-import static org.apache.commons.lang.StringUtils.remove;
-import static org.apache.commons.lang.StringUtils.substringAfter;
-import static org.apache.commons.lang.StringUtils.uncapitalize;
-import static org.apache.commons.lang.WordUtils.capitalize;
 
 final class Names {
 

@@ -1,5 +1,8 @@
 package uk.gov.justice.services.eventsourcing.publisher.jms;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.Metadata;
 import uk.gov.justice.services.messaging.jms.JmsEnvelopeSender;
@@ -10,9 +13,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.jms.Destination;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JmsEventPublisherTest {

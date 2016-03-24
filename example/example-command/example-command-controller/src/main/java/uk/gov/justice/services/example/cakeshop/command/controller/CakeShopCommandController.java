@@ -1,5 +1,8 @@
 package uk.gov.justice.services.example.cakeshop.command.controller;
 
+import static org.slf4j.LoggerFactory.getLogger;
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_CONTROLLER;
+
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.sender.Sender;
@@ -8,9 +11,6 @@ import uk.gov.justice.services.messaging.Envelope;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
-
-import static org.slf4j.LoggerFactory.getLogger;
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_CONTROLLER;
 
 @ServiceComponent(COMMAND_CONTROLLER)
 public class CakeShopCommandController {

@@ -1,5 +1,9 @@
 package uk.gov.justice.services.core.handler;
 
+import static net.trajano.commons.testing.UtilityClassTestUtil.assertUtilityClassWellDefined;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.handler.registry.exception.InvalidHandlerException;
 
@@ -11,10 +15,6 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.json.JsonObject;
-
-import static net.trajano.commons.testing.UtilityClassTestUtil.assertUtilityClassWellDefined;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
 
 public class HandlerUtilTest {
 

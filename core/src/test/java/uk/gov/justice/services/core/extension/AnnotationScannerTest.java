@@ -1,5 +1,14 @@
 package uk.gov.justice.services.core.extension;
 
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_API;
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_CONTROLLER;
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_HANDLER;
+
 import uk.gov.justice.services.core.annotation.ServiceComponent;
 
 import org.hamcrest.CoreMatchers;
@@ -15,15 +24,6 @@ import java.util.HashSet;
 import javax.enterprise.inject.spi.AfterDeploymentValidation;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
-
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_API;
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_CONTROLLER;
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_HANDLER;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AnnotationScannerTest {

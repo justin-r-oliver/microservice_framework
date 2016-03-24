@@ -1,11 +1,11 @@
 package uk.gov.justice.services.adapter.rest.envelope;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Unit tests for the {@link StructuredMediaType} class.

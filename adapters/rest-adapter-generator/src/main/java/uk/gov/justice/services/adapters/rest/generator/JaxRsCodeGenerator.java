@@ -1,5 +1,7 @@
 package uk.gov.justice.services.adapters.rest.generator;
 
+import static org.apache.commons.lang.Validate.notNull;
+
 import uk.gov.justice.raml.core.GeneratorConfig;
 
 import com.sun.codemodel.JCodeModel;
@@ -12,8 +14,6 @@ import org.raml.model.Resource;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Collection;
-
-import static org.apache.commons.lang.Validate.notNull;
 
 /**
  * Code generator for generating JAX-RS classes based on RAML resources.

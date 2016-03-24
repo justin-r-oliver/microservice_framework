@@ -1,15 +1,15 @@
 package uk.gov.justice.services.core.sender;
 
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_API;
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_CONTROLLER;
+import static uk.gov.justice.services.core.annotation.Component.COMMAND_HANDLER;
+
 import uk.gov.justice.services.core.annotation.Component;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.enterprise.context.ApplicationScoped;
-
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_API;
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_CONTROLLER;
-import static uk.gov.justice.services.core.annotation.Component.COMMAND_HANDLER;
 
 /**
  * Contains the relationship between the various service components in the same pillar.

@@ -1,5 +1,9 @@
 package uk.gov.justice.services.eventsourcing.source.core;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
+
 import uk.gov.justice.services.messaging.Envelope;
 
 import org.junit.Before;
@@ -10,10 +14,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.UUID;
 import java.util.stream.Stream;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EnvelopeEventStreamTest {

@@ -1,5 +1,11 @@
 package uk.gov.justice.services.messaging;
 
+import static uk.gov.justice.services.messaging.JsonObjects.getJsonString;
+import static uk.gov.justice.services.messaging.JsonObjects.getLong;
+import static uk.gov.justice.services.messaging.JsonObjects.getString;
+import static uk.gov.justice.services.messaging.JsonObjects.getUUID;
+import static uk.gov.justice.services.messaging.JsonObjects.getUUIDs;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -7,12 +13,6 @@ import java.util.UUID;
 
 import javax.json.JsonObject;
 import javax.json.JsonString;
-
-import static uk.gov.justice.services.messaging.JsonObjects.getJsonString;
-import static uk.gov.justice.services.messaging.JsonObjects.getLong;
-import static uk.gov.justice.services.messaging.JsonObjects.getString;
-import static uk.gov.justice.services.messaging.JsonObjects.getUUID;
-import static uk.gov.justice.services.messaging.JsonObjects.getUUIDs;
 
 /**
  * Implementation of metadata that uses a JsonObject internally to store the metadata.

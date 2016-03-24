@@ -1,5 +1,8 @@
 package uk.gov.justice.services.adapters.test.utils.compiler;
 
+import static java.lang.String.join;
+import static java.text.MessageFormat.format;
+
 import com.google.common.collect.Sets;
 
 import org.apache.commons.io.FileUtils;
@@ -31,9 +34,6 @@ import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
-
-import static java.lang.String.join;
-import static java.text.MessageFormat.format;
 
 /**
  * Compiles and loads classes and interfaces from the specified folders

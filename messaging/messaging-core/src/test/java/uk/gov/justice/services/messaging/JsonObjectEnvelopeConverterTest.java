@@ -1,5 +1,9 @@
 package uk.gov.justice.services.messaging;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
 import uk.gov.justice.services.common.converter.JsonObjectConverter;
 
 import com.google.common.io.Resources;
@@ -15,10 +19,6 @@ import java.util.UUID;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
 
 public class JsonObjectEnvelopeConverterTest {
 

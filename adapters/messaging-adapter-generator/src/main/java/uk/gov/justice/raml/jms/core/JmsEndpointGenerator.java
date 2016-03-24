@@ -1,5 +1,11 @@
 package uk.gov.justice.raml.jms.core;
 
+import static java.lang.String.format;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.joining;
+import static org.apache.commons.io.FileUtils.write;
+import static uk.gov.justice.raml.jms.core.TemplateRenderer.render;
+
 import uk.gov.justice.raml.core.Generator;
 import uk.gov.justice.raml.core.GeneratorConfig;
 import uk.gov.justice.raml.jms.validation.CompositeRamlValidator;
@@ -26,12 +32,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.lang.String.format;
-import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.joining;
-import static org.apache.commons.io.FileUtils.write;
-import static uk.gov.justice.raml.jms.core.TemplateRenderer.render;
 
 /**
  * Generates JMS endpoint classes out of RAML object

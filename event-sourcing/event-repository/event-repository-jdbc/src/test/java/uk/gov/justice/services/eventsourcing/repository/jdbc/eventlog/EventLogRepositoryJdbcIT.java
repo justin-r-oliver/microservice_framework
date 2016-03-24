@@ -1,5 +1,8 @@
 package uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+
 import uk.gov.justice.services.eventsourcing.repository.jdbc.exception.EventLogRepositoryException;
 import uk.gov.justice.services.eventsourcing.repository.jdbc.exception.InvalidSequenceIdException;
 
@@ -15,9 +18,6 @@ import javax.naming.Context;
 import liquibase.Liquibase;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.ClassLoaderResourceAccessor;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
 
 public class EventLogRepositoryJdbcIT {
 
