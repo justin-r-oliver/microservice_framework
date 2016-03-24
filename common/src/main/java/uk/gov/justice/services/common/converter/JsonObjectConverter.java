@@ -1,12 +1,13 @@
 package uk.gov.justice.services.common.converter;
 
 
+import java.io.StringReader;
+import java.io.StringWriter;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
 
 /**
  * A utility class to manipulate JsonObject.

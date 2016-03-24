@@ -1,5 +1,10 @@
 package uk.gov.justice.api.resource;
 
+import uk.gov.justice.api.RestApplication;
+import uk.gov.justice.services.adapter.rest.RestProcessor;
+import uk.gov.justice.services.adapter.rest.envelope.RestEnvelopeBuilderFactory;
+import uk.gov.justice.services.example.DummyDispatcher;
+
 import org.apache.openejb.OpenEjbContainer;
 import org.apache.openejb.jee.Application;
 import org.apache.openejb.jee.WebApp;
@@ -13,13 +18,10 @@ import org.apache.openejb.util.NetworkUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import uk.gov.justice.api.RestApplication;
-import uk.gov.justice.services.adapter.rest.RestProcessor;
-import uk.gov.justice.services.adapter.rest.envelope.RestEnvelopeBuilderFactory;
-import uk.gov.justice.services.example.DummyDispatcher;
+
+import java.util.Properties;
 
 import javax.ws.rs.core.Response;
-import java.util.Properties;
 
 import static javax.ws.rs.client.Entity.entity;
 import static org.apache.cxf.jaxrs.client.WebClient.create;
@@ -33,12 +35,10 @@ import static org.junit.Assert.assertThat;
 @RunWith(ApplicationComposer.class)
 public class DefaultUsersUserIdResourceIT {
 
+    private static final String BASE_URI_PATTERN = "http://localhost:%d/rest-adapter-generator/rest";
+    private static final String JSON = "{\"userUrn\" : \"test\"}";
     private static int port = -1;
     private static String BASE_URI = "undefined";
-
-    private static final String BASE_URI_PATTERN = "http://localhost:%d/rest-adapter-generator/rest";
-
-    private static final String JSON = "{\"userUrn\" : \"test\"}";
 
     @BeforeClass
     public static void beforeClass() {

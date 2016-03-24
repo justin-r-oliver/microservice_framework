@@ -1,16 +1,17 @@
 package uk.gov.justice.services.example.cakeshop.command.api;
 
+import uk.gov.justice.services.core.sender.Sender;
+import uk.gov.justice.services.messaging.Envelope;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.justice.services.core.sender.Sender;
-import uk.gov.justice.services.messaging.Envelope;
-
-import javax.json.JsonObject;
 
 import java.util.UUID;
+
+import javax.json.JsonObject;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -24,13 +25,10 @@ public class AddRecipeCommandApiTest {
 
     @Mock
     Envelope envelope;
-
-    @Mock
-    private Sender sender;
-
     @Mock
     JsonObject payload;
-
+    @Mock
+    private Sender sender;
     @InjectMocks
     private AddRecipeCommandApi addRecipeCommandApi;
 

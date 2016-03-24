@@ -1,20 +1,22 @@
 package uk.gov.justice.api.resource;
 
+import uk.gov.justice.services.adapter.rest.RestProcessor;
+import uk.gov.justice.services.core.dispatcher.Dispatcher;
+import uk.gov.justice.services.messaging.Envelope;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.justice.services.adapter.rest.RestProcessor;
-import uk.gov.justice.services.core.dispatcher.Dispatcher;
-import uk.gov.justice.services.messaging.Envelope;
+
+import java.util.Map;
+import java.util.function.Consumer;
 
 import javax.json.JsonObject;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
-import java.util.Map;
-import java.util.function.Consumer;
 
 import static javax.json.Json.createObjectBuilder;
 import static org.hamcrest.Matchers.is;
@@ -69,7 +71,7 @@ public class DefaultUsersUserIdResourceTest {
     }
 
     @Test
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void shouldCallDispatcherWhenCreatingUser() throws Exception {
 
         resource.postVndPeopleCommandsCreateUserJsonUsersByUserId(NOT_USED_USER_ID, NOT_USED_ENTITY);
@@ -86,7 +88,7 @@ public class DefaultUsersUserIdResourceTest {
     }
 
     @Test
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public void shouldCallDispatcherWhenUpdatingUser() throws Exception {
 
         resource.postVndPeopleCommandsUpdateUserJsonUsersByUserId(NOT_USED_USER_ID, NOT_USED_ENTITY);
@@ -126,7 +128,7 @@ public class DefaultUsersUserIdResourceTest {
 
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Test
     public void shouldPassUserIdToRestProcessorWhenCreatingUser() throws Exception {
 
@@ -145,7 +147,7 @@ public class DefaultUsersUserIdResourceTest {
     }
 
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Test
     public void shouldPassUserIdToRestProcessorWhenUpdatingUser() throws Exception {
 

@@ -1,12 +1,13 @@
 package uk.gov.justice.services.eventsource;
 
+import uk.gov.justice.services.core.jms.JmsDestinations;
+import uk.gov.justice.services.messaging.context.ContextName;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.justice.services.core.jms.JmsDestinations;
-import uk.gov.justice.services.messaging.context.ContextName;
 
 import javax.jms.Destination;
 

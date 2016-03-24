@@ -1,14 +1,16 @@
 package uk.gov.justice.services.core.handler;
 
-import org.hamcrest.collection.IsCollectionWithSize;
-import org.junit.Test;
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.handler.registry.exception.InvalidHandlerException;
 
-import javax.json.JsonObject;
+import org.hamcrest.collection.IsCollectionWithSize;
+import org.junit.Test;
+
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.UUID;
+
+import javax.json.JsonObject;
 
 import static net.trajano.commons.testing.UtilityClassTestUtil.assertUtilityClassWellDefined;
 import static org.hamcrest.CoreMatchers.notNullValue;

@@ -1,12 +1,14 @@
 package uk.gov.justice.services.adapters.rest.generator;
 
+import uk.gov.justice.raml.core.GeneratorConfig;
+
 import com.sun.codemodel.JCodeModel;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
-import uk.gov.justice.raml.core.GeneratorConfig;
 
 import static java.nio.file.Paths.get;
 import static org.raml.model.ActionType.POST;

@@ -1,12 +1,13 @@
 package uk.gov.justice.services.core.jms;
 
+import uk.gov.justice.services.core.annotation.Component;
+import uk.gov.justice.services.core.jms.exception.JmsSenderException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.justice.services.core.annotation.Component;
-import uk.gov.justice.services.core.jms.exception.JmsSenderException;
 
 import javax.jms.Destination;
 import javax.naming.Context;

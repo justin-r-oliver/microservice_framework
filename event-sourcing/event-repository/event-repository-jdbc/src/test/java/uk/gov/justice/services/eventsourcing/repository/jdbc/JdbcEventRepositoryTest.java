@@ -1,10 +1,5 @@
 package uk.gov.justice.services.eventsourcing.repository.jdbc;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import uk.gov.justice.services.eventsourcing.repository.core.exception.StoreEventRequestFailedException;
 import uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.EventLog;
 import uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog.EventLogConverter;
@@ -14,6 +9,12 @@ import uk.gov.justice.services.eventsourcing.repository.jdbc.exception.InvalidSe
 import uk.gov.justice.services.eventsourcing.repository.jdbc.exception.InvalidStreamIdException;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.Metadata;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 import java.util.Optional;

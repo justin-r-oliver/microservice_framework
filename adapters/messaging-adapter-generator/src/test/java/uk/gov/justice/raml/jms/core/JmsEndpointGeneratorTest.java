@@ -1,5 +1,13 @@
 package uk.gov.justice.raml.jms.core;
 
+import uk.gov.justice.raml.core.Generator;
+import uk.gov.justice.services.adapter.messaging.JmsProcessor;
+import uk.gov.justice.services.adapters.test.utils.compiler.JavaCompilerUtil;
+import uk.gov.justice.services.core.annotation.Adapter;
+import uk.gov.justice.services.core.annotation.Component;
+import uk.gov.justice.services.core.dispatcher.Dispatcher;
+import uk.gov.justice.services.messaging.Envelope;
+
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
@@ -13,19 +21,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.raml.model.ActionType;
-import uk.gov.justice.raml.core.Generator;
-import uk.gov.justice.services.adapter.messaging.JmsProcessor;
-import uk.gov.justice.services.adapters.test.utils.compiler.JavaCompilerUtil;
-import uk.gov.justice.services.core.annotation.Adapter;
-import uk.gov.justice.services.core.annotation.Component;
-import uk.gov.justice.services.core.dispatcher.Dispatcher;
-import uk.gov.justice.services.messaging.Envelope;
 
-import javax.ejb.ActivationConfigProperty;
-import javax.ejb.MessageDriven;
-import javax.inject.Inject;
-import javax.jms.Message;
-import javax.jms.MessageListener;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -36,6 +32,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
+import javax.ejb.ActivationConfigProperty;
+import javax.ejb.MessageDriven;
+import javax.inject.Inject;
+import javax.jms.Message;
+import javax.jms.MessageListener;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -77,17 +79,14 @@ public class JmsEndpointGeneratorTest {
 
     private static final String BASE_PACKAGE = "uk.test";
     private static final String BASE_PACKAGE_FOLDER = "/uk/test";
-
-    private Generator generator = new JmsEndpointGenerator();
-
+    @Rule
+    public TemporaryFolder outputFolder = new TemporaryFolder();
     @Mock
     JmsProcessor jmsProcessor;
 
     @Mock
     Dispatcher dispatcher;
-
-    @Rule
-    public TemporaryFolder outputFolder = new TemporaryFolder();
+    private Generator generator = new JmsEndpointGenerator();
     private JavaCompilerUtil compiler;
 
     @Before

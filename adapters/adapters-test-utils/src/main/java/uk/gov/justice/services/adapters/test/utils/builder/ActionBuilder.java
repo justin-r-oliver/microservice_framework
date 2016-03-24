@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ActionBuilder {
-    private ActionType actionType;
     private final Map<String, MimeType> body = new HashMap<>();
+    private ActionType actionType;
 
     public static ActionBuilder action() {
         return new ActionBuilder();
@@ -18,7 +18,7 @@ public class ActionBuilder {
     public static ActionBuilder action(final ActionType actionType, final String... mimeTypes) {
         ActionBuilder actionBuilder = new ActionBuilder()
                 .with(actionType);
-        for (String mimeType: mimeTypes) {
+        for (String mimeType : mimeTypes) {
             actionBuilder = actionBuilder.withMediaType(mimeType);
         }
         return actionBuilder;
@@ -33,6 +33,7 @@ public class ActionBuilder {
         body.put(mimeType.toString(), mimeType);
         return this;
     }
+
     public ActionBuilder withMediaType(String stringMimeType) {
         return withMediaType(new MimeType(stringMimeType));
     }

@@ -5,13 +5,14 @@ import uk.gov.justice.services.messaging.JsonObjectMetadata;
 import uk.gov.justice.services.messaging.JsonObjects;
 import uk.gov.justice.services.messaging.Metadata;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.core.HttpHeaders;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
 
 import static java.util.Collections.emptyMap;
 import static uk.gov.justice.services.adapter.rest.HeaderConstants.CLIENT_CORRELATION_ID;

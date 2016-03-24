@@ -5,12 +5,13 @@ import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.annotation.exception.MissingAnnotationException;
 import uk.gov.justice.services.core.jms.JmsSenderFactory;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Produces the correct Sender based on the injection point.

@@ -4,11 +4,12 @@ import uk.gov.justice.services.messaging.DefaultEnvelope;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.Metadata;
 
-import javax.json.Json;
-import javax.json.JsonObject;
 import java.util.Collections;
 import java.util.UUID;
 import java.util.stream.Stream;
+
+import javax.json.Json;
+import javax.json.JsonObject;
 
 import static uk.gov.justice.services.messaging.JsonObjectMetadata.ID;
 import static uk.gov.justice.services.messaging.JsonObjectMetadata.NAME;

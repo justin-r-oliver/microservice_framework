@@ -1,5 +1,7 @@
 package uk.gov.justice.services.adapters.rest.generator;
 
+import uk.gov.justice.raml.core.GeneratorConfig;
+
 import com.google.common.collect.ImmutableList;
 import com.sun.codemodel.JAnnotatable;
 import com.sun.codemodel.JClass;
@@ -10,18 +12,12 @@ import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
 import com.sun.codemodel.JPackage;
 import com.sun.codemodel.JVar;
+
 import org.raml.model.Action;
 import org.raml.model.MimeType;
 import org.raml.model.Resource;
 import org.raml.model.parameter.UriParameter;
-import uk.gov.justice.raml.core.GeneratorConfig;
 
-import javax.json.JsonObject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,6 +25,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import javax.json.JsonObject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 import static java.lang.String.join;
 import static org.apache.commons.lang.StringUtils.defaultIfBlank;

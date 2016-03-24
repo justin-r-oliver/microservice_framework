@@ -23,6 +23,7 @@ import static org.apache.commons.lang.WordUtils.capitalize;
 
 final class Names {
 
+    static final String GENERIC_PAYLOAD_ARGUMENT_NAME = "entity";
     private static final Set<String> JAVA_KEYWORDS = Collections.unmodifiableSet(new HashSet<>(
             Arrays.asList("abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class",
                     "const", "continue", "default", "do", "double", "else", "enum", "extends", "false", "final",
@@ -30,8 +31,6 @@ final class Names {
                     "interface", "long", "native", "new", "null", "package", "private", "protected", "public",
                     "return", "short", "static", "strictfp", "super", "switch", "synchronized", "this", "throw",
                     "throws", "transient", "true", "try", "void", "volatile", "while")));
-
-    static final String GENERIC_PAYLOAD_ARGUMENT_NAME = "entity";
     private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
     private static final String INTERFACE_NAME_SUFFIX = "Resource";
     private static final String APPLICATION_NAME_SUFFIX = "Application";

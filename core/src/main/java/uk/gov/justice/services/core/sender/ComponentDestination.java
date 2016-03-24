@@ -2,9 +2,10 @@ package uk.gov.justice.services.core.sender;
 
 import uk.gov.justice.services.core.annotation.Component;
 
-import javax.enterprise.context.ApplicationScoped;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.enterprise.context.ApplicationScoped;
 
 import static uk.gov.justice.services.core.annotation.Component.COMMAND_API;
 import static uk.gov.justice.services.core.annotation.Component.COMMAND_CONTROLLER;

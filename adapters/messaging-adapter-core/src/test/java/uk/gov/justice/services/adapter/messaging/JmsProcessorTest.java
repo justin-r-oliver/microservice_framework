@@ -1,18 +1,20 @@
 package uk.gov.justice.services.adapter.messaging;
 
+import uk.gov.justice.services.adapter.messaging.exception.InvalildJmsMessageTypeException;
+import uk.gov.justice.services.messaging.Envelope;
+import uk.gov.justice.services.messaging.jms.EnvelopeConverter;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.justice.services.adapter.messaging.exception.InvalildJmsMessageTypeException;
-import uk.gov.justice.services.messaging.Envelope;
-import uk.gov.justice.services.messaging.jms.EnvelopeConverter;
+
+import java.io.IOException;
 
 import javax.jms.JMSException;
 import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
-import java.io.IOException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;

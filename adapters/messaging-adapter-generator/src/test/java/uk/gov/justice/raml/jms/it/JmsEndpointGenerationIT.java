@@ -1,5 +1,14 @@
 package uk.gov.justice.raml.jms.it;
 
+import uk.gov.justice.api.StructureControllerCommandsJmsListener;
+import uk.gov.justice.api.StructureEventsJmsListener;
+import uk.gov.justice.api.StructureHandlerCommandsJmsListener;
+import uk.gov.justice.services.adapter.messaging.JmsProcessor;
+import uk.gov.justice.services.common.converter.JsonObjectConverter;
+import uk.gov.justice.services.messaging.Envelope;
+import uk.gov.justice.services.messaging.JsonObjectEnvelopeConverter;
+import uk.gov.justice.services.messaging.jms.EnvelopeConverter;
+
 import org.apache.cxf.common.i18n.Exception;
 import org.apache.openejb.OpenEjbContainer;
 import org.apache.openejb.jee.WebApp;
@@ -14,14 +23,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import uk.gov.justice.api.StructureControllerCommandsJmsListener;
-import uk.gov.justice.api.StructureEventsJmsListener;
-import uk.gov.justice.api.StructureHandlerCommandsJmsListener;
-import uk.gov.justice.services.adapter.messaging.JmsProcessor;
-import uk.gov.justice.services.common.converter.JsonObjectConverter;
-import uk.gov.justice.services.messaging.Envelope;
-import uk.gov.justice.services.messaging.JsonObjectEnvelopeConverter;
-import uk.gov.justice.services.messaging.jms.EnvelopeConverter;
+
+import java.util.Optional;
+import java.util.Properties;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -37,9 +42,6 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 import javax.naming.NamingException;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.UUID;
 
 import static com.jayway.awaitility.Awaitility.await;
 import static javax.json.Json.createObjectBuilder;

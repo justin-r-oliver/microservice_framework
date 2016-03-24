@@ -1,11 +1,13 @@
 package uk.gov.justice.services.adapters.rest.generator;
 
+import uk.gov.justice.raml.core.GeneratorConfig;
+
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
+
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
-import uk.gov.justice.raml.core.GeneratorConfig;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -48,7 +50,8 @@ class JaxRsCodeGenerator {
      *
      * NB: this requires the interface to have been created already.
      *
-     * @param interfaceName the fully qualified name of the interface to base this implementation on
+     * @param interfaceName the fully qualified name of the interface to base this implementation
+     *                      on
      * @return the fully qualified name of the class created
      */
     String createImplementation(final String interfaceName) {
@@ -58,8 +61,10 @@ class JaxRsCodeGenerator {
 
     /**
      * Create an application class from a RAML definition.
-     * @param raml the RAML definition
-     * @param implementationNames a collection of class names for the resources this application should use
+     *
+     * @param raml                the RAML definition
+     * @param implementationNames a collection of class names for the resources this application
+     *                            should use
      * @return the fully qualified name of the application class created.
      */
     String createApplication(final Raml raml, final Collection<String> implementationNames) {
@@ -70,7 +75,7 @@ class JaxRsCodeGenerator {
      * Generate the class files from the code model.
      */
     void generate() {
-        try(final PrintStream printStream = new PrintStream(new ByteArrayOutputStream())) {
+        try (final PrintStream printStream = new PrintStream(new ByteArrayOutputStream())) {
             codeModel.build(config.getOutputDirectory().toFile(), printStream);
         } catch (IOException ex) {
             throw new RuntimeException("Could not write generated classes", ex);

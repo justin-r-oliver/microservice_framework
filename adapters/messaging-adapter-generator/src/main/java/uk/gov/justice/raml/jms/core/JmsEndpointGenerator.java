@@ -1,10 +1,20 @@
 package uk.gov.justice.raml.jms.core;
 
-import static java.lang.String.format;
-import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.joining;
-import static org.apache.commons.io.FileUtils.write;
-import static uk.gov.justice.raml.jms.core.TemplateRenderer.render;
+import uk.gov.justice.raml.core.Generator;
+import uk.gov.justice.raml.core.GeneratorConfig;
+import uk.gov.justice.raml.jms.validation.CompositeRamlValidator;
+import uk.gov.justice.raml.jms.validation.ContainsActionsRamlValidator;
+import uk.gov.justice.raml.jms.validation.ContainsResourcesRamlValidator;
+import uk.gov.justice.raml.jms.validation.MediaTypeRamlValidator;
+import uk.gov.justice.raml.jms.validation.RamlValidator;
+import uk.gov.justice.raml.jms.validation.UriRamlValidator;
+import uk.gov.justice.services.core.annotation.Component;
+
+import org.apache.commons.lang.StringUtils;
+import org.raml.model.Action;
+import org.raml.model.ActionType;
+import org.raml.model.Raml;
+import org.raml.model.Resource;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,21 +27,11 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
-import org.raml.model.Action;
-import org.raml.model.ActionType;
-import org.raml.model.Raml;
-import org.raml.model.Resource;
-
-import uk.gov.justice.raml.core.Generator;
-import uk.gov.justice.raml.core.GeneratorConfig;
-import uk.gov.justice.raml.jms.validation.CompositeRamlValidator;
-import uk.gov.justice.raml.jms.validation.ContainsActionsRamlValidator;
-import uk.gov.justice.raml.jms.validation.ContainsResourcesRamlValidator;
-import uk.gov.justice.raml.jms.validation.MediaTypeRamlValidator;
-import uk.gov.justice.raml.jms.validation.RamlValidator;
-import uk.gov.justice.raml.jms.validation.UriRamlValidator;
-import uk.gov.justice.services.core.annotation.Component;
+import static java.lang.String.format;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.joining;
+import static org.apache.commons.io.FileUtils.write;
+import static uk.gov.justice.raml.jms.core.TemplateRenderer.render;
 
 /**
  * Generates JMS endpoint classes out of RAML object
@@ -57,10 +57,9 @@ public class JmsEndpointGenerator implements Generator {
     /**
      * Generates JMS endpoint classes out of RAML object
      *
-     * @param raml - the RAML object
-     * @param configuration - contains package of generated sources, as well as
-     *            source and
-     *            destination folders
+     * @param raml          - the RAML object
+     * @param configuration - contains package of generated sources, as well as source and
+     *                      destination folders
      */
     @Override
     public void run(final Raml raml, final GeneratorConfig configuration) {
@@ -105,7 +104,7 @@ public class JmsEndpointGenerator implements Generator {
     /**
      * Create Template Attributes from the RAML Resource and Configuration
      *
-     * @param resource RAML Resource
+     * @param resource      RAML Resource
      * @param configuration Configuration information
      * @return template attributes
      */
@@ -139,8 +138,7 @@ public class JmsEndpointGenerator implements Generator {
     /**
      * Convert given URI to a valid Component
      *
-     * Takes the last and second to last parts of the URI as the pillar and tier
-     * of the Component
+     * Takes the last and second to last parts of the URI as the pillar and tier of the Component
      *
      * @param uri URI String to convert
      * @return component the value of the pillar and tier parts of the uri
@@ -154,7 +152,7 @@ public class JmsEndpointGenerator implements Generator {
 
     /**
      * Construct the destination name from the URI
-     * 
+     *
      * @param uri URI String to convert
      * @return destination name
      */
@@ -187,8 +185,7 @@ public class JmsEndpointGenerator implements Generator {
     /**
      * Converts media type String to a command name
      *
-     * Command name is equal to everything between "application/vnd." and the
-     * first "+".
+     * Command name is equal to everything between "application/vnd." and the first "+".
      *
      * @param mediaType String representation of the Media Type
      * @return command name

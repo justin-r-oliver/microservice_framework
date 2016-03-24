@@ -1,7 +1,8 @@
 package uk.gov.justice.api;
 
-import org.junit.Test;
 import uk.gov.justice.api.resource.DefaultUsersUserIdResource;
+
+import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;

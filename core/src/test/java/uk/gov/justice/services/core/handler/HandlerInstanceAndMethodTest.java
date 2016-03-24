@@ -1,16 +1,18 @@
 package uk.gov.justice.services.core.handler;
 
-import com.google.common.io.Resources;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import uk.gov.justice.services.common.converter.JsonObjectConverter;
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.handler.exception.HandlerExecutionException;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonObjectEnvelopeConverter;
+
+import com.google.common.io.Resources;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
 import java.lang.reflect.Method;

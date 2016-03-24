@@ -1,5 +1,7 @@
 package uk.gov.justice.services.core.extension;
 
+import uk.gov.justice.services.core.annotation.ServiceComponent;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,12 +9,12 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.justice.services.core.annotation.ServiceComponent;
+
+import java.util.HashSet;
 
 import javax.enterprise.inject.spi.AfterDeploymentValidation;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
-import java.util.HashSet;
 
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;

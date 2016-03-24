@@ -2,13 +2,6 @@ package uk.gov.justice.services.messaging;
 
 import com.google.common.collect.ImmutableList;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonNumber;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonString;
-import javax.json.JsonValue;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +11,14 @@ import java.util.UUID;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonNumber;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonString;
+import javax.json.JsonValue;
 
 import static javax.json.JsonValue.ValueType;
 
@@ -33,7 +34,8 @@ public final class JsonObjects {
     }
 
     /**
-     * Returns the (possibly nested) array value to which the specified name is mapped, if it exists.
+     * Returns the (possibly nested) array value to which the specified name is mapped, if it
+     * exists.
      *
      * @param object the JsonObject from which to retrieve the value
      * @param names  the field name path whose associated value is to be returned
@@ -45,12 +47,13 @@ public final class JsonObjects {
     }
 
     /**
-     * Returns the (possibly nested) object value to which the specified name is mapped, if it exists.
+     * Returns the (possibly nested) object value to which the specified name is mapped, if it
+     * exists.
      *
      * @param object the JsonObject from which to retrieve the value
      * @param names  the field name path whose associated value is to be returned
-     * @return the object value to which the specified name is mapped, or
-     * {@code null} if this object contains no mapping for the name
+     * @return the object value to which the specified name is mapped, or {@code null} if this
+     * object contains no mapping for the name
      * @throws IllegalStateException if the value is not assignable to JsonObject type
      */
     public static Optional<JsonObject> getJsonObject(final JsonObject object, final String... names) {
@@ -58,7 +61,8 @@ public final class JsonObjects {
     }
 
     /**
-     * Returns the (possibly nested) number value to which the specified name is mapped, if it exists.
+     * Returns the (possibly nested) number value to which the specified name is mapped, if it
+     * exists.
      *
      * @param object the JsonObject from which to retrieve the value
      * @param names  the field name path whose associated value is to be returned
@@ -70,7 +74,8 @@ public final class JsonObjects {
     }
 
     /**
-     * Returns the (possibly nested) string value to which the specified name is mapped, if it exists.
+     * Returns the (possibly nested) string value to which the specified name is mapped, if it
+     * exists.
      *
      * @param object the JsonObject from which to retrieve the value
      * @param names  the field name path whose associated value is to be returned
@@ -86,7 +91,8 @@ public final class JsonObjects {
      *
      * @param object    the JsonObject from which to retrieve the value
      * @param valueType the type of JsonValue we need to return
-     * @param function  the function to use to get the correct type of JsonValue from the JsonObject
+     * @param function  the function to use to get the correct type of JsonValue from the
+     *                  JsonObject
      * @param names     the field name path whose associated value is to be returned
      * @param <T>       the type of JsonValue that will be returned
      * @return an optional value found at the specified location in the JsonObject
@@ -229,7 +235,8 @@ public final class JsonObjects {
     }
 
     /**
-     * Assert that the provided arguments are valid. The object must not be null, and the next field name must be non-empty.
+     * Assert that the provided arguments are valid. The object must not be null, and the next field
+     * name must be non-empty.
      *
      * @param object the JsonObject from which to retrieve the value
      * @param names  the field names

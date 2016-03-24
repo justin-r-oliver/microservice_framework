@@ -1,12 +1,13 @@
 package uk.gov.justice.services.eventsourcing.publisher.jms;
 
+import uk.gov.justice.services.messaging.Envelope;
+import uk.gov.justice.services.messaging.Metadata;
+import uk.gov.justice.services.messaging.jms.JmsEnvelopeSender;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.justice.services.messaging.Envelope;
-import uk.gov.justice.services.messaging.Metadata;
-import uk.gov.justice.services.messaging.jms.JmsEnvelopeSender;
 
 import javax.jms.Destination;
 

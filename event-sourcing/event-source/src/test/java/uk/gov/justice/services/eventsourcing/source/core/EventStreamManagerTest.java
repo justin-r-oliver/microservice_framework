@@ -1,10 +1,5 @@
 package uk.gov.justice.services.eventsourcing.source.core;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import uk.gov.justice.services.eventsourcing.publisher.core.EventPublisher;
 import uk.gov.justice.services.eventsourcing.repository.core.EventRepository;
 import uk.gov.justice.services.eventsourcing.repository.core.exception.StoreEventRequestFailedException;
@@ -12,6 +7,12 @@ import uk.gov.justice.services.eventsourcing.source.core.exception.EventStreamEx
 import uk.gov.justice.services.eventsourcing.source.core.exception.InvalidStreamVersionRuntimeException;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.Metadata;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Collections;
 import java.util.Optional;

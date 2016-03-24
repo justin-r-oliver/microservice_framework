@@ -1,15 +1,15 @@
 package uk.gov.justice.raml.jms.validation;
 
-import static java.lang.String.format;
+import org.raml.model.Resource;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.raml.model.Resource;
+import static java.lang.String.format;
 
 /**
- * Checks if all resources in @Raml contain uris that correctly denote messaging component(s) of the framework
- *
+ * Checks if all resources in @Raml contain uris that correctly denote messaging component(s) of the
+ * framework
  */
 public class UriRamlValidator extends AbstractResourceRamlValidator {
 

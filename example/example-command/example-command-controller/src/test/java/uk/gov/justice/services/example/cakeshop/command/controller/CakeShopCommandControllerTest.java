@@ -1,15 +1,17 @@
 package uk.gov.justice.services.example.cakeshop.command.controller;
 
+import uk.gov.justice.services.core.sender.Sender;
+import uk.gov.justice.services.messaging.Envelope;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.justice.services.core.sender.Sender;
-import uk.gov.justice.services.messaging.Envelope;
+
+import java.util.UUID;
 
 import javax.json.JsonObject;
-import java.util.UUID;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -23,13 +25,10 @@ public class CakeShopCommandControllerTest {
 
     @Mock
     Envelope envelope;
-
-    @Mock
-    private Sender sender;
-
     @Mock
     JsonObject payload;
-
+    @Mock
+    private Sender sender;
     @InjectMocks
     private CakeShopCommandController cakeShopCommandController;
 

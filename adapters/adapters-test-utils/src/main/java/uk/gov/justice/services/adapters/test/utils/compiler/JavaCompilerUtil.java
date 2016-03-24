@@ -1,6 +1,7 @@
 package uk.gov.justice.services.adapters.test.utils.compiler;
 
 import com.google.common.collect.Sets;
+
 import org.apache.commons.io.FileUtils;
 import org.reflections.ReflectionUtils;
 import org.reflections.Reflections;
@@ -8,13 +9,6 @@ import org.reflections.util.ClasspathHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.tools.Diagnostic;
-import javax.tools.DiagnosticCollector;
-import javax.tools.JavaCompiler;
-import javax.tools.JavaCompiler.CompilationTask;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -29,6 +23,14 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import javax.tools.Diagnostic;
+import javax.tools.DiagnosticCollector;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaCompiler.CompilationTask;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 
 import static java.lang.String.join;
 import static java.text.MessageFormat.format;
@@ -47,12 +49,8 @@ public class JavaCompilerUtil {
 
     /**
      * Compiles and loads a single class
-     * @param basePackage
      *
-     * @return
-     * @throws MalformedURLException
-     * @throws IllegalStateException
-     *             - if more or less than one classes found
+     * @throws IllegalStateException - if more or less than one classes found
      */
     public Class<?> compiledClassOf(String basePackage)
             throws MalformedURLException {
@@ -67,11 +65,8 @@ public class JavaCompilerUtil {
      * Compiles then finds a single class.
      *
      * @param basePackage the base package
-     *
      * @return the class
-     * @throws MalformedURLException
-     * @throws IllegalStateException
-     *             - if more or less than one classes found
+     * @throws IllegalStateException - if more or less than one classes found
      */
     public Class<?> compiledClassOf(String basePackage, String... additionalFilterElements) throws MalformedURLException {
         Set<Class<?>> resourceClasses = compiledClassesAndInterfaces(
@@ -93,12 +88,8 @@ public class JavaCompilerUtil {
 
     /**
      * Compiles and loads a single interface
-     * @param basePackageName
      *
-     * @return
-     * @throws MalformedURLException
-     * @throws IllegalStateException
-     *             - if more or less than one interfaces found
+     * @throws IllegalStateException - if more or less than one interfaces found
      */
     public Class<?> compiledInterfaceOf(String basePackageName)
             throws MalformedURLException {
@@ -113,10 +104,6 @@ public class JavaCompilerUtil {
 
     /**
      * compiles and loads specified classes
-     * @param basePackage
-     *
-     * @return
-     * @throws MalformedURLException
      */
     public Set<Class<?>> compiledClassesOf(String basePackage)
             throws MalformedURLException {
@@ -125,10 +112,6 @@ public class JavaCompilerUtil {
 
     /**
      * compiles and loads specified interfaces
-     * @param basePackage
-     *
-     * @return
-     * @throws MalformedURLException
      */
     public Set<Class<?>> compiledInterfacesOf(String basePackage)
             throws MalformedURLException {
@@ -155,13 +138,13 @@ public class JavaCompilerUtil {
 
         ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
         Set<Class<?>> rootResourceClasses = new HashSet<>();
-        try(URLClassLoader resourceClassLoader = new URLClassLoader(new URL[] { compilationOutputDir.toURI().toURL() })) {
+        try (URLClassLoader resourceClassLoader = new URLClassLoader(new URL[]{compilationOutputDir.toURI().toURL()})) {
             Thread.currentThread().setContextClassLoader(resourceClassLoader);
             Reflections reflections = new Reflections(basePackage, ClasspathHelper.forClass(Object.class),
                     new AllObjectsScanner());
             Set<String> classNames = reflections.getStore().get(AllObjectsScanner.class, Object.class.getName());
             rootResourceClasses.addAll(Sets.newHashSet(ReflectionUtils.forNames(classNames, reflections.getConfiguration().getClassLoaders())));
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             throw new RuntimeException("Error creating class loader", ex);
         } finally {
             Thread.currentThread().setContextClassLoader(initialClassLoader);
@@ -181,7 +164,7 @@ public class JavaCompilerUtil {
             throw new CompilationException(
                     format("There are no source files to compile in {0}", codegenOutputDir.getAbsolutePath()));
         }
-        String[] compileOptions = new String[] { "-d", compilationOutputDir.getAbsolutePath() };
+        String[] compileOptions = new String[]{"-d", compilationOutputDir.getAbsolutePath()};
         Iterable<String> compilationOptions = Arrays.asList(compileOptions);
 
         CompilationTask compilerTask = compiler.getTask(null, fileManager, diagnostics, compilationOptions, null,

@@ -1,7 +1,8 @@
 package uk.gov.justice.services.messaging.context;
 
-import org.junit.Test;
 import uk.gov.justice.services.messaging.exception.InvalidNameException;
+
+import org.junit.Test;
 
 import static net.trajano.commons.testing.UtilityClassTestUtil.assertUtilityClassWellDefined;
 import static org.hamcrest.CoreMatchers.equalTo;

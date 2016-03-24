@@ -1,19 +1,21 @@
 package uk.gov.justice.services.adapter.rest;
 
+import uk.gov.justice.services.adapter.rest.envelope.RestEnvelopeBuilder;
+import uk.gov.justice.services.adapter.rest.envelope.RestEnvelopeBuilderFactory;
+import uk.gov.justice.services.messaging.Envelope;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.justice.services.adapter.rest.envelope.RestEnvelopeBuilder;
-import uk.gov.justice.services.adapter.rest.envelope.RestEnvelopeBuilderFactory;
-import uk.gov.justice.services.messaging.Envelope;
+
+import java.util.Map;
+import java.util.function.Consumer;
 
 import javax.json.JsonObject;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
-import java.util.Map;
-import java.util.function.Consumer;
 
 import static javax.ws.rs.core.Response.Status.ACCEPTED;
 import static org.hamcrest.CoreMatchers.equalTo;

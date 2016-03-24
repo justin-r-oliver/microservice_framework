@@ -1,11 +1,12 @@
 package uk.gov.justice.services.eventsourcing.source.core;
 
+import uk.gov.justice.services.messaging.Envelope;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.justice.services.messaging.Envelope;
 
 import java.util.UUID;
 import java.util.stream.Stream;

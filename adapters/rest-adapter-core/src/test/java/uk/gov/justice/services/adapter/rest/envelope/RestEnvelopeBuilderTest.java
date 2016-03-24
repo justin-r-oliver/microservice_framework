@@ -1,20 +1,23 @@
 package uk.gov.justice.services.adapter.rest.envelope;
 
+import uk.gov.justice.services.adapter.rest.HeaderConstants;
+import uk.gov.justice.services.messaging.Envelope;
+
 import com.google.common.collect.ImmutableMap;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.justice.services.adapter.rest.HeaderConstants;
-import uk.gov.justice.services.messaging.Envelope;
+
+import java.util.UUID;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
-import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;

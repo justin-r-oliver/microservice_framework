@@ -1,10 +1,7 @@
 package uk.gov.justice.raml.jms.core;
 
-import static org.raml.model.ActionType.POST;
-import static uk.gov.justice.raml.jms.core.GeneratorConfigUtil.configurationWithBasePackage;
-import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
-import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.raml;
-import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
+import uk.gov.justice.raml.core.Generator;
+import uk.gov.justice.raml.jms.validation.RamlValidationException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,20 +9,20 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 import org.raml.model.ActionType;
 
-import uk.gov.justice.raml.core.Generator;
-import uk.gov.justice.raml.jms.validation.RamlValidationException;
+import static org.raml.model.ActionType.POST;
+import static uk.gov.justice.raml.jms.core.GeneratorConfigUtil.configurationWithBasePackage;
+import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
+import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.raml;
+import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
 
 public class JmsEndpointGeneratorErrorHandlingTest {
 
     private static final String BASE_PACKAGE = "uk.test";
-
-    private Generator generator = new JmsEndpointGenerator();
-
     @Rule
     public TemporaryFolder outputFolder = new TemporaryFolder();
-
     @Rule
     public ExpectedException exception = ExpectedException.none();
+    private Generator generator = new JmsEndpointGenerator();
 
     @Test
     public void shouldThrowExceptionIfInvalidTierPassedInUri() throws Exception {
@@ -156,7 +153,7 @@ public class JmsEndpointGeneratorErrorHandlingTest {
                                         .with(ActionType.POST)
                                         .withMediaType("application/vnd.people.commaods.command1+json")
                                         .withMediaType("application/vnd.people.commands.command1+json")
-                                        ))
+                                ))
                         .build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder));
 

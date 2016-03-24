@@ -6,9 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Identifies handler methods for commands, queries and events.
- * <p>
- * Usage: @Handles("context.commands.do-something")
+ * Identifies handler methods for commands, queries and events. <p> Usage:
+ * @Handles("context.commands.do-something")
  */
 
 @Retention(RetentionPolicy.RUNTIME)

@@ -1,17 +1,16 @@
 package uk.gov.justice.raml.jms.validation;
 
-import java.util.Collection;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.raml.model.Action;
 import org.raml.model.ActionType;
 import org.raml.model.MimeType;
 import org.raml.model.Resource;
 
+import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Checks if action's mediaType is valid and contains a valid command or event.
- *
  */
 public class MediaTypeRamlValidator extends AbstractResourceRamlValidator {
 

@@ -1,17 +1,20 @@
 package uk.gov.justice.services.messaging;
 
-import com.google.common.io.Resources;
-import org.junit.Test;
 import uk.gov.justice.services.common.converter.JsonObjectConverter;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
+import com.google.common.io.Resources;
+
+import org.junit.Test;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;

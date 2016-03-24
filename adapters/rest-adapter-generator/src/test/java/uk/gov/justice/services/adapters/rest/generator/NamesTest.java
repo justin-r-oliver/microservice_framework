@@ -1,12 +1,13 @@
 package uk.gov.justice.services.adapters.rest.generator;
 
+import uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder;
+
 import org.junit.Test;
 import org.raml.model.Action;
 import org.raml.model.ActionType;
 import org.raml.model.MimeType;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
-import uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder;
 
 import static net.trajano.commons.testing.UtilityClassTestUtil.assertUtilityClassWellDefined;
 import static org.hamcrest.core.Is.is;

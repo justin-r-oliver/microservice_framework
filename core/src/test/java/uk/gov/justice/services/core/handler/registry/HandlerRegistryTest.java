@@ -1,14 +1,15 @@
 package uk.gov.justice.services.core.handler.registry;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.handler.registry.exception.DuplicateHandlerException;
 import uk.gov.justice.services.core.handler.registry.exception.InvalidHandlerException;
 import uk.gov.justice.services.messaging.Envelope;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 

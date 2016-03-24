@@ -1,5 +1,10 @@
 package uk.gov.justice.raml.jms.validation;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.raml.model.ActionType;
+
 import static org.raml.model.ActionType.GET;
 import static org.raml.model.ActionType.HEAD;
 import static org.raml.model.ActionType.OPTIONS;
@@ -9,13 +14,10 @@ import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.raml;
 import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.raml.model.ActionType;
-
 public class MediaTypeRamlValidatorTest {
 
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
     private RamlValidator validator = new MediaTypeRamlValidator();
 
     @Test
@@ -28,7 +30,7 @@ public class MediaTypeRamlValidatorTest {
                         .build());
 
     }
-    
+
     @Test
     public void shouldIgnoreInvalidMediaTypesInNonPOSTActions() throws Exception {
 
@@ -40,13 +42,10 @@ public class MediaTypeRamlValidatorTest {
                                 .with(action(HEAD, "application/vnd.structure.dummy.command3+json"))
                                 .with(action(PUT, "application/vnd.structure.dummy.command4+json"))
                                 .with(action(OPTIONS, "application/vnd.structure.dummy.command5+json"))
-                                )
+                        )
                         .build());
 
     }
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void shouldThrowExceptionIfMediaTypeNotSet() throws Exception {

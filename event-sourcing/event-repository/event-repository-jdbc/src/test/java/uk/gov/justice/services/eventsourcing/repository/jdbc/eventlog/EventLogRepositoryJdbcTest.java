@@ -1,17 +1,15 @@
 package uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog;
 
+import uk.gov.justice.services.eventsourcing.repository.jdbc.exception.EventLogRepositoryException;
+import uk.gov.justice.services.eventsourcing.repository.jdbc.exception.InvalidSequenceIdException;
+
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.justice.services.eventsourcing.repository.jdbc.exception.EventLogRepositoryException;
-import uk.gov.justice.services.eventsourcing.repository.jdbc.exception.InvalidSequenceIdException;
 
-import javax.naming.Context;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +18,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;

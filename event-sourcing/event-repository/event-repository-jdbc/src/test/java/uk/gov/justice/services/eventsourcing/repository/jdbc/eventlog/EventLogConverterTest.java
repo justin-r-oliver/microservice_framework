@@ -1,10 +1,5 @@
 package uk.gov.justice.services.eventsourcing.repository.jdbc.eventlog;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.skyscreamer.jsonassert.JSONAssert;
 import uk.gov.justice.services.common.converter.JsonObjectConverter;
 import uk.gov.justice.services.eventsourcing.repository.jdbc.exception.InvalidStreamIdException;
 import uk.gov.justice.services.messaging.DefaultEnvelope;
@@ -12,10 +7,17 @@ import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonObjectEnvelopeConverter;
 import uk.gov.justice.services.messaging.Metadata;
 
-import javax.json.Json;
-import javax.json.JsonObject;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.skyscreamer.jsonassert.JSONAssert;
+
 import java.io.IOException;
 import java.util.UUID;
+
+import javax.json.Json;
+import javax.json.JsonObject;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;

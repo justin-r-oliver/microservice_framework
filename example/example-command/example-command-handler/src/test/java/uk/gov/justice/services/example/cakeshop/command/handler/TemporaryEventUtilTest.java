@@ -1,14 +1,16 @@
 package uk.gov.justice.services.example.cakeshop.command.handler;
 
-import org.junit.Test;
 import uk.gov.justice.services.messaging.DefaultEnvelope;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.Metadata;
 
-import javax.json.Json;
-import javax.json.JsonObject;
+import org.junit.Test;
+
 import java.util.UUID;
 import java.util.stream.Stream;
+
+import javax.json.Json;
+import javax.json.JsonObject;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;

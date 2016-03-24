@@ -5,8 +5,7 @@ import org.raml.model.Raml;
 import static java.util.Arrays.stream;
 
 /**
- * Used to compose raml validators 
- *
+ * Used to compose raml validators
  */
 public class CompositeRamlValidator implements RamlValidator {
 

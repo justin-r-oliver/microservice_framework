@@ -1,10 +1,11 @@
 package uk.gov.justice.services.example.cakeshop.command.controller;
 
-import org.slf4j.Logger;
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
+
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 
