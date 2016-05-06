@@ -41,7 +41,7 @@ public class JavaCompilerUtil {
     private static final Logger LOG = LoggerFactory.getLogger(JavaCompilerUtil.class);
     private final File codegenOutputDir, compilationOutputDir;
 
-    public JavaCompilerUtil(File codegenOutputDir, File compilationOutputDir) {
+    public JavaCompilerUtil(final File codegenOutputDir, final File compilationOutputDir) {
         this.codegenOutputDir = codegenOutputDir;
         this.compilationOutputDir = compilationOutputDir;
     }
@@ -51,9 +51,9 @@ public class JavaCompilerUtil {
      *
      * @throws IllegalStateException - if more or less than one classes found
      */
-    public Class<?> compiledClassOf(String basePackage)
+    public Class<?> compiledClassOf(final String basePackage)
             throws MalformedURLException {
-        Set<Class<?>> resourceClasses = compiledClassesOf(basePackage);
+        final Set<Class<?>> resourceClasses = compiledClassesOf(basePackage);
         if (resourceClasses.size() != 1) {
             throw new IllegalStateException(format("Expected to find single class but found {0}", resourceClasses));
         }
@@ -67,7 +67,8 @@ public class JavaCompilerUtil {
      * @return the class
      * @throws IllegalStateException - if more or less than one classes found
      */
-    public Class<?> compiledClassOf(String basePackage, String... additionalFilterElements) throws MalformedURLException {
+    public Class<?> compiledClassOf(final String basePackage, final String... additionalFilterElements)
+            throws MalformedURLException {
         return compiledClassOf(basePackage, c -> !c.isInterface(), additionalFilterElements);
     }
 
@@ -78,12 +79,14 @@ public class JavaCompilerUtil {
      * @return the class
      * @throws IllegalStateException - if more or less than one classes found
      */
-    public Class<?> compiledInterfaceClassOf(String basePackage, String... additionalFilterElements) throws MalformedURLException {
+    public Class<?> compiledInterfaceClassOf(final String basePackage, final String... additionalFilterElements)
+            throws MalformedURLException {
         return compiledClassOf(basePackage, Class::isInterface, additionalFilterElements);
     }
 
-    public Class<?> classOf(Set<Class<?>> classes, String basePackage, String... additionalFilterElements) throws MalformedURLException {
-        Set<Class<?>> resourceClasses = classesMatching(classes,
+    public Class<?> classOf(final Set<Class<?>> classes, final String basePackage, final String... additionalFilterElements)
+            throws MalformedURLException {
+        final Set<Class<?>> resourceClasses = classesMatching(classes,
                 c -> !c.isInterface() && c.getName().equals(join(".", basePackage, join(".", additionalFilterElements))));
         if (resourceClasses.size() != 1) {
             throw new IllegalStateException(format("Expected to find single class but found {0}", resourceClasses));
@@ -96,9 +99,9 @@ public class JavaCompilerUtil {
      *
      * @throws IllegalStateException - if more or less than one interfaces found
      */
-    public Class<?> compiledInterfaceOf(String basePackageName)
+    public Class<?> compiledInterfaceOf(final String basePackageName)
             throws MalformedURLException {
-        Set<Class<?>> resourceInterfaces = compiledInterfacesOf(basePackageName);
+        final Set<Class<?>> resourceInterfaces = compiledInterfacesOf(basePackageName);
         if (resourceInterfaces.size() != 1) {
             throw new IllegalStateException(
                     format("Expected to find single interface but found {0}", resourceInterfaces));
@@ -110,7 +113,7 @@ public class JavaCompilerUtil {
     /**
      * compiles and loads specified classes
      */
-    public Set<Class<?>> compiledClassesOf(String basePackage)
+    public Set<Class<?>> compiledClassesOf(final String basePackage)
             throws MalformedURLException {
         return compiledClassesAndInterfaces(c -> !c.isInterface(), basePackage);
     }
@@ -118,13 +121,17 @@ public class JavaCompilerUtil {
     /**
      * compiles and loads specified interfaces
      */
-    public Set<Class<?>> compiledInterfacesOf(String basePackage)
+    public Set<Class<?>> compiledInterfacesOf(final String basePackage)
             throws MalformedURLException {
         return compiledClassesAndInterfaces(Class::isInterface, basePackage);
     }
 
-    private Class<?> compiledClassOf(String basePackage, Predicate<Class<?>> predicate, String... additionalFilterElements) throws MalformedURLException {
-        Set<Class<?>> resourceClasses = compiledClassesAndInterfaces(
+    private Class<?> compiledClassOf(final String basePackage,
+                                     final Predicate<Class<?>> predicate,
+                                     final String... additionalFilterElements)
+            throws MalformedURLException {
+
+        final Set<Class<?>> resourceClasses = compiledClassesAndInterfaces(
                 c -> predicate.test(c) && c.getName().equals(join(".", basePackage, join(".", additionalFilterElements))), basePackage);
         if (resourceClasses.size() != 1) {
             throw new IllegalStateException(format("Expected to find single class but found {0}", resourceClasses));
@@ -132,31 +139,32 @@ public class JavaCompilerUtil {
         return resourceClasses.iterator().next();
     }
 
-    private Set<Class<?>> compiledClassesAndInterfaces(Predicate<? super Class<?>> predicate,
-                                                       String basePackage)
+    private Set<Class<?>> compiledClassesAndInterfaces(final Predicate<? super Class<?>> predicate,
+                                                       final String basePackage)
             throws MalformedURLException {
         return classesMatching(compile(basePackage), predicate);
     }
 
-    private Set<Class<?>> classesMatching(Set<Class<?>> classes, Predicate<? super Class<?>> predicate)
+    private Set<Class<?>> classesMatching(final Set<Class<?>> classes,
+                                          final Predicate<? super Class<?>> predicate)
             throws MalformedURLException {
         return classes.stream().filter(predicate).collect(Collectors.toSet());
     }
 
-    private Set<Class<?>> compile(String basePackage) throws MalformedURLException {
+    private Set<Class<?>> compile(final String basePackage) throws MalformedURLException {
         compile();
         return loadClasses(basePackage);
     }
 
-    private Set<Class<?>> loadClasses(String basePackage) throws MalformedURLException {
+    private Set<Class<?>> loadClasses(final String basePackage) throws MalformedURLException {
 
-        ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
-        Set<Class<?>> rootResourceClasses = new HashSet<>();
-        try (URLClassLoader resourceClassLoader = new URLClassLoader(new URL[]{compilationOutputDir.toURI().toURL()})) {
+        final ClassLoader initialClassLoader = Thread.currentThread().getContextClassLoader();
+        final Set<Class<?>> rootResourceClasses = new HashSet<>();
+        try (final URLClassLoader resourceClassLoader = new URLClassLoader(new URL[]{compilationOutputDir.toURI().toURL()})) {
             Thread.currentThread().setContextClassLoader(resourceClassLoader);
-            Reflections reflections = new Reflections(basePackage, ClasspathHelper.forClass(Object.class),
+            final Reflections reflections = new Reflections(basePackage, ClasspathHelper.forClass(Object.class),
                     new AllObjectsScanner());
-            Set<String> classNames = reflections.getStore().get(AllObjectsScanner.class, Object.class.getName());
+            final Set<String> classNames = reflections.getStore().get(AllObjectsScanner.class, Object.class.getName());
             rootResourceClasses.addAll(Sets.newHashSet(ReflectionUtils.forNames(classNames, reflections.getConfiguration().getClassLoaders())));
         } catch (IOException ex) {
             throw new RuntimeException("Error creating class loader", ex);
@@ -168,20 +176,20 @@ public class JavaCompilerUtil {
 
     private void compile() {
 
-        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
-        DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
-        StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, Locale.getDefault(), null);
-        List<JavaFileObject> javaObjects = scanRecursivelyForJavaObjects(codegenOutputDir, fileManager);
+        final DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
+        final StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, Locale.getDefault(), null);
+        final List<JavaFileObject> javaObjects = scanRecursivelyForJavaObjects(codegenOutputDir, fileManager);
 
         if (javaObjects.size() == 0) {
             throw new CompilationException(
                     format("There are no source files to compile in {0}", codegenOutputDir.getAbsolutePath()));
         }
-        String[] compileOptions = new String[]{"-d", compilationOutputDir.getAbsolutePath()};
-        Iterable<String> compilationOptions = Arrays.asList(compileOptions);
+        final String[] compileOptions = new String[]{"-d", compilationOutputDir.getAbsolutePath()};
+        final Iterable<String> compilationOptions = Arrays.asList(compileOptions);
 
-        CompilationTask compilerTask = compiler.getTask(null, fileManager, diagnostics, compilationOptions, null,
+        final CompilationTask compilerTask = compiler.getTask(null, fileManager, diagnostics, compilationOptions, null,
                 javaObjects);
 
         if (!compilerTask.call()) {
@@ -192,27 +200,29 @@ public class JavaCompilerUtil {
         }
     }
 
-    private List<JavaFileObject> scanRecursivelyForJavaObjects(File dir, StandardJavaFileManager fileManager) {
-        List<JavaFileObject> javaObjects = new LinkedList<JavaFileObject>();
-        File[] files = dir.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
-                javaObjects.addAll(scanRecursivelyForJavaObjects(file, fileManager));
-            } else if (file.isFile() && file.getName().toLowerCase().endsWith(".java")) {
-                try {
-                    LOG.debug(FileUtils.readFileToString(file));
-                } catch (IOException e) {
-                    LOG.warn("Could not read file", e);
+    private List<JavaFileObject> scanRecursivelyForJavaObjects(final File dir, final StandardJavaFileManager fileManager) {
+        final List<JavaFileObject> javaObjects = new LinkedList<>();
+        final File[] files = dir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    javaObjects.addAll(scanRecursivelyForJavaObjects(file, fileManager));
+                } else if (file.isFile() && file.getName().toLowerCase().endsWith(".java")) {
+                    try {
+                        LOG.debug(FileUtils.readFileToString(file));
+                    } catch (IOException e) {
+                        LOG.warn("Could not read file", e);
+                    }
+                    javaObjects.add(readJavaObject(file, fileManager));
                 }
-                javaObjects.add(readJavaObject(file, fileManager));
             }
         }
         return javaObjects;
     }
 
-    private JavaFileObject readJavaObject(File file, StandardJavaFileManager fileManager) {
-        Iterable<? extends JavaFileObject> javaFileObjects = fileManager.getJavaFileObjects(file);
-        Iterator<? extends JavaFileObject> it = javaFileObjects.iterator();
+    private JavaFileObject readJavaObject(final File file, final StandardJavaFileManager fileManager) {
+        final Iterable<? extends JavaFileObject> javaFileObjects = fileManager.getJavaFileObjects(file);
+        final Iterator<? extends JavaFileObject> it = javaFileObjects.iterator();
         if (it.hasNext()) {
             return it.next();
         }
