@@ -13,7 +13,7 @@ public class GeneratorConfigUtil {
     public static GeneratorConfig configurationWithBasePackage(final String basePackageName,
                                                                final TemporaryFolder outputFolder,
                                                                final Map<String, String> generatorProperties) {
-        Path outputPath = Paths.get(outputFolder.getRoot().getAbsolutePath());
+        final Path outputPath = Paths.get(outputFolder.getRoot().getAbsolutePath());
         return new GeneratorConfig(outputPath, outputPath, basePackageName, generatorProperties);
     }
 

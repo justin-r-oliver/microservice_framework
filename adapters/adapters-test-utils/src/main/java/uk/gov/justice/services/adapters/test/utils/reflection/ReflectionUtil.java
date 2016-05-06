@@ -17,7 +17,7 @@ public final class ReflectionUtil {
     /**
      * @return - list of methods of the clazz
      */
-    public static List<Method> methodsOf(Class<?> clazz) {
+    public static List<Method> methodsOf(final Class<?> clazz) {
         return Arrays.stream(clazz.getDeclaredMethods()).filter(m -> !m.getName().contains("jacoco") && !m.getName().contains("lambda"))
                 .collect(toList());
     }
@@ -29,9 +29,9 @@ public final class ReflectionUtil {
      * @param fieldName  - name of the field belonging to the object
      * @param fieldValue - value of the field to be set
      */
-    public static void setField(Object object, String fieldName, Object fieldValue)
+    public static void setField(final Object object, final String fieldName, final Object fieldValue)
             throws IllegalAccessException {
-        Field field = fieldOf(object.getClass(), fieldName);
+        final Field field = fieldOf(object.getClass(), fieldName);
         field.setAccessible(true);
         field.set(object, fieldValue);
     }
@@ -41,8 +41,8 @@ public final class ReflectionUtil {
      *
      * @return - field belonging to the given clazz with the given fieldName
      */
-    public static Field fieldOf(Class<?> clazz, String fieldName) {
-        Optional<Field> field = Arrays.stream(clazz.getDeclaredFields()).filter(f -> f.getName().equals(fieldName))
+    public static Field fieldOf(final Class<?> clazz, final String fieldName) {
+        final Optional<Field> field = Arrays.stream(clazz.getDeclaredFields()).filter(f -> f.getName().equals(fieldName))
                 .findFirst();
         assertTrue(field.isPresent());
         return field.get();
@@ -53,7 +53,7 @@ public final class ReflectionUtil {
      *
      * @return - first method of the given clazz
      */
-    public static Method firstMethodOf(Class<?> clazz) {
+    public static Method firstMethodOf(final Class<?> clazz) {
         List<Method> methods = methodsOf(clazz);
         return methods.get(0);
     }

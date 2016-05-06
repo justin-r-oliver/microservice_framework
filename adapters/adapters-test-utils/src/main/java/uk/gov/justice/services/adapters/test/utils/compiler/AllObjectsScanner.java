@@ -17,8 +17,8 @@ public class AllObjectsScanner extends SubTypesScanner {
      */
     @SuppressWarnings({"unchecked"})
     public void scan(final Object cls) {
-        String className = getMetadataAdapter().getClassName(cls);
-        String superclass = Object.class.getName();
+        final String className = getMetadataAdapter().getClassName(cls);
+        final String superclass = Object.class.getName();
 
         if (acceptResult(superclass)) {
             getStore().put(superclass, className);
