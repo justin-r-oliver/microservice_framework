@@ -74,7 +74,7 @@ public class RequestContentTypeRamlValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionIfNotvalidMediaType() throws Exception {
+    public void shouldThrowExceptionIfNotValidMediaType() throws Exception {
 
         exception.expect(RamlValidationException.class);
         exception.expectMessage("Invalid request type: nd.people.command.command1+json");
@@ -88,7 +88,7 @@ public class RequestContentTypeRamlValidatorTest {
     }
 
     @Test
-    public void shouldThrowExceptionIfNotvalidMediaType2() throws Exception {
+    public void shouldThrowExceptionIfNotValidMediaType2() throws Exception {
 
         exception.expect(RamlValidationException.class);
         exception.expectMessage("Invalid request type: nd.people.unknown.command1+nonjson");

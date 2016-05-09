@@ -220,7 +220,7 @@ public class JmsEndpointGenerator implements Generator {
      * @return - rendered template
      */
     private String render(final String template, final TemplateAttributes templateAttributes) {
-        ST st = new ST(template);
+        final ST st = new ST(template);
         templateAttributes.mainAttributes.forEach(a -> st.add(a.getKey(), a.getValue()));
         templateAttributes.activationConfigAttributes
                 .forEach(a -> st.addAggr("ACTIVATION_CONFIG_PROPERTY.{NAME, VALUE}", a.getKey(), a.getValue()));

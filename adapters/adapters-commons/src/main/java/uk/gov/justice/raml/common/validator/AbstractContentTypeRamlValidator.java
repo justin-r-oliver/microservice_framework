@@ -19,29 +19,29 @@ public abstract class AbstractContentTypeRamlValidator extends AbstractResourceR
     private final ActionType actionType;
     private final String contentTypeDec;
 
-    public AbstractContentTypeRamlValidator(ActionType actionType, String contentTypeDec, String... componentTypes) {
+    public AbstractContentTypeRamlValidator(final ActionType actionType, final String contentTypeDec, final String... componentTypes) {
         this.actionType = actionType;
         this.contentTypeDec = contentTypeDec;
-        String pipelineSeparatedComponentTypes = stream(componentTypes).collect(Collectors.joining("|"));
+        final String pipelineSeparatedComponentTypes = stream(componentTypes).collect(Collectors.joining("|"));
         mediaTypePattern = Pattern
                 .compile(format("application/vnd\\.\\S+\\.(%s)\\.\\S+\\+json", pipelineSeparatedComponentTypes));
     }
 
     @Override
     protected void validate(final Resource resource) {
-        Action postAction = resource.getActions().get(actionType);
+        final Action postAction = resource.getActions().get(actionType);
         if (postAction != null) {
-            Collection<MimeType> mediaTypes = mediaTypesToValidate(postAction);
+            final Collection<MimeType> mediaTypes = mediaTypesToValidate(postAction);
             checkNonEmpty(mediaTypes);
             checkValid(mediaTypes);
         }
     }
 
-    protected abstract Collection<MimeType> mediaTypesToValidate(Action postAction);
+    protected abstract Collection<MimeType> mediaTypesToValidate(final Action postAction);
 
     private void checkValid(final Collection<MimeType> mediaTypes) {
         mediaTypes.forEach(mt -> {
-            Matcher matcher = mediaTypePattern.matcher(mt.getType());
+            final Matcher matcher = mediaTypePattern.matcher(mt.getType());
             if (!matcher.matches()) {
                 throw new RamlValidationException(format("Invalid %s: %s", contentTypeDec, mt.getType()));
             }

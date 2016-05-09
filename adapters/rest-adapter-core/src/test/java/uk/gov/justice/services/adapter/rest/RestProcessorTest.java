@@ -1,6 +1,10 @@
 package uk.gov.justice.services.adapter.rest;
 
 import static com.jayway.jsonassert.JsonAssert.with;
+import static javax.ws.rs.core.Response.Status.ACCEPTED;
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+import static javax.ws.rs.core.Response.Status.OK;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -77,7 +81,7 @@ public class RestProcessorTest {
     public void shouldReturn202ResponseOnAsyncProcessing() throws Exception {
         Response response = restProcessor.processAsynchronously(consumer, NOT_USED_PAYLOAD, NOT_USED_HEADERS, NOT_USED_PATH_PARAMS);
 
-        assertThat(response.getStatus(), equalTo(202));
+        assertThat(response.getStatus(), equalTo(ACCEPTED.getStatusCode()));
     }
 
     @Test
@@ -99,8 +103,6 @@ public class RestProcessorTest {
 
     @Test
     public void shouldPassEnvelopeWithMetadataToConsumerOnAsyncProcessing() throws Exception {
-        JsonObject payload = Json.createObjectBuilder().add("key123", "value45678").build();
-
         restProcessor.processAsynchronously(consumer, NOT_USED_PAYLOAD,
                 headersWith("Content-Type", "application/vnd.somecontext.command.somecommand+json"), NOT_USED_PATH_PARAMS);
 
@@ -118,7 +120,7 @@ public class RestProcessorTest {
                 envelopeFrom(metadata, Json.createObjectBuilder().build()));
         Response response = restProcessor.processSynchronously(function, NOT_USED_HEADERS, NOT_USED_PATH_PARAMS);
 
-        assertThat(response.getStatus(), equalTo(200));
+        assertThat(response.getStatus(), equalTo(OK.getStatusCode()));
     }
 
     @Test
@@ -126,7 +128,7 @@ public class RestProcessorTest {
         when(function.apply(any(JsonEnvelope.class))).thenReturn(envelopeFrom(null, JsonValue.NULL));
         Response response = restProcessor.processSynchronously(function, NOT_USED_HEADERS, NOT_USED_PATH_PARAMS);
 
-        assertThat(response.getStatus(), equalTo(404));
+        assertThat(response.getStatus(), equalTo(NOT_FOUND.getStatusCode()));
     }
 
     @Test
@@ -134,7 +136,7 @@ public class RestProcessorTest {
         when(function.apply(any(JsonEnvelope.class))).thenReturn(null);
         Response response = restProcessor.processSynchronously(function, NOT_USED_HEADERS, NOT_USED_PATH_PARAMS);
 
-        assertThat(response.getStatus(), equalTo(500));
+        assertThat(response.getStatus(), equalTo(INTERNAL_SERVER_ERROR.getStatusCode()));
     }
 
     @Test
@@ -176,6 +178,7 @@ public class RestProcessorTest {
                 .assertThat("key22", equalTo("value55"));
     }
 
+    @SuppressWarnings({"unchecked"})
     private HttpHeaders headersWith(String headerName, String headerValue) {
         MultivaluedMapImpl headersMap = new MultivaluedMapImpl();
         headersMap.add(headerName, headerValue);

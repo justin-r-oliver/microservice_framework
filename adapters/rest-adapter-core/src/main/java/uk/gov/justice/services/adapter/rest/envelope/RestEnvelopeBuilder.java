@@ -100,10 +100,10 @@ public class RestEnvelopeBuilder {
 
         metadataBuilder = metadataBuilder.add(ID, id.toString());
 
-        HttpHeaders httpHeaders = headers.orElseThrow(() ->
+        final HttpHeaders httpHeaders = headers.orElseThrow(() ->
                 new IllegalStateException("Cannot get name from empty headers"));
 
-        StructuredMediaType mediaType = new StructuredMediaType(
+        final StructuredMediaType mediaType = new StructuredMediaType(
                 httpHeaders.getMediaType() != null
                         && httpHeaders.getMediaType().toString().startsWith("application/vnd.")
                         ? httpHeaders.getMediaType()
