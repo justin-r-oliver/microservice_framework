@@ -8,12 +8,14 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
+import static org.raml.model.ActionType.GET;
 import static org.raml.model.ActionType.POST;
 import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.raml;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.restRamlWithDefaults;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.restRamlWithTitleVersion;
 import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
+import static uk.gov.justice.services.adapters.test.utils.builder.ResponseBuilder.response;
 import static uk.gov.justice.services.adapters.test.utils.config.GeneratorConfigUtil.configurationWithBasePackage;
 import static uk.gov.justice.services.adapters.test.utils.reflection.ReflectionUtil.firstMethodOf;
 import static uk.gov.justice.services.adapters.test.utils.reflection.ReflectionUtil.methodsOf;
@@ -44,6 +46,12 @@ import org.raml.model.parameter.QueryParameter;
 
 public class RestClientGenerator_CodeStructureTest {
 
+    private static final String MESSAGE_ANNOTATION = "...\n" +
+            "(message):\n" +
+            "    type: query\n" +
+            "    name: search-users\n" +
+            "...\n";
+
     private static final String BASE_PACKAGE = "org.raml.test";
     private static final Map<String, String> NOT_USED_GENERATOR_PROPERTIES = ImmutableMap.of("serviceComponent", "QUERY_CONTROLLER");
     private static final String BASE_URI_WITH_LESS_THAN_EIGHT_PARTS = "http://localhost:8080/command/api/rest/service";
@@ -63,14 +71,13 @@ public class RestClientGenerator_CodeStructureTest {
 
     @Test
     public void shouldGenerateClassWithAnnotations() throws Exception {
-
         restClientGenerator.run(
                 raml()
                         .withBaseUri("http://localhost:8080/warname/query/api/rest/service")
                         .with(resource("/some/path/{recipeId}")
-                                .with(action(POST, "application/vnd.cakeshop.commands.add-recipe+json")
+                                .with(action(GET, "application/vnd.cakeshop.commands.add-recipe+json")
                                         .withQueryParameters(queryParameterOf("recipename", true), queryParameterOf("topingredient", false))
-                                        .withActionWithResponseTypes("application/vnd.cakeshop.commands.cmd1+json"))
+                                        .withActionResponse(response(MESSAGE_ANNOTATION), "application/vnd.cakeshop.commands.cmd1+json"))
                         ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, ImmutableMap.of("serviceComponent", "QUERY_API")));
 

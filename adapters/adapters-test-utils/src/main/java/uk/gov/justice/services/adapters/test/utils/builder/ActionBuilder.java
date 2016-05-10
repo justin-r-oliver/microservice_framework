@@ -21,6 +21,7 @@ public class ActionBuilder {
     private final Map<String, QueryParameter> queryParameters = new HashMap<>();
     private ActionType actionType;
     private List<Response> responses = new LinkedList<>();
+    private String description;
 
     public static ActionBuilder action() {
         return new ActionBuilder();
@@ -58,6 +59,10 @@ public class ActionBuilder {
 
     public ActionBuilder withActionWithResponseTypes(final String... responseTypes) {
         Response response = new Response();
+        return withActionResponse(response, responseTypes);
+    }
+
+    public ActionBuilder withActionResponse(final Response response, final String...responseTypes) {
         Map<String, MimeType> respBody = new HashMap<>();
         for (String responseType : responseTypes) {
             respBody.put(responseType, new MimeType(responseType));
@@ -101,13 +106,19 @@ public class ActionBuilder {
         return this;
     }
 
-    public ActionBuilder withMediaType(String stringMimeType) {
+    public ActionBuilder withMediaType(final String stringMimeType) {
         return withMediaType(new MimeType(stringMimeType));
+    }
+
+    public ActionBuilder withDescription(final String description) {
+        this.description = description;
+        return this;
     }
 
     public Action build() {
         final Action action = new Action();
         action.setType(actionType);
+        action.setDescription(description);
         action.setBody(body);
 
         HashMap<String, Response> responsesMap = new HashMap<>();
@@ -118,5 +129,4 @@ public class ActionBuilder {
 
         return action;
     }
-
 }

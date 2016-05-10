@@ -12,10 +12,17 @@ baseUri: http://localhost:8080/rest-adapter-generator/query/api/rest/example
 
 /users:
   get:
+    description: |
+        ...
+        (message):
+            mediaType: application/vnd.people.search-users+json
+            type: query
+            name: people.search-users
+        ...
     queryParameters:
         surname:
             type: string
     responses:
         200:
             body:
-                application/vnd.people.query.search-users+json:
+                application/vnd.people.users+json:
