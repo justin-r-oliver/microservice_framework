@@ -3,6 +3,8 @@ package uk.gov.justice.services.core.dispatcher;
 import static uk.gov.justice.services.core.handler.HandlerMethod.ASYNCHRONOUS;
 import static uk.gov.justice.services.core.handler.HandlerMethod.SYNCHRONOUS;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.gov.justice.services.core.handler.HandlerMethod;
 import uk.gov.justice.services.core.handler.registry.HandlerRegistry;
 import uk.gov.justice.services.messaging.JsonEnvelope;
@@ -20,8 +22,11 @@ class Dispatcher {
 
     private HandlerRegistry handlerRegistry;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Dispatcher.class);
+
     Dispatcher() {
         handlerRegistry = new HandlerRegistry();
+        LOGGER.trace("Dispatcher created");
     }
 
     /**
@@ -35,6 +40,11 @@ class Dispatcher {
      * @param envelope the envelope to dispatch to a handler
      */
     void asynchronousDispatch(final JsonEnvelope envelope) {
+        try {
+            LOGGER.trace("Synchronously dispatching Meta: \n{} Payload: \n{}", envelope.metadata().asJsonObject(), envelope.payloadAsJsonString());
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
         getMethod(envelope, ASYNCHRONOUS).execute(envelope);
     }
 
@@ -46,6 +56,11 @@ class Dispatcher {
      * @return the envelope returned by the handler method
      */
     JsonEnvelope synchronousDispatch(final JsonEnvelope envelope) {
+        try {
+            LOGGER.trace("Synchronously dispatching envelope with Metadata: \n{} Payload: \n{}", envelope.metadata().asJsonObject().toString(), envelope.payloadAsJsonString());
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
         return (JsonEnvelope) getMethod(envelope, SYNCHRONOUS).execute(envelope);
     }
 
@@ -57,6 +72,7 @@ class Dispatcher {
      * @param handler handler instance to be registered.
      */
     void register(final Object handler) {
+        LOGGER.trace("Registering handler {}", handler);
         handlerRegistry.register(handler);
     }
 
@@ -67,6 +83,11 @@ class Dispatcher {
      * @return the handler method
      */
     private HandlerMethod getMethod(final JsonEnvelope envelope, final boolean isSynchronous) {
+        try {
+            LOGGER.trace("Getting handler method for envelope with Metadata:\n {} \nand Payload:\n {}", envelope.metadata().asJsonObject(), envelope.payloadAsJsonString());
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
         final String name = envelope.metadata().name();
         return handlerRegistry.get(name, isSynchronous);
     }
