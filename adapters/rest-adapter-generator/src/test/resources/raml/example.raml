@@ -10,12 +10,12 @@ protocols: [ HTTP, HTTPS ]
     description: |
         Create user or Update user
         ...
-        (message):
-            mediaType: application/vnd.people.create-user+json
+        (mapping):
+            inputType: application/vnd.people.create-user+json
             type: command
             name: people.create-user
-        (message):
-            mediaType: application/vnd.people.update-user+json
+        (mapping):
+            inputType: application/vnd.people.update-user+json
             type: command
             name: people.update-user
         ...

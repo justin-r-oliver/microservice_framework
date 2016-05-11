@@ -47,7 +47,8 @@ import org.raml.model.parameter.QueryParameter;
 public class RestClientGenerator_CodeStructureTest {
 
     private static final String MESSAGE_ANNOTATION = "...\n" +
-            "(message):\n" +
+            "(mapping):\n" +
+            "    outputType: application/vnd.people.search-users+json\n" +
             "    type: query\n" +
             "    name: search-users\n" +
             "...\n";
