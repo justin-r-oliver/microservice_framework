@@ -1,6 +1,5 @@
 package uk.gov.justice.services.core.dispatcher;
 
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,10 +13,8 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.contains;
-import static org.mockito.Matchers.isNotNull;
 import static org.mockito.Mockito.when;
 
 
@@ -37,10 +34,16 @@ public class TraceLoggerHelperTest {
     private List<UUID> causations;
 
     @Mock
-    private JsonEnvelope envelope;
+    private JsonEnvelope envelopeWithCausation;
+
+    @Mock
+    private JsonEnvelope envelopeWithoutCausation;
 
     @Mock
     private Metadata metadata;
+
+    @Mock
+    private Metadata metadataWithoutCausation;
 
     private void makeCausations() {
 
@@ -53,28 +56,43 @@ public class TraceLoggerHelperTest {
     @Before
     public void setup() {
 
+
+
         makeCausations();
 
-        when(envelope.metadata()).thenReturn(metadata);
+        when(envelopeWithCausation.metadata()).thenReturn(metadata);
         when(metadata.name()).thenReturn(NAME);
         when(metadata.causation()).thenReturn(causations);
         when(metadata.id()).thenReturn(UUID_3);
+
+        when(envelopeWithoutCausation.metadata()).thenReturn(metadataWithoutCausation);
+        when(metadataWithoutCausation.name()).thenReturn(NAME);
+        when(metadataWithoutCausation.causation()).thenReturn(null);
+        when(metadataWithoutCausation.id()).thenReturn(UUID_3);
+
     }
 
+    @Test
+    public void shouldPrintAsTraceWithoutCausations() throws Exception {
+
+        String result = TraceLoggerHelper.printMessageAsJsonString(envelopeWithoutCausation);
+
+        assertThat(result, containsString(NAME));
+        assertThat(result, not(containsString(UUID_1.toString())));
+        assertThat(result, not(containsString(UUID_2.toString())));
+        assertThat(result, containsString(UUID_3.toString()));
+
+    }
 
     @Test
     public void shouldPrintAsTrace() throws Exception {
 
-        String result = TraceLoggerHelper.trace("test", envelope);
+        String result = TraceLoggerHelper.printMessageAsJsonString(envelopeWithCausation);
 
         assertThat(result, containsString(NAME));
         assertThat(result, containsString(UUID_1.toString()));
         assertThat(result, containsString(UUID_2.toString()));
         assertThat(result, containsString(UUID_3.toString()));
-        assertThat(result, Matchers.containsString(UUID_3.toString()));
 
     }
-
-
-
 }
