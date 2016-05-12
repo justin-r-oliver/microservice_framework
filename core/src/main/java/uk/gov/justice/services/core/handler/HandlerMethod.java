@@ -85,6 +85,7 @@ public class HandlerMethod {
      */
     @SuppressWarnings("unchecked")
     public Object execute(final JsonEnvelope envelope) {
+
         try {
             return handlerMethod.invoke(handlerInstance, envelope);
         } catch (IllegalAccessException | InvocationTargetException ex) {
@@ -92,6 +93,7 @@ public class HandlerMethod {
                     format("Error while invoking command handler method %s with parameter %s",
                             handlerMethod, envelope), ex);
         }
+
     }
 
     /**
