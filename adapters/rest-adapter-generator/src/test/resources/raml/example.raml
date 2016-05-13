@@ -1,24 +1,14 @@
 #%RAML 0.8
 title: Example Service
-baseUri: http://localhost:8080/rest-adapter-generator/command/api/rest/example
+baseUri: http://localhost:8080/rest-adapter-generator/query/api/rest/example
 version: v0.1
 mediaType: application/json
 protocols: [ HTTP, HTTPS ]
 
 /users/{userId}:
+  description: |
+    Create user or Update user
   post:
-    description: |
-        Create user or Update user
-        ...
-        (mapping):
-            inputType: application/vnd.people.create-user+json
-            type: command
-            name: people.create-user
-        (mapping):
-            inputType: application/vnd.people.update-user+json
-            type: command
-            name: people.update-user
-        ...
     body:
         application/vnd.people.command.create-user+json:
             schema: !include json/schema/people.command.create-user.json
@@ -46,13 +36,5 @@ protocols: [ HTTP, HTTPS ]
             required: false
     responses:
         200:
-            description: |
-                Create user or Update user
-                ...
-                (message):
-                    mediaType: application/vnd.people.query.users+json
-                    type: query
-                    name: search-users
-                ...
             body:
-                application/vnd.people.query.users+json:
+                application/vnd.people.query.search-users+json:
