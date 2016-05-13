@@ -1,4 +1,4 @@
-package uk.gov.justice.services.clients.core.mapping;
+package uk.gov.justice.raml.common.mapper;
 
 import java.util.HashMap;
 import java.util.Map;

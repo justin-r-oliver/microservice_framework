@@ -1,56 +1,57 @@
-package uk.gov.justice.services.clients.core.mapping;
+package uk.gov.justice.raml.common.mapper;
 
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static uk.gov.justice.services.clients.core.mapping.Mapping.buildMapping;
-import static uk.gov.justice.services.clients.core.mapping.MappingParser.getMappingParser;
-import static uk.gov.justice.services.clients.core.mapping.MappingParser.postMappingParser;
+import static uk.gov.justice.raml.common.mapper.Mapping.buildMapping;
+import static uk.gov.justice.raml.common.mapper.MappingParser.getMappingParser;
+import static uk.gov.justice.raml.common.mapper.MappingParser.postMappingParser;
 
 import java.util.List;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 public class MappingParserTest {
 
     private static final String POST_MAPPING_PART =
             "        (mapping):\n" +
-                    "            inputType: %s\n" +
+                    "            requestType: %s\n" +
                     "            type: %s\n" +
                     "            name: %s\n";
 
-    private static final String[] POST_FIELD_NAMES = new String[]{"inputType", "type", "name"};
+    private static final String[] POST_FIELD_NAMES = new String[]{"requestType", "type", "name"};
 
     private static final Mapping POST_MAPPING_1 = buildMapping()
-            .withField("inputType", "mediaType1")
+            .withField("requestType", "mediaType1")
             .withField("type", "type1")
             .withField("name", "name1")
             .build();
 
     private static final Mapping POST_MAPPING_2 = buildMapping()
-            .withField("inputType", "mediaType2")
+            .withField("requestType", "mediaType2")
             .withField("type", "type2")
             .withField("name", "name2")
             .build();
 
     private static final String GET_MAPPING_PART =
             "        (mapping):\n" +
-                    "            outputType: %s\n" +
+                    "            responseType: %s\n" +
                     "            type: %s\n" +
                     "            name: %s\n";
 
-    private static final String[] GET_FIELD_NAMES = new String[]{"outputType", "type", "name"};
+    private static final String[] GET_FIELD_NAMES = new String[]{"responseType", "type", "name"};
 
     private static final Mapping GET_MAPPING_1 = buildMapping()
-            .withField("outputType", "mediaType1")
+            .withField("responseType", "mediaType1")
             .withField("type", "type1")
             .withField("name", "name1")
             .build();
 
     private static final Mapping GET_MAPPING_2 = buildMapping()
-            .withField("outputType", "mediaType2")
+            .withField("responseType", "mediaType2")
             .withField("type", "type2")
             .withField("name", "name2")
             .build();
@@ -94,7 +95,7 @@ public class MappingParserTest {
 
         List<Mapping> mappings = postMappingParser().parseFromDescription(description);
 
-        assertThat(mappings, containsInAnyOrder(POST_MAPPING_1, POST_MAPPING_2));
+        assertThat(mappings, Matchers.containsInAnyOrder(POST_MAPPING_1, POST_MAPPING_2));
     }
 
     @Test
@@ -103,7 +104,7 @@ public class MappingParserTest {
 
         List<Mapping> mappings = getMappingParser().parseFromDescription(description);
 
-        assertThat(mappings, containsInAnyOrder(GET_MAPPING_1, GET_MAPPING_2));
+        assertThat(mappings, Matchers.containsInAnyOrder(GET_MAPPING_1, GET_MAPPING_2));
     }
 
     @Test
@@ -116,14 +117,14 @@ public class MappingParserTest {
 
         List<Mapping> mappings = postMappingParser().parseFromDescription(description);
 
-        assertThat(mappings, containsInAnyOrder(POST_MAPPING_1, POST_MAPPING_2));
+        assertThat(mappings, Matchers.containsInAnyOrder(POST_MAPPING_1, POST_MAPPING_2));
     }
 
     @Test(expected = IllegalStateException.class)
     public void shouldThrowExceptionIfExpectedFieldsAreNotPresent() throws Exception {
         String description = "...\n" +
                 "        (mapping):\n" +
-                "            inputType: %s\n" +
+                "            requestType: %s\n" +
                 "            type: %s\n" +
                 "...\n";
 

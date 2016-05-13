@@ -79,10 +79,10 @@ class JaxRsInterfaceGenerator {
     }
 
     /**
-     * Process the body or bodies for each action.
+     * Process the body or bodies for each httpAction.
      *
-     * @param action the action to forEach
-     * @return the list of {@link MethodSpec} that represents each method for the action
+     * @param action the httpAction to forEach
+     * @return the list of {@link MethodSpec} that represents each method for the httpAction
      */
     private List<MethodSpec> forEach(final Action action) {
         final Collection<MimeType> responseMimeTypes = responseMimeTypesOf(action);
@@ -95,10 +95,10 @@ class JaxRsInterfaceGenerator {
     }
 
     /**
-     * Process an action with no body.
+     * Process an httpAction with no body.
      *
-     * @param action the action to process
-     * @return the {@link MethodSpec} that represents a method for the action
+     * @param action the httpAction to process
+     * @return the {@link MethodSpec} that represents a method for the httpAction
      */
     private MethodSpec processNoActionBody(final Action action,
                                            final Collection<MimeType> responseMimeTypes) {
@@ -107,10 +107,10 @@ class JaxRsInterfaceGenerator {
     }
 
     /**
-     * Process an action with one or more bodies.
+     * Process an httpAction with one or more bodies.
      *
-     * @param action the action to process
-     * @return the list of {@link MethodSpec} that represents each method for the action
+     * @param action the httpAction to process
+     * @return the list of {@link MethodSpec} that represents each method for the httpAction
      */
     private List<MethodSpec> processOneOrMoreActionBodies(final Action action,
                                                           final Collection<MimeType> responseMimeTypes) {
@@ -167,10 +167,10 @@ class JaxRsInterfaceGenerator {
     /**
      * Generate a method for each {@link Action}.
      *
-     * @param action             the action to generate as a method
+     * @param action             the httpAction to generate as a method
      * @param resourceMethodName the resource method name to generate
      * @return a {@link MethodSpec} that represents the generated method
-     * @throws IllegalStateException if action type is not GET or POST
+     * @throws IllegalStateException if httpAction type is not GET or POST
      */
     private MethodSpec.Builder generateResourceMethod(final Action action,
                                                       final String resourceMethodName,
@@ -186,7 +186,7 @@ class JaxRsInterfaceGenerator {
         } else if (actionType == POST) {
             actionTypeAnnotation = AnnotationSpec.builder(javax.ws.rs.POST.class).build();
         } else {
-            throw new IllegalStateException(String.format("Unsupported action type %s", actionType));
+            throw new IllegalStateException(String.format("Unsupported httpAction type %s", actionType));
         }
 
         return methodBuilder(resourceMethodName)

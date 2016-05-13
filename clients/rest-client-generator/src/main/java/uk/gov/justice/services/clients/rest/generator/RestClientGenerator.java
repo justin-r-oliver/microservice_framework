@@ -9,21 +9,21 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.apache.commons.lang3.StringUtils.capitalize;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
-import static uk.gov.justice.services.clients.core.mapping.MappingParser.NAME_FIELD;
-import static uk.gov.justice.services.clients.core.mapping.MappingParser.OUTPUT_TYPE_FIELD;
-import static uk.gov.justice.services.clients.core.mapping.MappingParser.INPUT_TYPE_FIELD;
-import static uk.gov.justice.services.clients.core.mapping.MappingParser.getMappingParser;
-import static uk.gov.justice.services.clients.core.mapping.MappingParser.postMappingParser;
+import static uk.gov.justice.raml.common.mapper.MappingParser.INPUT_TYPE_FIELD;
+import static uk.gov.justice.raml.common.mapper.MappingParser.NAME_FIELD;
+import static uk.gov.justice.raml.common.mapper.MappingParser.OUTPUT_TYPE_FIELD;
+import static uk.gov.justice.raml.common.mapper.MappingParser.getMappingParser;
+import static uk.gov.justice.raml.common.mapper.MappingParser.postMappingParser;
 import static uk.gov.justice.services.core.annotation.Component.contains;
 import static uk.gov.justice.services.core.annotation.Component.names;
 
+import uk.gov.justice.raml.common.mapper.Mapping;
 import uk.gov.justice.raml.core.Generator;
 import uk.gov.justice.raml.core.GeneratorConfig;
 import uk.gov.justice.services.clients.core.EndpointDefinition;
 import uk.gov.justice.services.clients.core.QueryParam;
 import uk.gov.justice.services.clients.core.RestClientHelper;
 import uk.gov.justice.services.clients.core.RestClientProcessor;
-import uk.gov.justice.services.clients.core.mapping.Mapping;
 import uk.gov.justice.services.core.annotation.Component;
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.annotation.Remote;
@@ -56,7 +56,7 @@ import org.raml.model.parameter.QueryParameter;
  * Generates code for a rest client.
  *
  * The generated client is a {@link ServiceComponent} with an additional {link @Remote} annotation.
- * The client will contain a method per media type within every action, within every resource.
+ * The client will contain a method per media type within every httpAction, within every resource.
  */
 public class RestClientGenerator implements Generator {
 
@@ -145,7 +145,7 @@ public class RestClientGenerator implements Generator {
                 generateCodeForPostActionType(resource, action, classBuilder);
                 break;
             default:
-                throw new IllegalStateException(format("Unsupported action type %s", action.getType()));
+                throw new IllegalStateException(format("Unsupported httpAction type %s", action.getType()));
         }
     }
 

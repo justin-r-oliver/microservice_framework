@@ -10,7 +10,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.raml.model.ActionType.GET;
 import static org.raml.model.ActionType.POST;
-import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.raml;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.restRamlWithDefaults;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.restRamlWithTitleVersion;
@@ -19,6 +18,7 @@ import static uk.gov.justice.services.adapters.test.utils.config.GeneratorConfig
 import static uk.gov.justice.services.adapters.test.utils.reflection.ReflectionUtil.firstMethodOf;
 import static uk.gov.justice.services.adapters.test.utils.reflection.ReflectionUtil.methodsOf;
 
+import uk.gov.justice.services.adapters.test.utils.builder.HttpActionBuilder;
 import uk.gov.justice.services.adapters.test.utils.compiler.JavaCompilerUtil;
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.annotation.Remote;
@@ -47,14 +47,14 @@ public class RestClientGenerator_CodeStructureTest {
 
     private static final String GET_MAPPING_ANNOTATION = "...\n" +
             "(mapping):\n" +
-            "    outputType: application/vnd.cakeshop.query.recipe+json\n" +
+            "    responseType: application/vnd.cakeshop.query.recipe+json\n" +
             "    type: query\n" +
             "    name: cakeshop.get-recipe\n" +
             "...\n";
 
     private static final String POST_MAPPING_ANNOTATION = "...\n" +
             "(mapping):\n" +
-            "    inputType: application/vnd.cakeshop.command.update-recipe+json\n" +
+            "    requestType: application/vnd.cakeshop.command.update-recipe+json\n" +
             "    type: command\n" +
             "    name: cakeshop.update-recipe\n" +
             "...\n";
@@ -82,7 +82,7 @@ public class RestClientGenerator_CodeStructureTest {
                 raml()
                         .withBaseUri("http://localhost:8080/warname/query/api/rest/service")
                         .with(resource("/some/path/{recipeId}")
-                                .with(action(GET, "application/vnd.cakeshop.query.add-recipe+json")
+                                .with(HttpActionBuilder.httpAction(GET, "application/vnd.cakeshop.query.add-recipe+json")
                                         .withQueryParameters(queryParameterOf("recipename", true), queryParameterOf("topingredient", false)))
                         ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, ImmutableMap.of("serviceComponent", "QUERY_API")));
@@ -117,8 +117,8 @@ public class RestClientGenerator_CodeStructureTest {
         restClientGenerator.run(
                 restRamlWithDefaults()
                         .with(resource("/some/path/{recipeId}")
-                                .with(action(GET)
-                                        .withActionWithResponseTypes("application/vnd.cakeshop.query.recipe+json")
+                                .with(HttpActionBuilder.httpAction(GET)
+                                        .withResponseTypes("application/vnd.cakeshop.query.recipe+json")
                                         .withDescription(GET_MAPPING_ANNOTATION))
                         ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, NOT_USED_GENERATOR_PROPERTIES));
@@ -139,7 +139,7 @@ public class RestClientGenerator_CodeStructureTest {
         restClientGenerator.run(
                 restRamlWithDefaults()
                         .with(resource("/some/path/{recipeId}")
-                                .with(action(POST, "application/vnd.cakeshop.command.update-recipe+json")
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.cakeshop.command.update-recipe+json")
                                         .withDescription(POST_MAPPING_ANNOTATION))
                         ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, NOT_USED_GENERATOR_PROPERTIES));
@@ -160,7 +160,7 @@ public class RestClientGenerator_CodeStructureTest {
         restClientGenerator.run(
                 restRamlWithDefaults()
                         .with(resource("/some/path/{recipeId}")
-                                .with(action(POST, "application/vnd.cakeshop.command.update-recipe+json")
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.cakeshop.command.update-recipe+json")
                                         .withDescription(POST_MAPPING_ANNOTATION))
                         ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, NOT_USED_GENERATOR_PROPERTIES));

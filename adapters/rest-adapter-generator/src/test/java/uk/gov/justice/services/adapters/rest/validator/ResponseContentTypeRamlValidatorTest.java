@@ -2,12 +2,12 @@ package uk.gov.justice.services.adapters.rest.validator;
 
 import static org.raml.model.ActionType.GET;
 import static org.raml.model.ActionType.POST;
-import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.raml;
 import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
 
 import uk.gov.justice.raml.common.validator.RamlValidationException;
 import uk.gov.justice.raml.common.validator.RamlValidator;
+import uk.gov.justice.services.adapters.test.utils.builder.HttpActionBuilder;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class ResponseContentTypeRamlValidatorTest {
         validator.validate(
                 raml().with(
                         resource("/some/path")
-                                .with(action(GET).withActionWithResponseTypes("application/vnd.ctx.query.query1+json"))
+                                .with(HttpActionBuilder.httpAction(GET).withResponseTypes("application/vnd.ctx.query.query1+json"))
                 ).build());
     }
 
@@ -35,9 +35,9 @@ public class ResponseContentTypeRamlValidatorTest {
         validator.validate(
                 raml()
                         .with(resource("/some/path")
-                                .with(action(GET).withActionWithResponseTypes("application/vnd.ctx.query.query1+json")))
+                                .with(HttpActionBuilder.httpAction(GET).withResponseTypes("application/vnd.ctx.query.query1+json")))
                         .with(resource("/some/path")
-                                .with(action(POST).withActionWithResponseTypes("application/vnd.ctx.invalid.aa+json")))
+                                .with(HttpActionBuilder.httpAction(POST).withResponseTypes("application/vnd.ctx.invalid.aa+json")))
                         .build());
     }
 
@@ -50,7 +50,7 @@ public class ResponseContentTypeRamlValidatorTest {
         validator.validate(
                 raml().with(
                         resource("/some/path")
-                                .with(action(GET))
+                                .with(HttpActionBuilder.httpAction(GET))
                 ).build());
 
     }
@@ -65,7 +65,7 @@ public class ResponseContentTypeRamlValidatorTest {
         validator.validate(
                 raml().with(
                         resource("/some/path")
-                                .with(action(GET).withActionWithResponseTypes("application/vnd.people.invalid.abc1+json"))
+                                .with(HttpActionBuilder.httpAction(GET).withResponseTypes("application/vnd.people.invalid.abc1+json"))
                 ).build());
 
     }
@@ -81,7 +81,7 @@ public class ResponseContentTypeRamlValidatorTest {
         validator.validate(
                 raml().with(
                         resource("/some/path")
-                                .with(action(GET).withActionWithResponseTypes("application/vnd.people.invalid.abc1+json"))
+                                .with(HttpActionBuilder.httpAction(GET).withResponseTypes("application/vnd.people.invalid.abc1+json"))
                 ).build());
 
     }
@@ -96,7 +96,7 @@ public class ResponseContentTypeRamlValidatorTest {
         validator.validate(
                 raml().with(
                         resource("/some/path")
-                                .with(action(GET).withActionWithResponseTypes("application/vnd.query.query1+json"))
+                                .with(HttpActionBuilder.httpAction(GET).withResponseTypes("application/vnd.query.query1+json"))
                 ).build());
 
     }

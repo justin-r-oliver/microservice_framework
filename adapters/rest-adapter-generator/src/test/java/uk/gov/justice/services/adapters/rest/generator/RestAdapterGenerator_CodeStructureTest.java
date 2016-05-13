@@ -16,7 +16,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.raml.model.ActionType.GET;
 import static org.raml.model.ActionType.POST;
-import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.restRamlWithDefaults;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.restRamlWithQueryApiDefaults;
 import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
@@ -26,6 +25,7 @@ import static uk.gov.justice.services.adapters.test.utils.reflection.ReflectionU
 
 import uk.gov.justice.raml.core.GeneratorConfig;
 import uk.gov.justice.services.adapter.rest.RestProcessor;
+import uk.gov.justice.services.adapters.test.utils.builder.HttpActionBuilder;
 import uk.gov.justice.services.core.annotation.Adapter;
 import uk.gov.justice.services.core.annotation.Component;
 import uk.gov.justice.services.core.dispatcher.AsynchronousDispatcher;
@@ -59,7 +59,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -79,7 +79,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 config);
 
@@ -94,7 +94,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -116,7 +116,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path/{p1}")
-                                .with(action(POST, "application/vnd.ctx.command.cmd-a+json", "application/vnd.ctx.command.cmd-b+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.cmd-a+json", "application/vnd.ctx.command.cmd-b+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -146,7 +146,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(GET).withActionWithResponseTypes("application/vnd.ctx.query.query1+json"))
+                                .with(HttpActionBuilder.httpAction(GET).withResponseTypes("application/vnd.ctx.query.query1+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -168,8 +168,8 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(GET)
-                                        .withActionWithResponseTypes(
+                                .with(HttpActionBuilder.httpAction(GET)
+                                        .withResponseTypes(
                                                 "application/vnd.ctx.query.query1+json",
                                                 "application/vnd.ctx.query.query2+json")
                                 )
@@ -196,7 +196,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path/no/path/params")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -215,7 +215,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path/{paramA}", "paramA")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -244,7 +244,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path/{paramA}/abc/{paramB}", "paramA", "paramB")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -278,7 +278,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -296,7 +296,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -347,7 +347,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -365,7 +365,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path/{p1}", "p1")
-                                .with(action(POST,
+                                .with(HttpActionBuilder.httpAction(POST,
                                         "application/vnd.ctx.command.command-a+json",
                                         "application/vnd.ctx.command.command-b+json",
                                         "application/vnd.ctx.command.command-c+json",
@@ -385,7 +385,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path/{paramA}", "paramA")
-                                .with(action(POST, "application/vnd.ctx.command.command-a+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.command-a+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -411,7 +411,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path/{paramA}/{paramB}/{paramC}", "paramA", "paramB", "paramC")
-                                .with(action(POST, "application/vnd.ctx.command.command-a+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.command-a+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -450,7 +450,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 config);
 
@@ -465,7 +465,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -483,7 +483,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
         Class<?> resourceClass = compiler.compiledClassOf(BASE_PACKAGE, "resource", "DefaultSomePathResource");
@@ -500,8 +500,8 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(GET)
-                                        .withActionWithResponseTypes("application/vnd.ctx.query.query1+json")
+                                .with(HttpActionBuilder.httpAction(GET)
+                                        .withResponseTypes("application/vnd.ctx.query.query1+json")
                                 ))
                         .build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
@@ -520,8 +520,8 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
                 restRamlWithDefaults()
                         .with(
                                 resource("/some/path")
-                                        .with(action(GET)
-                                                .withActionWithResponseTypes("application/vnd.ctx.query.query1+json")))
+                                        .with(HttpActionBuilder.httpAction(GET)
+                                                .withResponseTypes("application/vnd.ctx.query.query1+json")))
                         .build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
         Class<?> resourceClass = compiler.compiledClassOf(BASE_PACKAGE, "resource", "DefaultSomePathResource");
@@ -538,7 +538,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -557,7 +557,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
         Class<?> resourceClass = compiler.compiledClassOf(BASE_PACKAGE, "resource", "DefaultSomePathResource");
@@ -574,7 +574,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path")
-                                .with(action(POST, "application/vnd.ctx.command.default+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.default+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -591,9 +591,9 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
     public void classShouldContainQueryParam() throws Exception {
         generator.run(
                 restRamlWithQueryApiDefaults().with(
-                        resource("/users").with(action(GET)
+                        resource("/users").with(HttpActionBuilder.httpAction(GET)
                                 .withQueryParameters("surname")
-                                .withActionWithResponseTypes("application/vnd.people.query.search-users+json"))
+                                .withResponseTypes("application/vnd.people.query.search-users+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap())
         );
@@ -626,11 +626,11 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
     public void classShouldContainThreeQueryParams() throws Exception {
         generator.run(
                 restRamlWithQueryApiDefaults().with(
-                        resource("/users").with(action(GET)
+                        resource("/users").with(HttpActionBuilder.httpAction(GET)
                                 .withQueryParameters("surname")
                                 .withQueryParameters("firstname")
                                 .withQueryParameters("middlename")
-                                .withActionWithResponseTypes("application/vnd.people.query.search-users+json"))
+                                .withResponseTypes("application/vnd.people.query.search-users+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap())
         );

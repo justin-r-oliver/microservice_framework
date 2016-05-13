@@ -2,13 +2,14 @@ package uk.gov.justice.raml.jms.core;
 
 import static java.util.Collections.emptyMap;
 import static org.raml.model.ActionType.POST;
-import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
+import static uk.gov.justice.services.adapters.test.utils.builder.HttpActionBuilder.httpAction;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.raml;
 import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
 import static uk.gov.justice.services.adapters.test.utils.config.GeneratorConfigUtil.configurationWithBasePackage;
 
 import uk.gov.justice.raml.common.validator.RamlValidationException;
 import uk.gov.justice.raml.core.Generator;
+import uk.gov.justice.services.adapters.test.utils.builder.HttpActionBuilder;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -106,7 +107,7 @@ public class JmsEndpointGeneratorErrorHandlingTest {
         generator.run(
                 raml()
                         .with(resource()
-                                .with(action().withActionType(POST)))
+                                .with(httpAction().withHttpActionType(POST)))
                         .build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -121,7 +122,7 @@ public class JmsEndpointGeneratorErrorHandlingTest {
         generator.run(
                 raml()
                         .with(resource()
-                                .with(action(POST, "application/vnd.people.unknown.command1+json")))
+                                .with(httpAction(POST, "application/vnd.people.unknown.command1+json")))
                         .build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -136,7 +137,7 @@ public class JmsEndpointGeneratorErrorHandlingTest {
         generator.run(
                 raml()
                         .with(resource()
-                                .with(action(POST, "nd.people.unknown.command1+json")))
+                                .with(httpAction(POST, "nd.people.unknown.command1+json")))
                         .build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -151,8 +152,8 @@ public class JmsEndpointGeneratorErrorHandlingTest {
         generator.run(
                 raml()
                         .with(resource()
-                                .with(action()
-                                        .withActionType(POST)
+                                .with(httpAction()
+                                        .withHttpActionType(POST)
                                         .withMediaType("application/vnd.people.commaods.command1+json")
                                         .withMediaType("application/vnd.people.command.command1+json")
                                 ))

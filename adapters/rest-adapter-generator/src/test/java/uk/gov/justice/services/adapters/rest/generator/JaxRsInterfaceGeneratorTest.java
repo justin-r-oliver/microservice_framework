@@ -6,8 +6,9 @@ import static org.raml.model.ActionType.OPTIONS;
 import static org.raml.model.ActionType.PATCH;
 import static org.raml.model.ActionType.PUT;
 import static org.raml.model.ActionType.TRACE;
-import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
 import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
+
+import uk.gov.justice.services.adapters.test.utils.builder.HttpActionBuilder;
 
 import java.util.Collections;
 import java.util.List;
@@ -57,6 +58,6 @@ public class JaxRsInterfaceGeneratorTest {
     }
 
     private List<Resource> singleResourceWithActionType(final ActionType actionType) {
-        return Collections.singletonList(resource().with(action(actionType)).build());
+        return Collections.singletonList(resource().with(HttpActionBuilder.httpAction(actionType)).build());
     }
 }

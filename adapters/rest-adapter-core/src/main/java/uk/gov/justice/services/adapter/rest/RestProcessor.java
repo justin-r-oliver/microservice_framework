@@ -48,18 +48,19 @@ public class RestProcessor {
      * an envelope and passing the envelope to the given consumer.
      *
      * @param consumer       a consumer for the envelope
-     * @param initialPayload the payload from the REST request
+     * @param action
+     *@param initialPayload the payload from the REST request
      * @param headers        the headers from the REST request
-     * @param params         the parameters from the REST request
-     * @return the HTTP response to return to the client
+     * @param params         the parameters from the REST request    @return the HTTP response to return to the client
      */
     public Response processAsynchronously(final Consumer<JsonEnvelope> consumer,
-                                          final JsonObject initialPayload,
+                                          final String action, final JsonObject initialPayload,
                                           final HttpHeaders headers,
                                           final Map<String, String> params) {
 
         final JsonEnvelope envelope = envelopeBuilderFactory.builder()
                 .withInitialPayload(initialPayload)
+                .withAction(action)
                 .withHeaders(headers)
                 .withParams(params)
                 .build();
@@ -70,11 +71,12 @@ public class RestProcessor {
     }
 
     public Response processSynchronously(final Function<JsonEnvelope, JsonEnvelope> function,
-                                         final HttpHeaders headers,
+                                         final String action, final HttpHeaders headers,
                                          final Map<String, String> params) {
         final JsonEnvelope envelope = envelopeBuilderFactory.builder()
                 .withHeaders(headers)
                 .withParams(params)
+                .withAction(action)
                 .build();
 
         final JsonEnvelope result = function.apply(envelope);

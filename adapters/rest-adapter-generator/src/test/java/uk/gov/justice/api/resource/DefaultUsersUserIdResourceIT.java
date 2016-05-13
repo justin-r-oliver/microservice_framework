@@ -191,7 +191,7 @@ public class DefaultUsersUserIdResourceIT {
                 .get();
         JsonEnvelope envelope = syncDispatcher.awaitForEnvelopeWithPayloadOf("userId", "4444-5555");
         assertThat(envelope.payloadAsJsonObject().getString("userId"), is("4444-5555"));
-        assertThat(envelope.metadata().name(), is("people.query.get-user"));
+        assertThat(envelope.metadata().name(), is("people.get-user1"));
 
     }
 
@@ -207,7 +207,7 @@ public class DefaultUsersUserIdResourceIT {
         assertThat(response.getStatus(), is(OK.getStatusCode()));
         JsonEnvelope envelope = syncDispatcher.awaitForEnvelopeWithPayloadOf("userId", "4444-5555");
         assertThat(envelope.payloadAsJsonObject().getString("userId"), is("4444-5555"));
-        assertThat(envelope.metadata().name(), is("people.query.get-user2"));
+        assertThat(envelope.metadata().name(), is("people.get-user2"));
 
     }
 

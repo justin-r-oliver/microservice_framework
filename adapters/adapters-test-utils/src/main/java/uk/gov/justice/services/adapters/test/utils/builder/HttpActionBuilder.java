@@ -1,6 +1,8 @@
 package uk.gov.justice.services.adapters.test.utils.builder;
 
+import static java.lang.String.format;
 import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.joining;
 import static org.raml.model.ActionType.GET;
 import static org.raml.model.ActionType.POST;
 import static org.raml.model.ParamType.STRING;
@@ -16,70 +18,74 @@ import org.raml.model.MimeType;
 import org.raml.model.Response;
 import org.raml.model.parameter.QueryParameter;
 
-public class ActionBuilder {
+/**
+ * Builds RAML http action (not to be confused with framework's action)
+ */
+public class HttpActionBuilder {
     private static final String POST_MAPPING_ANNOTATION = "...\n" +
             "(mapping):\n" +
-            "    inputType: application/vnd.structure.command.test-cmd+json\n" +
+            "    requestType: application/vnd.structure.command.test-cmd+json\n" +
             "    type: command\n" +
             "    name: structure.test-cmd\n" +
             "...\n";
 
     private static final String GET_MAPPING_ANNOTATION = "...\n" +
             "(mapping):\n" +
-            "    outputType: application/vnd.ctx.query.defquery+json\n" +
+            "    responseType: application/vnd.ctx.query.defquery+json\n" +
             "    type: query\n" +
             "    name: ctx.test-cmd\n" +
             "...\n";
+    private static final String MAPPINGS_BOUNDARY = "...\n";
 
     private final Map<String, MimeType> body = new HashMap<>();
     private final Map<String, QueryParameter> queryParameters = new HashMap<>();
     private ActionType actionType;
     private List<Response> responses = new LinkedList<>();
+    private List<MappingBuilder> mappings = new LinkedList<>();
     private String description;
 
-    public static ActionBuilder action() {
-        return new ActionBuilder();
+    public static HttpActionBuilder httpAction() {
+        return new HttpActionBuilder();
     }
 
-    public static ActionBuilder defaultPostAction() {
-        return action(POST, "application/vnd.structure.command.test-cmd+json")
+    public static HttpActionBuilder defaultPostAction() {
+        return httpAction(POST, "application/vnd.structure.command.test-cmd+json")
                 .withDescription(POST_MAPPING_ANNOTATION);
     }
 
-    public static ActionBuilder defaultGetAction() {
-        return action().withActionType(GET)
+    public static HttpActionBuilder defaultGetAction() {
+        return httpAction().withHttpActionType(GET)
                 .withDefaultResponseType()
                 .withDescription(GET_MAPPING_ANNOTATION);
     }
 
-    public static ActionBuilder action(final ActionType actionType, final String... mimeTypes) {
-        ActionBuilder actionBuilder = new ActionBuilder()
-                .withActionType(actionType);
+    public static HttpActionBuilder httpAction(final ActionType actionType, final String... mimeTypes) {
+        HttpActionBuilder httpActionBuilder = new HttpActionBuilder()
+                .withHttpActionType(actionType);
         for (String mimeType : mimeTypes) {
-            actionBuilder = actionBuilder.withMediaType(mimeType);
+            httpActionBuilder = httpActionBuilder.withMediaType(mimeType);
         }
-        return actionBuilder;
+        return httpActionBuilder;
     }
 
-    public ActionBuilder withActionType(final ActionType actionType) {
+    public HttpActionBuilder withHttpActionType(final ActionType actionType) {
         this.actionType = actionType;
         return this;
     }
 
-    public ActionBuilder withActionOfDefaultRequestType() {
+    public HttpActionBuilder withHttpActionOfDefaultRequestType() {
         return withMediaType("application/vnd.ctx.command.defcmd+json");
     }
 
-    public ActionBuilder withDefaultResponseType() {
-        return withActionWithResponseTypes("application/vnd.ctx.query.defquery+json");
+    public HttpActionBuilder withDefaultResponseType() {
+        return withResponseTypes("application/vnd.ctx.query.defquery+json");
     }
 
-    public ActionBuilder withActionWithResponseTypes(final String... responseTypes) {
-        Response response = new Response();
-        return withActionResponse(response, responseTypes);
+    public HttpActionBuilder withResponseTypes(final String... responseTypes) {
+        return withHttpActionResponse(new Response(), responseTypes);
     }
 
-    public ActionBuilder withActionResponse(final Response response, final String... responseTypes) {
+    public HttpActionBuilder withHttpActionResponse(final Response response, final String... responseTypes) {
         Map<String, MimeType> respBody = new HashMap<>();
         for (String responseType : responseTypes) {
             respBody.put(responseType, new MimeType(responseType));
@@ -89,12 +95,12 @@ public class ActionBuilder {
         return this;
     }
 
-    public ActionBuilder withQueryParameters(final QueryParameter... queryParameters) {
+    public HttpActionBuilder withQueryParameters(final QueryParameter... queryParameters) {
         stream(queryParameters).forEach(queryParameter -> this.queryParameters.put(queryParameter.getDisplayName(), queryParameter));
         return this;
     }
 
-    public ActionBuilder withQueryParameters(final String... paramNames) {
+    public HttpActionBuilder withQueryParameters(final String... paramNames) {
         stream(paramNames).forEach(paramName -> {
             QueryParameter queryParameter = new QueryParameter();
             queryParameter.setDisplayName(paramName);
@@ -106,7 +112,7 @@ public class ActionBuilder {
         return this;
     }
 
-    public ActionBuilder withOptionalQueryParameters(final String... paramNames) {
+    public HttpActionBuilder withOptionalQueryParameters(final String... paramNames) {
         stream(paramNames).forEach(paramName -> {
             QueryParameter queryParameter = new QueryParameter();
             queryParameter.setDisplayName(paramName);
@@ -118,24 +124,41 @@ public class ActionBuilder {
         return this;
     }
 
-    public ActionBuilder withMediaType(final MimeType mimeType) {
+    public HttpActionBuilder withMediaType(final MimeType mimeType) {
         body.put(mimeType.toString(), mimeType);
         return this;
     }
 
-    public ActionBuilder withMediaType(final String stringMimeType) {
+    public HttpActionBuilder withMediaType(final String stringMimeType) {
         return withMediaType(new MimeType(stringMimeType));
     }
 
-    public ActionBuilder withDescription(final String description) {
+    public HttpActionBuilder withDescription(final String description) {
         this.description = description;
+        return this;
+    }
+
+    public HttpActionBuilder with(final MappingBuilder mapping) {
+        this.mappings.add(mapping);
         return this;
     }
 
     public Action build() {
         final Action action = new Action();
         action.setType(actionType);
-        action.setDescription(description);
+
+        if (description != null) {
+            action.setDescription(description);
+        } else {
+            String description =
+                    format("%s%s%s",
+                            MAPPINGS_BOUNDARY,
+                            mappings.stream().map(MappingBuilder::build).collect(joining()),
+                            MAPPINGS_BOUNDARY);
+            action.setDescription(description);
+        }
+
+
         action.setBody(body);
 
         HashMap<String, Response> responsesMap = new HashMap<>();
@@ -143,6 +166,7 @@ public class ActionBuilder {
         action.setResponses(responsesMap);
 
         action.setQueryParameters(queryParameters);
+
 
         return action;
     }

@@ -4,11 +4,11 @@ import static java.util.Collections.emptyMap;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.raml.model.ActionType.POST;
-import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.restRamlWithDefaults;
 import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
 import static uk.gov.justice.services.adapters.test.utils.config.GeneratorConfigUtil.configurationWithBasePackage;
@@ -17,6 +17,7 @@ import static uk.gov.justice.services.adapters.test.utils.reflection.ReflectionU
 import static uk.gov.justice.services.adapters.test.utils.reflection.ReflectionUtil.setField;
 import static uk.gov.justice.services.messaging.DefaultJsonEnvelope.envelopeFrom;
 
+import uk.gov.justice.services.adapters.test.utils.builder.HttpActionBuilder;
 import uk.gov.justice.services.core.dispatcher.AsynchronousDispatcher;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 
@@ -48,7 +49,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/path")
-                                .with(action(POST).withActionOfDefaultRequestType())
+                                .with(HttpActionBuilder.httpAction(POST).withHttpActionOfDefaultRequestType())
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -56,7 +57,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
         Object resourceObject = instantiate(resourceClass);
 
         Response processorResponse = Response.ok().build();
-        when(restProcessor.processAsynchronously(any(Consumer.class), any(JsonObject.class), any(HttpHeaders.class),
+        when(restProcessor.processAsynchronously(any(Consumer.class), anyString(), any(JsonObject.class), any(HttpHeaders.class),
                 any(Map.class))).thenReturn(processorResponse);
 
         Method method = firstMethodOf(resourceClass);
@@ -73,7 +74,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/path")
-                                .with(action(POST).withActionOfDefaultRequestType())
+                                .with(HttpActionBuilder.httpAction(POST).withHttpActionOfDefaultRequestType())
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -85,7 +86,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
         method.invoke(resourceObject, NOT_USED_JSONOBJECT);
 
         ArgumentCaptor<Consumer> consumerCaptor = ArgumentCaptor.forClass(Consumer.class);
-        verify(restProcessor).processAsynchronously(consumerCaptor.capture(), any(JsonObject.class), any(HttpHeaders.class),
+        verify(restProcessor).processAsynchronously(consumerCaptor.capture(), anyString(), any(JsonObject.class), any(HttpHeaders.class),
                 any(Map.class));
 
         JsonEnvelope envelope = envelopeFrom(null, null);
@@ -102,7 +103,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/path")
-                                .with(action(POST).withActionOfDefaultRequestType())
+                                .with(HttpActionBuilder.httpAction(POST).withHttpActionOfDefaultRequestType())
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -114,7 +115,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
         Method method = firstMethodOf(resourceClass);
         method.invoke(resourceObject, jsonObject);
 
-        verify(restProcessor).processAsynchronously(any(Consumer.class), eq(jsonObject), any(HttpHeaders.class), any(Map.class));
+        verify(restProcessor).processAsynchronously(any(Consumer.class), anyString(), eq(jsonObject), any(HttpHeaders.class), any(Map.class));
 
     }
 
@@ -124,7 +125,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/path")
-                                .with(action(POST).withActionOfDefaultRequestType())
+                                .with(HttpActionBuilder.httpAction(POST).withHttpActionOfDefaultRequestType())
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -137,7 +138,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
         Method method = firstMethodOf(resourceClass);
         method.invoke(resourceObject, NOT_USED_JSONOBJECT);
 
-        verify(restProcessor).processAsynchronously(any(Consumer.class), any(JsonObject.class), eq(headers), any(Map.class));
+        verify(restProcessor).processAsynchronously(any(Consumer.class), anyString(), any(JsonObject.class), eq(headers), any(Map.class));
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -147,7 +148,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path/{paramA}", "paramA")
-                                .with(action(POST).withActionOfDefaultRequestType())
+                                .with(HttpActionBuilder.httpAction(POST).withHttpActionOfDefaultRequestType())
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -160,7 +161,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
 
         ArgumentCaptor<Map> pathParamsCaptor = ArgumentCaptor.forClass(Map.class);
 
-        verify(restProcessor).processAsynchronously(any(Consumer.class), any(JsonObject.class), any(HttpHeaders.class),
+        verify(restProcessor).processAsynchronously(any(Consumer.class), anyString(), any(JsonObject.class), any(HttpHeaders.class),
                 pathParamsCaptor.capture());
 
         Map pathParams = pathParamsCaptor.getValue();
@@ -177,7 +178,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path/{p1}", "p1")
-                                .with(action(POST, "application/vnd.ctx.command.cmd-aa+json", "application/vnd.ctx.command.cmd-bb+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.ctx.command.cmd-aa+json", "application/vnd.ctx.command.cmd-bb+json"))
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -192,7 +193,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
 
         ArgumentCaptor<Map> pathParamsCaptor = ArgumentCaptor.forClass(Map.class);
 
-        verify(restProcessor).processAsynchronously(any(Consumer.class), any(JsonObject.class), any(HttpHeaders.class),
+        verify(restProcessor).processAsynchronously(any(Consumer.class), anyString(), any(JsonObject.class), any(HttpHeaders.class),
                 pathParamsCaptor.capture());
 
         Map pathParams = pathParamsCaptor.getValue();
@@ -208,7 +209,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
         generator.run(
                 restRamlWithDefaults().with(
                         resource("/some/path/{param1}/{param2}", "param1", "param2")
-                                .with(action(POST).withActionOfDefaultRequestType())
+                                .with(HttpActionBuilder.httpAction(POST).withHttpActionOfDefaultRequestType())
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
@@ -221,7 +222,7 @@ public class RestAdapterGenerator_POSTMethodBodyTest extends BaseRestAdapterGene
 
         ArgumentCaptor<Map> pathParamsCaptor = ArgumentCaptor.forClass(Map.class);
 
-        verify(restProcessor).processAsynchronously(any(Consumer.class), any(JsonObject.class), any(HttpHeaders.class),
+        verify(restProcessor).processAsynchronously(any(Consumer.class), anyString(), any(JsonObject.class), any(HttpHeaders.class),
                 pathParamsCaptor.capture());
 
         Map pathParams = pathParamsCaptor.getValue();

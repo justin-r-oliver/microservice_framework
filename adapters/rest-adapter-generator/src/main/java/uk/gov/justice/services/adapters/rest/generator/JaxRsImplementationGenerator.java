@@ -57,8 +57,8 @@ class JaxRsImplementationGenerator {
     private static final String VARIABLE_MAP_BUILDER = "validParameterMapBuilder";
     private static final String PARAMS_PUT_REQUIRED_STATEMENT_FORMAT = "$L.putRequired($S, $N)";
     private static final String PARAMS_PUT_OPTIONAL_STATEMENT_FORMAT = "$L.putOptional($S, $N)";
-    private static final String SYNCHRONOUS_METHOD_STATEMENT = "return restProcessor.processSynchronously(syncDispatcher::dispatch, headers, $L.validateAndBuildMap())";
-    private static final String ASYNCHRONOUS_METHOD_STATEMENT = "return restProcessor.processAsynchronously(asyncDispatcher::dispatch, entity, headers, $L.validateAndBuildMap())";
+    private static final String SYNCHRONOUS_METHOD_STATEMENT = "return restProcessor.processSynchronously(syncDispatcher::dispatch, \"\", headers, $L.validateAndBuildMap())";
+    private static final String ASYNCHRONOUS_METHOD_STATEMENT = "return restProcessor.processAsynchronously(asyncDispatcher::dispatch, \"\", entity, headers, $L.validateAndBuildMap())";
 
     private final GeneratorConfig configuration;
 
@@ -125,10 +125,10 @@ class JaxRsImplementationGenerator {
     }
 
     /**
-     * Process the body or bodies for each action.
+     * Process the body or bodies for each httpAction.
      *
-     * @param action the action to process
-     * @return the list of {@link MethodSpec} that represents each method for the action
+     * @param action the httpAction to process
+     * @return the list of {@link MethodSpec} that represents each method for the httpAction
      */
     private List<MethodSpec> forEach(final Action action) {
         if (!action.hasBody()) {
@@ -139,10 +139,10 @@ class JaxRsImplementationGenerator {
     }
 
     /**
-     * Process an action with no body.
+     * Process an httpAction with no body.
      *
-     * @param action the action to process
-     * @return the {@link MethodSpec} that represents the method for the action
+     * @param action the httpAction to process
+     * @return the {@link MethodSpec} that represents the method for the httpAction
      */
     private MethodSpec processNoActionBody(final Action action) {
         final String resourceMethodName = buildResourceMethodNameWithNoMimeType(action);
@@ -150,10 +150,10 @@ class JaxRsImplementationGenerator {
     }
 
     /**
-     * Process an action with one or more bodies.
+     * Process an httpAction with one or more bodies.
      *
-     * @param action the action to process
-     * @return the list of {@link MethodSpec} that represents each method for the action
+     * @param action the httpAction to process
+     * @return the list of {@link MethodSpec} that represents each method for the httpAction
      */
     private List<MethodSpec> processOneOrMoreActionBodies(final Action action) {
         return action.getBody().values().stream()
@@ -179,9 +179,9 @@ class JaxRsImplementationGenerator {
      * Uses the type of {@link Action} to provide a {@link SynchronousDispatcher} or an {@link
      * AsynchronousDispatcher} and provides the correct field definition as a {@link FieldSpec}.
      *
-     * @param action the action to forEach
+     * @param action the httpAction to forEach
      * @return a {@link FieldSpec} representing the field definition.
-     * @throws IllegalStateException if action type is not GET or POST
+     * @throws IllegalStateException if httpAction type is not GET or POST
      */
     private FieldSpec dispatcherFieldFor(final Action action) {
         final ActionType actionType = action.getType();
@@ -191,7 +191,7 @@ class JaxRsImplementationGenerator {
         } else if (actionType == POST) {
             return asynchronousDispatcherField();
         } else {
-            throw new IllegalStateException(String.format("Unsupported action type %s", actionType));
+            throw new IllegalStateException(String.format("Unsupported httpAction type %s", actionType));
         }
     }
 
@@ -232,7 +232,7 @@ class JaxRsImplementationGenerator {
     /**
      * Generate a method for each {@link Action}.
      *
-     * @param action             the action to generate as a method
+     * @param action             the httpAction to generate as a method
      * @param resourceMethodName the resource method name to generate
      * @return a {@link MethodSpec} that represents the generated method
      */
@@ -248,7 +248,7 @@ class JaxRsImplementationGenerator {
         } else if (actionType == POST) {
             methodBody = methodBody(pathParams, this::methodBodyForPost);
         } else {
-            throw new IllegalStateException(String.format("Unsupported action type %s", actionType));
+            throw new IllegalStateException(String.format("Unsupported httpAction type %s", actionType));
         }
 
         return methodBuilder(resourceMethodName)
@@ -261,7 +261,7 @@ class JaxRsImplementationGenerator {
     }
 
     /**
-     * Produce code specific to the GET action type.
+     * Produce code specific to the GET httpAction type.
      *
      * @param queryParams the query parameters to add to a map
      * @return the {@link CodeBlock} representing the GET specific code
@@ -274,7 +274,7 @@ class JaxRsImplementationGenerator {
     }
 
     /**
-     * Produce code specific to the POST action type.
+     * Produce code specific to the POST httpAction type.
      *
      * @return the {@link CodeBlock} representing the POST specific code
      */
@@ -285,7 +285,7 @@ class JaxRsImplementationGenerator {
     }
 
     /**
-     * General code that is for both GET and POST action type methods.
+     * General code that is for both GET and POST httpAction type methods.
      *
      * @return the {@link CodeBlock} representing the general code
      */

@@ -10,7 +10,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.defaultGetAction;
+import static uk.gov.justice.services.adapters.test.utils.builder.HttpActionBuilder.defaultGetAction;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.restRamlWithDefaults;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.restRamlWithQueryApiDefaults;
 import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.defaultGetResource;

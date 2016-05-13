@@ -5,9 +5,11 @@ import static org.raml.model.ActionType.HEAD;
 import static org.raml.model.ActionType.OPTIONS;
 import static org.raml.model.ActionType.POST;
 import static org.raml.model.ActionType.PUT;
-import static uk.gov.justice.services.adapters.test.utils.builder.ActionBuilder.action;
+import static uk.gov.justice.services.adapters.test.utils.builder.HttpActionBuilder.httpAction;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.raml;
 import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
+
+import uk.gov.justice.services.adapters.test.utils.builder.HttpActionBuilder;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,7 +27,7 @@ public class RequestContentTypeRamlValidatorTest {
         validator.validate(
                 raml()
                         .with(resource()
-                                .with(action(POST, "application/vnd.people.command.command1+json")))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.people.command.command1+json")))
                         .build());
 
     }
@@ -36,11 +38,11 @@ public class RequestContentTypeRamlValidatorTest {
         validator.validate(
                 raml()
                         .with(resource()
-                                .with(action(GET, "application/vnd.structure.dummy.command1+json"))
-                                .with(action(POST, "application/vnd.structure.command.command2+json"))
-                                .with(action(HEAD, "application/vnd.structure.dummy.command3+json"))
-                                .with(action(PUT, "application/vnd.structure.dummy.command4+json"))
-                                .with(action(OPTIONS, "application/vnd.structure.dummy.command5+json"))
+                                .with(HttpActionBuilder.httpAction(GET, "application/vnd.structure.dummy.command1+json"))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.structure.command.command2+json"))
+                                .with(HttpActionBuilder.httpAction(HEAD, "application/vnd.structure.dummy.command3+json"))
+                                .with(HttpActionBuilder.httpAction(PUT, "application/vnd.structure.dummy.command4+json"))
+                                .with(HttpActionBuilder.httpAction(OPTIONS, "application/vnd.structure.dummy.command5+json"))
                         )
                         .build());
 
@@ -54,7 +56,7 @@ public class RequestContentTypeRamlValidatorTest {
 
         validator.validate(raml()
                 .with(resource()
-                        .with(action().withActionType(POST)))
+                        .with(httpAction().withHttpActionType(POST)))
                 .build());
 
     }
@@ -68,7 +70,7 @@ public class RequestContentTypeRamlValidatorTest {
         validator.validate(
                 raml()
                         .with(resource()
-                                .with(action(POST, "application/vnd.people.invalid.command1+json")))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.people.invalid.command1+json")))
                         .build());
 
     }
@@ -82,7 +84,7 @@ public class RequestContentTypeRamlValidatorTest {
         validator.validate(
                 raml()
                         .with(resource()
-                                .with(action(POST, "nd.people.command.command1+json")))
+                                .with(HttpActionBuilder.httpAction(POST, "nd.people.command.command1+json")))
                         .build());
 
     }
@@ -96,7 +98,7 @@ public class RequestContentTypeRamlValidatorTest {
         validator.validate(
                 raml()
                         .with(resource()
-                                .with(action(POST, "nd.people.unknown.command1+nonjson")))
+                                .with(HttpActionBuilder.httpAction(POST, "nd.people.unknown.command1+nonjson")))
                         .build());
 
     }
@@ -110,7 +112,7 @@ public class RequestContentTypeRamlValidatorTest {
         validator.validate(
                 raml()
                         .with(resource()
-                                .with(action(POST, "application/vnd.handlers.command1+json")))
+                                .with(HttpActionBuilder.httpAction(POST, "application/vnd.handlers.command1+json")))
                         .build());
 
     }

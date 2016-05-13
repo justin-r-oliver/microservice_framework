@@ -7,7 +7,7 @@ import org.raml.model.ActionType;
 import org.raml.model.MimeType;
 
 /**
- * Checks if action's mediaType is valid and contains a valid command or event.
+ * Checks if httpAction's mediaType is valid and contains a valid command or event.
  */
 public class RequestContentTypeRamlValidator extends AbstractContentTypeRamlValidator {
 

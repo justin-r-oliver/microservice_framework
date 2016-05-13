@@ -1,10 +1,10 @@
-package uk.gov.justice.services.clients.core.mapping;
+package uk.gov.justice.raml.common.mapper;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static uk.gov.justice.services.clients.core.mapping.Mapping.buildMapping;
+import static uk.gov.justice.raml.common.mapper.Mapping.buildMapping;
 
 import javax.naming.NamingException;
 

@@ -1,4 +1,4 @@
-package uk.gov.justice.services.clients.core.mapping;
+package uk.gov.justice.raml.common.mapper;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
@@ -17,8 +17,8 @@ import java.util.stream.Stream;
 
 public class MappingParser {
 
-    public static final String OUTPUT_TYPE_FIELD = "outputType";
-    public static final String INPUT_TYPE_FIELD = "inputType";
+    public static final String OUTPUT_TYPE_FIELD = "responseType";
+    public static final String INPUT_TYPE_FIELD = "requestType";
     public static final String TYPE_FIELD = "type";
     public static final String NAME_FIELD = "name";
 
