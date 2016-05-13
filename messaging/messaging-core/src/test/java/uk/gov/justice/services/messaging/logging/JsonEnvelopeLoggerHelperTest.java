@@ -1,4 +1,4 @@
-package uk.gov.justice.services.core.dispatcher;
+package uk.gov.justice.services.messaging.logging;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.justice.services.messaging.Metadata;
+import uk.gov.justice.services.messaging.logging.JsonEnvelopeLoggerHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.when;
  * Created by vagrant on 5/11/16.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class TraceLoggerHelperTest {
+public class JsonEnvelopeLoggerHelperTest {
 
     private static final String NAME = "test.command.do-something";
 
@@ -75,7 +76,7 @@ public class TraceLoggerHelperTest {
     @Test
     public void shouldPrintAsTraceWithoutCausations() throws Exception {
 
-        String result = TraceLoggerHelper.printMessageAsJsonString(envelopeWithoutCausation);
+        String result = JsonEnvelopeLoggerHelper.toTraceString(envelopeWithoutCausation);
 
         assertThat(result, containsString(NAME));
         assertThat(result, not(containsString(UUID_1.toString())));
@@ -87,7 +88,7 @@ public class TraceLoggerHelperTest {
     @Test
     public void shouldPrintAsTrace() throws Exception {
 
-        String result = TraceLoggerHelper.printMessageAsJsonString(envelopeWithCausation);
+        String result = JsonEnvelopeLoggerHelper.toTraceString(envelopeWithCausation);
 
         assertThat(result, containsString(NAME));
         assertThat(result, containsString(UUID_1.toString()));

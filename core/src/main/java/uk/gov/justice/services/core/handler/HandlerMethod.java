@@ -1,7 +1,7 @@
 package uk.gov.justice.services.core.handler;
 
 import static java.lang.String.format;
-import static uk.gov.justice.services.core.dispatcher.TraceLoggerHelper.printMessageAsJsonString;
+import static uk.gov.justice.services.messaging.logging.JsonEnvelopeLoggerHelper.toTraceString;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,10 +90,10 @@ public class HandlerMethod {
      */
     @SuppressWarnings("unchecked")
     public Object execute(final JsonEnvelope envelope) {
-        LOGGER.trace("Dispatching message to handler {} to {}", handlerMethod.toString(), printMessageAsJsonString(envelope));
+        LOGGER.trace("Dispatching message to handler {} to {}", handlerMethod.toString(), toTraceString(envelope));
         try {
             Object obj = handlerMethod.invoke(handlerInstance, envelope);
-            LOGGER.trace("Object response retrieved from HandlerMethod : {}", printMessageAsJsonString(envelope));
+            LOGGER.trace("Object response retrieved from HandlerMethod : {}", toTraceString(envelope));
             return obj;
 
         } catch (IllegalAccessException | InvocationTargetException ex) {
