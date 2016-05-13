@@ -113,7 +113,7 @@ public class RemoteExampleQueryApiIT {
     @Test
     public void shouldSendQueryRemoteServiceAndReturnResponse() {
 
-        final String name = "people.query.get-user";
+        final String name = "people.get-user1";
         final JsonObject metadata = Json.createObjectBuilder()
                 .add(NAME, name)
                 .add(ID, QUERY_ID.toString())

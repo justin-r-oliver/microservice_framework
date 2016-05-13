@@ -9,6 +9,11 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.apache.commons.lang3.StringUtils.capitalize;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static uk.gov.justice.services.clients.core.mapping.MappingParser.NAME_FIELD;
+import static uk.gov.justice.services.clients.core.mapping.MappingParser.OUTPUT_TYPE_FIELD;
+import static uk.gov.justice.services.clients.core.mapping.MappingParser.INPUT_TYPE_FIELD;
+import static uk.gov.justice.services.clients.core.mapping.MappingParser.getMappingParser;
+import static uk.gov.justice.services.clients.core.mapping.MappingParser.postMappingParser;
 import static uk.gov.justice.services.core.annotation.Component.contains;
 import static uk.gov.justice.services.core.annotation.Component.names;
 
@@ -18,6 +23,7 @@ import uk.gov.justice.services.clients.core.EndpointDefinition;
 import uk.gov.justice.services.clients.core.QueryParam;
 import uk.gov.justice.services.clients.core.RestClientHelper;
 import uk.gov.justice.services.clients.core.RestClientProcessor;
+import uk.gov.justice.services.clients.core.mapping.Mapping;
 import uk.gov.justice.services.core.annotation.Component;
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.annotation.Remote;
@@ -26,6 +32,7 @@ import uk.gov.justice.services.messaging.JsonEnvelope;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -63,7 +70,7 @@ public class RestClientGenerator implements Generator {
 
     @Override
     public void run(final Raml raml, final GeneratorConfig generatorConfig) {
-        TypeSpec.Builder classSpec = classSpecOf(raml, generatorConfig);
+        final TypeSpec.Builder classSpec = classSpecOf(raml, generatorConfig);
         generateMethods(classSpec, raml);
         writeToJavaFile(classSpec, generatorConfig);
     }
@@ -132,30 +139,57 @@ public class RestClientGenerator implements Generator {
     private void generateCodeForAction(final Resource resource, final Action action, final TypeSpec.Builder classBuilder) {
         switch (action.getType()) {
             case GET:
-                Response response = action.getResponses().get(valueOf(OK.getStatusCode()));
-                if (response != null) {
-                    response.getBody().values().forEach(
-                            mimeType -> classBuilder.addMethod(methodOf(resource, action, mimeType)));
-                }
+                generateCodeForGetActionType(resource, action, classBuilder);
                 break;
             case POST:
-                action.getBody().values().iterator().forEachRemaining(
-                        mimeType -> classBuilder.addMethod(methodOf(resource, action, mimeType)));
+                generateCodeForPostActionType(resource, action, classBuilder);
                 break;
             default:
                 throw new IllegalStateException(format("Unsupported action type %s", action.getType()));
         }
     }
 
-    private MethodSpec methodOf(Resource resource, Action action, MimeType mimeType) {
-        String header = headerOf(mimeType);
-        String methodName = methodNameOf(action.getType(), header);
-        Class<?> methodReturnType = action.getType().equals(ActionType.GET) ? JsonEnvelope.class : Void.class;
+    private void generateCodeForGetActionType(final Resource resource, final Action action, final TypeSpec.Builder classBuilder) {
+        final List<Mapping> mappingsForGet = getMappingParser().parseFromDescription(action.getDescription());
+        final Response response = action.getResponses().get(valueOf(OK.getStatusCode()));
+        if (response != null) {
+            response.getBody().values().forEach(mimeType -> {
+                final Mapping mappingForGet = mappingFrom(mimeType, OUTPUT_TYPE_FIELD, mappingsForGet);
+                classBuilder.addMethod(methodOf(resource, action, mimeType, mappingForGet));
+            });
+        }
+    }
 
-        MethodSpec.Builder builder = methodBuilder(methodName)
+    private void generateCodeForPostActionType(final Resource resource, final Action action, final TypeSpec.Builder classBuilder) {
+        final List<Mapping> mappingsForPost = postMappingParser().parseFromDescription(action.getDescription());
+        action.getBody().values().forEach(mimeType -> {
+                    final Mapping mappingForPost = mappingFrom(mimeType, INPUT_TYPE_FIELD, mappingsForPost);
+                    classBuilder.addMethod(methodOf(resource, action, mimeType, mappingForPost));
+                }
+        );
+    }
+
+    private Mapping mappingFrom(final MimeType mimeType, final String fieldName, final List<Mapping> mappings) {
+        return mappings.stream()
+                .filter(mapping -> mapping.get(fieldName).equals(mimeType.getType()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(format("Mapping for mimetype: %s not found.", mimeType.getType())));
+    }
+
+    private MethodSpec methodOf(final Resource resource,
+                                final Action action,
+                                final MimeType mimeType,
+                                final Mapping mapping) {
+
+        final String header = headerOf(mimeType);
+        final String methodName = methodNameOf(action.getType(), header);
+        final Class<?> methodReturnType = action.getType().equals(ActionType.GET) ? JsonEnvelope.class : Void.class;
+
+        final MethodSpec.Builder builder = methodBuilder(methodName)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(Handles.class)
-                        .addMember("value", "$S", header).build())
+                        .addMember("value", "$S", mapping.get(NAME_FIELD))
+                        .build())
                 .addParameter(ParameterSpec.builder(JsonEnvelope.class, "envelope")
                         .addModifiers(Modifier.FINAL)
                         .build());
@@ -185,13 +219,13 @@ public class RestClientGenerator implements Generator {
     private String methodNameOf(final ActionType actionType, final String header) {
         String baseName = capitalize(header.replaceAll("[\\W_]", " ")).replaceAll("[\\W_]", "");
 
-        String actionTypeStr = actionType.name().toLowerCase();
+        final String actionTypeStr = actionType.name().toLowerCase();
         baseName = baseName.substring(0, 1).toUpperCase() + baseName.substring(1);
         return actionTypeStr + baseName;
     }
 
     private String classNameOf(final String baseUri) {
-        String[] pathSegments = baseUri.split("/");
+        final String[] pathSegments = baseUri.split("/");
         if (pathSegments.length != NUMBER_OF_PATH_SEGMENTS) {
             throw new IllegalArgumentException("baseUri must have 8 parts");
         }

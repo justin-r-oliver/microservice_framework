@@ -17,6 +17,20 @@ import org.raml.model.Response;
 import org.raml.model.parameter.QueryParameter;
 
 public class ActionBuilder {
+    private static final String POST_MAPPING_ANNOTATION = "...\n" +
+            "(mapping):\n" +
+            "    inputType: application/vnd.structure.command.test-cmd+json\n" +
+            "    type: command\n" +
+            "    name: structure.test-cmd\n" +
+            "...\n";
+
+    private static final String GET_MAPPING_ANNOTATION = "...\n" +
+            "(mapping):\n" +
+            "    outputType: application/vnd.ctx.query.defquery+json\n" +
+            "    type: query\n" +
+            "    name: ctx.test-cmd\n" +
+            "...\n";
+
     private final Map<String, MimeType> body = new HashMap<>();
     private final Map<String, QueryParameter> queryParameters = new HashMap<>();
     private ActionType actionType;
@@ -28,11 +42,14 @@ public class ActionBuilder {
     }
 
     public static ActionBuilder defaultPostAction() {
-        return action(POST, "application/vnd.structure.command.test-cmd+json");
+        return action(POST, "application/vnd.structure.command.test-cmd+json")
+                .withDescription(POST_MAPPING_ANNOTATION);
     }
 
     public static ActionBuilder defaultGetAction() {
-        return action().withActionType(GET).withDefaultResponseType();
+        return action().withActionType(GET)
+                .withDefaultResponseType()
+                .withDescription(GET_MAPPING_ANNOTATION);
     }
 
     public static ActionBuilder action(final ActionType actionType, final String... mimeTypes) {
@@ -62,7 +79,7 @@ public class ActionBuilder {
         return withActionResponse(response, responseTypes);
     }
 
-    public ActionBuilder withActionResponse(final Response response, final String...responseTypes) {
+    public ActionBuilder withActionResponse(final Response response, final String... responseTypes) {
         Map<String, MimeType> respBody = new HashMap<>();
         for (String responseType : responseTypes) {
             respBody.put(responseType, new MimeType(responseType));

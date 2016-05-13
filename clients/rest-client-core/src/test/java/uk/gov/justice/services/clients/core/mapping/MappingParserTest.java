@@ -62,6 +62,12 @@ public class MappingParserTest {
     }
 
     @Test
+    public void shouldReturnNoMappingsForNullDescription() throws Exception {
+        List<Mapping> mappings = postMappingParser().parseFromDescription(null);
+        assertThat(mappings.size(), is(0));
+    }
+
+    @Test
     public void shouldReturnNoMappingsForDescriptionWithNoMappings() throws Exception {
         List<Mapping> mappings = postMappingParser().parseFromDescription("Description\n with no mappings\n");
         assertThat(mappings.size(), is(0));

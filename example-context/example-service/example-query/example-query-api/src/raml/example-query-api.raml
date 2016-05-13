@@ -8,6 +8,13 @@ protocols: [ HTTP, HTTPS ]
 /recipes:
   description: list all recipes
   get:
+    description: |
+        ...
+        (mapping):
+            outputType: application/vnd.cakeshop.query.recipes+json
+            type: query
+            name: cakeshop.search-recipes
+        ...
     queryParameters:
         pagesize:
             type: string
@@ -28,6 +35,13 @@ protocols: [ HTTP, HTTPS ]
 /recipes/{recipeId}:
   description: return a recipe
   get:
+    description: |
+        ...
+        (mapping):
+            outputType: application/vnd.cakeshop.query.recipe+json
+            type: query
+            name: cakeshop.get-recipe
+        ...
     responses:
       200:
         body:

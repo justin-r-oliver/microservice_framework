@@ -15,7 +15,6 @@ import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.ra
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.restRamlWithDefaults;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.restRamlWithTitleVersion;
 import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
-import static uk.gov.justice.services.adapters.test.utils.builder.ResponseBuilder.response;
 import static uk.gov.justice.services.adapters.test.utils.config.GeneratorConfigUtil.configurationWithBasePackage;
 import static uk.gov.justice.services.adapters.test.utils.reflection.ReflectionUtil.firstMethodOf;
 import static uk.gov.justice.services.adapters.test.utils.reflection.ReflectionUtil.methodsOf;
@@ -46,11 +45,18 @@ import org.raml.model.parameter.QueryParameter;
 
 public class RestClientGenerator_CodeStructureTest {
 
-    private static final String MESSAGE_ANNOTATION = "...\n" +
+    private static final String GET_MAPPING_ANNOTATION = "...\n" +
             "(mapping):\n" +
-            "    outputType: application/vnd.people.search-users+json\n" +
+            "    outputType: application/vnd.cakeshop.query.recipe+json\n" +
             "    type: query\n" +
-            "    name: search-users\n" +
+            "    name: cakeshop.get-recipe\n" +
+            "...\n";
+
+    private static final String POST_MAPPING_ANNOTATION = "...\n" +
+            "(mapping):\n" +
+            "    inputType: application/vnd.cakeshop.command.update-recipe+json\n" +
+            "    type: command\n" +
+            "    name: cakeshop.update-recipe\n" +
             "...\n";
 
     private static final String BASE_PACKAGE = "org.raml.test";
@@ -76,9 +82,8 @@ public class RestClientGenerator_CodeStructureTest {
                 raml()
                         .withBaseUri("http://localhost:8080/warname/query/api/rest/service")
                         .with(resource("/some/path/{recipeId}")
-                                .with(action(GET, "application/vnd.cakeshop.commands.add-recipe+json")
-                                        .withQueryParameters(queryParameterOf("recipename", true), queryParameterOf("topingredient", false))
-                                        .withActionResponse(response(MESSAGE_ANNOTATION), "application/vnd.cakeshop.commands.cmd1+json"))
+                                .with(action(GET, "application/vnd.cakeshop.query.add-recipe+json")
+                                        .withQueryParameters(queryParameterOf("recipename", true), queryParameterOf("topingredient", false)))
                         ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, ImmutableMap.of("serviceComponent", "QUERY_API")));
 
@@ -108,11 +113,13 @@ public class RestClientGenerator_CodeStructureTest {
     }
 
     @Test
-    public void shouldGenerateMethodAnnotatedWithHandlesAnnotation() throws Exception {
+    public void shouldGenerateMethodAnnotatedWithHandlesAnnotationForGET() throws Exception {
         restClientGenerator.run(
                 restRamlWithDefaults()
                         .with(resource("/some/path/{recipeId}")
-                                .with(action(POST, "application/vnd.cakeshop.commands.update-recipe+json"))
+                                .with(action(GET)
+                                        .withActionWithResponseTypes("application/vnd.cakeshop.query.recipe+json")
+                                        .withDescription(GET_MAPPING_ANNOTATION))
                         ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, NOT_USED_GENERATOR_PROPERTIES));
 
@@ -123,7 +130,28 @@ public class RestClientGenerator_CodeStructureTest {
         Method method = methods.get(0);
         Handles handlesAnnotation = method.getAnnotation(Handles.class);
         assertThat(handlesAnnotation, not(nullValue()));
-        assertThat(handlesAnnotation.value(), is("cakeshop.commands.update-recipe"));
+        assertThat(handlesAnnotation.value(), is("cakeshop.get-recipe"));
+
+    }
+
+    @Test
+    public void shouldGenerateMethodAnnotatedWithHandlesAnnotationForPOST() throws Exception {
+        restClientGenerator.run(
+                restRamlWithDefaults()
+                        .with(resource("/some/path/{recipeId}")
+                                .with(action(POST, "application/vnd.cakeshop.command.update-recipe+json")
+                                        .withDescription(POST_MAPPING_ANNOTATION))
+                        ).build(),
+                configurationWithBasePackage(BASE_PACKAGE, outputFolder, NOT_USED_GENERATOR_PROPERTIES));
+
+        Class<?> clazz = compiler.compiledClassOf(BASE_PACKAGE, "RemoteServiceCommandApi");
+        List<Method> methods = methodsOf(clazz);
+        assertThat(methods, hasSize(1));
+
+        Method method = methods.get(0);
+        Handles handlesAnnotation = method.getAnnotation(Handles.class);
+        assertThat(handlesAnnotation, not(nullValue()));
+        assertThat(handlesAnnotation.value(), is("cakeshop.update-recipe"));
 
     }
 
@@ -132,7 +160,8 @@ public class RestClientGenerator_CodeStructureTest {
         restClientGenerator.run(
                 restRamlWithDefaults()
                         .with(resource("/some/path/{recipeId}")
-                                .with(action(POST, "application/vnd.cakeshop.commands.update-recipe+json"))
+                                .with(action(POST, "application/vnd.cakeshop.command.update-recipe+json")
+                                        .withDescription(POST_MAPPING_ANNOTATION))
                         ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, NOT_USED_GENERATOR_PROPERTIES));
 

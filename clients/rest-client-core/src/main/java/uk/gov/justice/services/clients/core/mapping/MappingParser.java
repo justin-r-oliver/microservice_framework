@@ -5,6 +5,7 @@ import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.stream.IntStream.range;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,11 @@ import java.util.stream.Stream;
 
 public class MappingParser {
 
+    public static final String OUTPUT_TYPE_FIELD = "outputType";
+    public static final String INPUT_TYPE_FIELD = "inputType";
+    public static final String TYPE_FIELD = "type";
+    public static final String NAME_FIELD = "name";
+
     private static final Pattern MAPPING_SECTION_PATTERN = Pattern
             .compile("(?!\\.\\.\\.)(.*)(?!\\.\\.\\.)", Pattern.DOTALL);
     private static final String FIELD_PATTERN = "%s: (.*)";
@@ -24,12 +30,12 @@ public class MappingParser {
     private final List<String> fieldNames;
     private final Map<String, Pattern> patterns;
 
-    public static MappingParser postMappingParser() {
-        return new MappingParser("inputType", "type", "name");
+    public static MappingParser getMappingParser() {
+        return new MappingParser(OUTPUT_TYPE_FIELD, TYPE_FIELD, NAME_FIELD);
     }
 
-    public static MappingParser getMappingParser() {
-        return new MappingParser("outputType", "type", "name");
+    public static MappingParser postMappingParser() {
+        return new MappingParser(INPUT_TYPE_FIELD, TYPE_FIELD, NAME_FIELD);
     }
 
     private MappingParser(final String... fieldNames) {
@@ -40,6 +46,10 @@ public class MappingParser {
     }
 
     public List<Mapping> parseFromDescription(final String description) {
+        if (description == null) {
+            return Collections.emptyList();
+        }
+
         final Matcher matcher = MAPPING_SECTION_PATTERN.matcher(description);
 
         matcher.find();
