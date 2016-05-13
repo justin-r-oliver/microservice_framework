@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public class JsonEnvelopeLoggerHelper {
 
-    public static String toTraceString(final JsonEnvelope envelope) {
+    public static String toEnvelopeTraceString(final JsonEnvelope envelope) {
 
         JsonObjectBuilder builder = Json.createObjectBuilder()
                 .add("id", String.valueOf(envelope.metadata().id()))

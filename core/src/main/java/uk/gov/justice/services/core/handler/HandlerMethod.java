@@ -1,13 +1,15 @@
 package uk.gov.justice.services.core.handler;
 
 import static java.lang.String.format;
-import static uk.gov.justice.services.messaging.logging.JsonEnvelopeLoggerHelper.toTraceString;
+import static uk.gov.justice.services.messaging.logging.JsonEnvelopeLoggerHelper.toEnvelopeTraceString;
+import static uk.gov.justice.services.messaging.logging.LoggerUtils.trace;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.justice.services.core.handler.exception.HandlerExecutionException;
 import uk.gov.justice.services.core.handler.registry.exception.InvalidHandlerException;
 import uk.gov.justice.services.messaging.JsonEnvelope;
+import uk.gov.justice.services.messaging.logging.LoggerUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -90,10 +92,13 @@ public class HandlerMethod {
      */
     @SuppressWarnings("unchecked")
     public Object execute(final JsonEnvelope envelope) {
-        LOGGER.trace("Dispatching message to handler {} to {}", handlerMethod.toString(), toTraceString(envelope));
+        trace(LOGGER, () ->
+            format("Dispatching message to handler %s to %s", handlerMethod.toString(), toEnvelopeTraceString(envelope)));
         try {
             Object obj = handlerMethod.invoke(handlerInstance, envelope);
-            LOGGER.trace("Object response retrieved from HandlerMethod : {}", toTraceString(envelope));
+            trace(LOGGER, () -> format("Object response retrieved from HandlerMethod : %s", toEnvelopeTraceString(envelope)));
+
+
             return obj;
 
         } catch (IllegalAccessException | InvocationTargetException ex) {

@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.justice.services.messaging.Metadata;
-import uk.gov.justice.services.messaging.logging.JsonEnvelopeLoggerHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +75,7 @@ public class JsonEnvelopeLoggerHelperTest {
     @Test
     public void shouldPrintAsTraceWithoutCausations() throws Exception {
 
-        String result = JsonEnvelopeLoggerHelper.toTraceString(envelopeWithoutCausation);
+        String result = JsonEnvelopeLoggerHelper.toEnvelopeTraceString(envelopeWithoutCausation);
 
         assertThat(result, containsString(NAME));
         assertThat(result, not(containsString(UUID_1.toString())));
@@ -88,7 +87,7 @@ public class JsonEnvelopeLoggerHelperTest {
     @Test
     public void shouldPrintAsTrace() throws Exception {
 
-        String result = JsonEnvelopeLoggerHelper.toTraceString(envelopeWithCausation);
+        String result = JsonEnvelopeLoggerHelper.toEnvelopeTraceString(envelopeWithCausation);
 
         assertThat(result, containsString(NAME));
         assertThat(result, containsString(UUID_1.toString()));

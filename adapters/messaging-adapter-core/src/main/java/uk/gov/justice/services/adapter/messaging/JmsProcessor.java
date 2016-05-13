@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.justice.services.adapter.messaging.exception.InvalildJmsMessageTypeException;
 import uk.gov.justice.services.messaging.JsonEnvelope;
-import uk.gov.justice.services.messaging.logging.JsonEnvelopeLoggerHelper;
 import uk.gov.justice.services.messaging.jms.EnvelopeConverter;
 
 import java.util.function.Consumer;
@@ -14,7 +13,10 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
-import static uk.gov.justice.services.messaging.logging.JMSMessageLoggerHelper.toTraceString;
+import static java.lang.String.format;
+import static uk.gov.justice.services.messaging.logging.JMSMessageLoggerHelper.toJMSTraceString;
+import static uk.gov.justice.services.messaging.logging.JsonEnvelopeLoggerHelper.toEnvelopeTraceString;
+import static uk.gov.justice.services.messaging.logging.LoggerUtils.trace;
 
 /**
  * In order to minimise the amount of generated code in the JMS Listener implementation classes,
@@ -37,21 +39,22 @@ public class JmsProcessor {
      * @param message  a message to be processed
      */
     public void process(final Consumer<JsonEnvelope> consumer, final Message message) {
-        LOGGER.trace("Processing message  pre dispatching {}", toTraceString(message));
+
+        trace(LOGGER, () -> format("Processing message pre dispatching %s", toJMSTraceString(message)));
+
         if (!(message instanceof TextMessage)) {
             try {
-                throw new InvalildJmsMessageTypeException(String.format("Message is not an instance of TextMessage %s", message.getJMSMessageID()));
+                throw new InvalildJmsMessageTypeException(format("Message is not an instance of TextMessage %s", message.getJMSMessageID()));
             } catch (JMSException e) {
-                throw new InvalildJmsMessageTypeException(String.format("Message is not an instance of TextMessage. Failed to retrieve messageId %s",
+                throw new InvalildJmsMessageTypeException(format("Message is not an instance of TextMessage. Failed to retrieve messageId %s",
                         message), e);
             }
         }
 
         JsonEnvelope jsonEnvelope = envelopeConverter.fromMessage((TextMessage) message);
-        LOGGER.trace("Message converted to JsonEnvelope pre dispatching {}", JsonEnvelopeLoggerHelper.toTraceString(jsonEnvelope));
+        trace(LOGGER, () -> format("Message converted to JsonEnvelope pre dispatching  %s", toEnvelopeTraceString(jsonEnvelope)));
         consumer.accept(jsonEnvelope);
-        LOGGER.trace("JsonEnvelope accepted by {} pre dispatching {}", consumer.getClass().toString(), JsonEnvelopeLoggerHelper.toTraceString(jsonEnvelope));
+        trace(LOGGER, () -> format("JsonEnvelope accepted by %s pre dispatching %s", consumer.getClass().toString(),
+                toEnvelopeTraceString(jsonEnvelope)));
     }
-
-
 }
