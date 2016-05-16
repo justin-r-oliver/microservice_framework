@@ -6,12 +6,11 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static uk.gov.justice.raml.common.mapper.Mapping.buildMapping;
-import static uk.gov.justice.raml.common.mapper.MappingParser.getMappingParser;
-import static uk.gov.justice.raml.common.mapper.MappingParser.postMappingParser;
+import static uk.gov.justice.raml.common.mapper.MappingParser.mappingParserForGet;
+import static uk.gov.justice.raml.common.mapper.MappingParser.mappingParserForPost;
 
-import java.util.List;
+import java.util.Map;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 public class MappingParserTest {
@@ -19,64 +18,58 @@ public class MappingParserTest {
     private static final String POST_MAPPING_PART =
             "        (mapping):\n" +
                     "            requestType: %s\n" +
-                    "            type: %s\n" +
                     "            name: %s\n";
 
-    private static final String[] POST_FIELD_NAMES = new String[]{"requestType", "type", "name"};
+    private static final String[] POST_FIELD_NAMES = new String[]{"requestType", "name"};
 
     private static final Mapping POST_MAPPING_1 = buildMapping()
             .withField("requestType", "mediaType1")
-            .withField("type", "type1")
             .withField("name", "name1")
             .build();
 
     private static final Mapping POST_MAPPING_2 = buildMapping()
             .withField("requestType", "mediaType2")
-            .withField("type", "type2")
             .withField("name", "name2")
             .build();
 
     private static final String GET_MAPPING_PART =
             "        (mapping):\n" +
                     "            responseType: %s\n" +
-                    "            type: %s\n" +
                     "            name: %s\n";
 
-    private static final String[] GET_FIELD_NAMES = new String[]{"responseType", "type", "name"};
+    private static final String[] GET_FIELD_NAMES = new String[]{"responseType", "name"};
 
     private static final Mapping GET_MAPPING_1 = buildMapping()
             .withField("responseType", "mediaType1")
-            .withField("type", "type1")
             .withField("name", "name1")
             .build();
 
     private static final Mapping GET_MAPPING_2 = buildMapping()
             .withField("responseType", "mediaType2")
-            .withField("type", "type2")
             .withField("name", "name2")
             .build();
 
     @Test
     public void shouldReturnNoMappingsForBlankDescription() throws Exception {
-        List<Mapping> mappings = postMappingParser().parseFromDescription("");
+        final Map<String, Mapping> mappings = mappingParserForPost().parseFromDescription("");
         assertThat(mappings.size(), is(0));
     }
 
     @Test
     public void shouldReturnNoMappingsForNullDescription() throws Exception {
-        List<Mapping> mappings = postMappingParser().parseFromDescription(null);
+        final Map<String, Mapping> mappings = mappingParserForPost().parseFromDescription(null);
         assertThat(mappings.size(), is(0));
     }
 
     @Test
     public void shouldReturnNoMappingsForDescriptionWithNoMappings() throws Exception {
-        List<Mapping> mappings = postMappingParser().parseFromDescription("Description\n with no mappings\n");
+        final Map<String, Mapping> mappings = mappingParserForPost().parseFromDescription("Description\n with no mappings\n");
         assertThat(mappings.size(), is(0));
     }
 
     @Test
     public void shouldReturnNoMappingsForDescriptionWithEmptyMappingSection() throws Exception {
-        List<Mapping> mappings = postMappingParser().parseFromDescription("...\n \n...\n");
+        final Map<String, Mapping> mappings = mappingParserForPost().parseFromDescription("...\n \n...\n");
         assertThat(mappings.size(), is(0));
     }
 
@@ -84,27 +77,27 @@ public class MappingParserTest {
     public void shouldReturnSingleMappingFromDescriptionWithSingleMappingDefined() throws Exception {
         String description = descriptionWithMappingsForPost(POST_MAPPING_1);
 
-        List<Mapping> mappings = postMappingParser().parseFromDescription(description);
+        final Map<String, Mapping> mappings = mappingParserForPost().parseFromDescription(description);
 
-        assertThat(mappings, containsInAnyOrder(POST_MAPPING_1));
+        assertThat(mappings.values(), containsInAnyOrder(POST_MAPPING_1));
     }
 
     @Test
     public void shouldReturnMultipleMappingsFromDescriptionWithSingleMappingDefined() throws Exception {
         String description = descriptionWithMappingsForPost(POST_MAPPING_1, POST_MAPPING_2);
 
-        List<Mapping> mappings = postMappingParser().parseFromDescription(description);
+        final Map<String, Mapping> mappings = mappingParserForPost().parseFromDescription(description);
 
-        assertThat(mappings, Matchers.containsInAnyOrder(POST_MAPPING_1, POST_MAPPING_2));
+        assertThat(mappings.values(), containsInAnyOrder(POST_MAPPING_1, POST_MAPPING_2));
     }
 
     @Test
     public void shouldReturnMultipleMappingsFromGetDescriptionWithSingleMappingDefined() throws Exception {
         String description = descriptionWithMappingsForGet(GET_MAPPING_1, GET_MAPPING_2);
 
-        List<Mapping> mappings = getMappingParser().parseFromDescription(description);
+        final Map<String, Mapping> mappings = mappingParserForGet().parseFromDescription(description);
 
-        assertThat(mappings, Matchers.containsInAnyOrder(GET_MAPPING_1, GET_MAPPING_2));
+        assertThat(mappings.values(), containsInAnyOrder(GET_MAPPING_1, GET_MAPPING_2));
     }
 
     @Test
@@ -115,9 +108,9 @@ public class MappingParserTest {
                 descriptionWithMappingsForPost(POST_MAPPING_2) +
                 "post text.\n";
 
-        List<Mapping> mappings = postMappingParser().parseFromDescription(description);
+        final Map<String, Mapping> mappings = mappingParserForPost().parseFromDescription(description);
 
-        assertThat(mappings, Matchers.containsInAnyOrder(POST_MAPPING_1, POST_MAPPING_2));
+        assertThat(mappings.values(), containsInAnyOrder(POST_MAPPING_1, POST_MAPPING_2));
     }
 
     @Test(expected = IllegalStateException.class)
@@ -125,10 +118,9 @@ public class MappingParserTest {
         String description = "...\n" +
                 "        (mapping):\n" +
                 "            requestType: %s\n" +
-                "            type: %s\n" +
                 "...\n";
 
-        postMappingParser().parseFromDescription(description);
+        mappingParserForPost().parseFromDescription(description);
     }
 
     private String descriptionWithMappingsForPost(final Mapping... mappings) {
@@ -146,8 +138,7 @@ public class MappingParserTest {
         stream(mappings).forEach(mapping -> builder.append(
                 format(mappingPart,
                         mapping.get(fieldNames[0]),
-                        mapping.get(fieldNames[1]),
-                        mapping.get(fieldNames[2]))));
+                        mapping.get(fieldNames[1]))));
 
         builder.append("...\n");
         return builder.toString();

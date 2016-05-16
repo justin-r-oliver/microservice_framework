@@ -9,11 +9,9 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.apache.commons.lang3.StringUtils.capitalize;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
-import static uk.gov.justice.raml.common.mapper.MappingParser.INPUT_TYPE_FIELD;
 import static uk.gov.justice.raml.common.mapper.MappingParser.NAME_FIELD;
-import static uk.gov.justice.raml.common.mapper.MappingParser.OUTPUT_TYPE_FIELD;
-import static uk.gov.justice.raml.common.mapper.MappingParser.getMappingParser;
-import static uk.gov.justice.raml.common.mapper.MappingParser.postMappingParser;
+import static uk.gov.justice.raml.common.mapper.MappingParser.mappingParserForGet;
+import static uk.gov.justice.raml.common.mapper.MappingParser.mappingParserForPost;
 import static uk.gov.justice.services.core.annotation.Component.contains;
 import static uk.gov.justice.services.core.annotation.Component.names;
 
@@ -32,7 +30,7 @@ import uk.gov.justice.services.messaging.JsonEnvelope;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -150,30 +148,20 @@ public class RestClientGenerator implements Generator {
     }
 
     private void generateCodeForGetActionType(final Resource resource, final Action action, final TypeSpec.Builder classBuilder) {
-        final List<Mapping> mappingsForGet = getMappingParser().parseFromDescription(action.getDescription());
+        final Map<String, Mapping> mappings = mappingParserForGet().parseFromDescription(action.getDescription());
         final Response response = action.getResponses().get(valueOf(OK.getStatusCode()));
         if (response != null) {
-            response.getBody().values().forEach(mimeType -> {
-                final Mapping mappingForGet = mappingFrom(mimeType, OUTPUT_TYPE_FIELD, mappingsForGet);
-                classBuilder.addMethod(methodOf(resource, action, mimeType, mappingForGet));
-            });
+            response.getBody().values().forEach(mimeType ->
+                    classBuilder.addMethod(methodOf(resource, action, mimeType, mappings.get(mimeType.getType())))
+            );
         }
     }
 
     private void generateCodeForPostActionType(final Resource resource, final Action action, final TypeSpec.Builder classBuilder) {
-        final List<Mapping> mappingsForPost = postMappingParser().parseFromDescription(action.getDescription());
-        action.getBody().values().forEach(mimeType -> {
-                    final Mapping mappingForPost = mappingFrom(mimeType, INPUT_TYPE_FIELD, mappingsForPost);
-                    classBuilder.addMethod(methodOf(resource, action, mimeType, mappingForPost));
-                }
+        final Map<String, Mapping> mappings = mappingParserForPost().parseFromDescription(action.getDescription());
+        action.getBody().values().forEach(mimeType ->
+                classBuilder.addMethod(methodOf(resource, action, mimeType, mappings.get(mimeType.getType())))
         );
-    }
-
-    private Mapping mappingFrom(final MimeType mimeType, final String fieldName, final List<Mapping> mappings) {
-        return mappings.stream()
-                .filter(mapping -> mapping.get(fieldName).equals(mimeType.getType()))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException(format("Mapping for mimetype: %s not found.", mimeType.getType())));
     }
 
     private MethodSpec methodOf(final Resource resource,

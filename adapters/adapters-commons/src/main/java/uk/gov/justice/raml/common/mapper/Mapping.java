@@ -33,6 +33,23 @@ public class Mapping {
     }
 
     @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("(mapper):\n");
+
+        fields.entrySet().stream()
+                .forEach(entry -> {
+                    builder.append("    ");
+                    builder.append(entry.getKey());
+                    builder.append(": ");
+                    builder.append(entry.getValue());
+                    builder.append("\n");
+                });
+
+         return builder.toString();
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(fields);
     }

@@ -72,7 +72,6 @@ public class RestProcessorProducerTest {
     @InjectMocks
     private RestProcessorProducer restProcessorProducer;
 
-
     @Before
     public void setup() {
 
@@ -92,7 +91,7 @@ public class RestProcessorProducerTest {
         when(function.apply(any())).thenReturn(envelopeWithJsonObjectPayload());
 
         Response response = restProcessorProducer.produceRestProcessor(queryApiInjectionPoint)
-                .processSynchronously(function, null, headersWith("Accept", "application/vnd.somecontext.query.somequery+json"), NOT_USED_PATH_PARAMS);
+                .processSynchronously(function, "somecontext.somequery", headersWith("Accept", "application/vnd.somecontext.query.somequery+json"), NOT_USED_PATH_PARAMS);
 
         assertThat(response, notNullValue());
         JsonAssert.with(response.getEntity().toString())
@@ -104,7 +103,7 @@ public class RestProcessorProducerTest {
         when(function.apply(any())).thenReturn(envelopeWithJsonObjectPayload());
 
         Response response = restProcessorProducer.produceRestProcessor(queryControllerInjectionPoint)
-                .processSynchronously(function, null, headersWith("Accept", "application/vnd.somecontext.query.somequery+json"), NOT_USED_PATH_PARAMS);
+                .processSynchronously(function, "somecontext.somequery", headersWith("Accept", "application/vnd.somecontext.query.somequery+json"), NOT_USED_PATH_PARAMS);
 
         assertThat(response, notNullValue());
         JsonAssert.with(response.getEntity().toString())
