@@ -16,6 +16,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.raml.model.ActionType.GET;
 import static org.raml.model.ActionType.POST;
+import static uk.gov.justice.services.adapters.test.utils.builder.HttpActionBuilder.defaultGetAction;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.restRamlWithDefaults;
 import static uk.gov.justice.services.adapters.test.utils.builder.RamlBuilder.restRamlWithQueryApiDefaults;
 import static uk.gov.justice.services.adapters.test.utils.builder.ResourceBuilder.resource;
@@ -24,6 +25,7 @@ import static uk.gov.justice.services.adapters.test.utils.reflection.ReflectionU
 import static uk.gov.justice.services.adapters.test.utils.reflection.ReflectionUtil.methodsOf;
 
 import uk.gov.justice.raml.core.GeneratorConfig;
+import uk.gov.justice.services.adapter.rest.BasicActionMapper;
 import uk.gov.justice.services.adapter.rest.RestProcessor;
 import uk.gov.justice.services.adapters.test.utils.builder.HttpActionBuilder;
 import uk.gov.justice.services.core.annotation.Adapter;
@@ -40,6 +42,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -495,6 +498,7 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
         assertThat(dispatcher.getModifiers(), is(0));
     }
 
+
     @Test
     public void shouldNotAddAsyncDispatcherBeanIfThereIsNoPOSTResourceInRAML() throws Exception {
         generator.run(
@@ -549,6 +553,24 @@ public class RestAdapterGenerator_CodeStructureTest extends BaseRestAdapterGener
                 .findAny()
                 .isPresent());
 
+    }
+
+    @Test
+    public void shouldAddActionMapperBean() throws Exception {
+        generator.run(
+                restRamlWithDefaults()
+                        .with(resource("/user").with(defaultGetAction())).build(),
+                configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
+
+        Class<?> resourceClass = compiler.compiledClassOf(BASE_PACKAGE, "resource", "DefaultUserResource");
+
+        Field mapping = resourceClass.getDeclaredField("actionMapper");
+        assertThat(mapping, not(nullValue()));
+        assertThat(mapping.getType(), equalTo(BasicActionMapper.class));
+        assertThat(mapping.getAnnotation(Inject.class), not(nullValue()));
+        assertThat(mapping.getAnnotation(Named.class), not(nullValue()));
+        assertThat(mapping.getAnnotation(Named.class).value(), is("DefaultUserResourceActionMapper"));
+        assertThat(mapping.getModifiers(), is(0));
     }
 
 

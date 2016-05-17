@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
+import static uk.gov.justice.services.adapters.test.utils.builder.HeadersBuilder.headersWith;
 import static uk.gov.justice.services.core.annotation.Component.QUERY_API;
 import static uk.gov.justice.services.core.annotation.Component.QUERY_CONTROLLER;
 import static uk.gov.justice.services.messaging.JsonEnvelope.METADATA;
@@ -31,8 +32,6 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 import com.jayway.jsonassert.JsonAssert;
-import org.jboss.resteasy.specimpl.MultivaluedMapImpl;
-import org.jboss.resteasy.specimpl.ResteasyHttpHeaders;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -110,12 +109,6 @@ public class RestProcessorProducerTest {
                 .assertThat("$." + FIELD_NAME, equalTo(FIELD_VALUE))
                 .assertThat("$." + METADATA + "." + ID, equalTo(ID_VALUE))
                 .assertThat("$." + METADATA + "." + NAME, equalTo(NAME_VALUE));
-    }
-
-    private HttpHeaders headersWith(String headerName, String headerValue) {
-        MultivaluedMapImpl headersMap = new MultivaluedMapImpl();
-        headersMap.add(headerName, headerValue);
-        return new ResteasyHttpHeaders(headersMap);
     }
 
     private JsonEnvelope envelopeWithJsonObjectPayload() {

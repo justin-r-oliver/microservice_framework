@@ -20,6 +20,7 @@ import static uk.gov.justice.services.adapters.test.utils.reflection.ReflectionU
 import static uk.gov.justice.services.adapters.test.utils.reflection.ReflectionUtil.setField;
 import static uk.gov.justice.services.messaging.DefaultJsonEnvelope.envelopeFrom;
 
+import uk.gov.justice.services.adapter.rest.BasicActionMapper;
 import uk.gov.justice.services.adapter.rest.exception.BadRequestException;
 import uk.gov.justice.services.core.dispatcher.SynchronousDispatcher;
 import uk.gov.justice.services.messaging.JsonEnvelope;
@@ -45,7 +46,11 @@ public class RestAdapterGenerator_GETMethodBodyTest extends BaseRestAdapterGener
     @Rule
     public ExpectedException exception = ExpectedException.none();
     @Mock
-    protected SynchronousDispatcher dispatcher;
+    private SynchronousDispatcher dispatcher;
+    @Mock
+    private BasicActionMapper actionMapper;
+
+
 
     @SuppressWarnings("unchecked")
     @Test
@@ -127,7 +132,7 @@ public class RestAdapterGenerator_GETMethodBodyTest extends BaseRestAdapterGener
     public void shouldPassActionToRestProcessor() throws Exception {
         generator.run(
                 restRamlWithDefaults().with(
-                        resource("/path")
+                        resource("/user")
                                 .with(httpAction(GET)
                                         .with(mapping()
                                                 .withName("contextA.someAction")
@@ -142,15 +147,54 @@ public class RestAdapterGenerator_GETMethodBodyTest extends BaseRestAdapterGener
                 ).build(),
                 configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
 
-        Class<?> resourceClass = compiler.compiledClassOf(BASE_PACKAGE, "resource", "DefaultPathResource");
+        Class<?> resourceClass = compiler.compiledClassOf(BASE_PACKAGE, "resource", "DefaultUserResource");
         Object resourceObject = instantiate(resourceClass);
+
+
+        HttpHeaders headers = new ThreadLocalHttpHeaders();
+        setField(resourceObject, "headers", headers);
+
+        when(actionMapper.actionOf("getUser", "GET", headers)).thenReturn("contextA.someAction");
 
         Method method = firstMethodOf(resourceClass);
         method.invoke(resourceObject);
 
+
         verify(restProcessor).processSynchronously(any(Function.class), eq("contextA.someAction"),
                 any(HttpHeaders.class), any(Map.class));
     }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void shouldPassActionToRestProcessor2() throws Exception {
+        generator.run(
+                restRamlWithDefaults().with(
+                        resource("/case")
+                                .with(httpAction(GET)
+                                        .with(mapping()
+                                                .withName("contextB.action1")
+                                                .withResponseType("application/vnd.ctx.query.mediatype1+json"))
+                                        .withResponseTypes("application/vnd.ctx.query.mediatype1+json"))
+                ).build(),
+                configurationWithBasePackage(BASE_PACKAGE, outputFolder, emptyMap()));
+
+        Class<?> resourceClass = compiler.compiledClassOf(BASE_PACKAGE, "resource", "DefaultCaseResource");
+        Object resourceObject = instantiate(resourceClass);
+
+
+        HttpHeaders headers = new ThreadLocalHttpHeaders();
+        setField(resourceObject, "headers", headers);
+
+        when(actionMapper.actionOf("getCase", "GET", headers)).thenReturn("contextB.action1");
+
+        Method method = firstMethodOf(resourceClass);
+        method.invoke(resourceObject);
+
+
+        verify(restProcessor).processSynchronously(any(Function.class), eq("contextB.action1"),
+                any(HttpHeaders.class), any(Map.class));
+    }
+
 
 
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -382,6 +426,7 @@ public class RestAdapterGenerator_GETMethodBodyTest extends BaseRestAdapterGener
         Object resourceObject = resourceClass.newInstance();
         setField(resourceObject, "restProcessor", restProcessor);
         setField(resourceObject, "syncDispatcher", dispatcher);
+        setField(resourceObject, "actionMapper", actionMapper);
         return resourceObject;
     }
 

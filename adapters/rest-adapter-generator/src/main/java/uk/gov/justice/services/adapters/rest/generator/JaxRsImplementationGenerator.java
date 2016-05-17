@@ -2,6 +2,7 @@ package uk.gov.justice.services.adapters.rest.generator;
 
 import static com.squareup.javapoet.MethodSpec.methodBuilder;
 import static com.squareup.javapoet.TypeSpec.classBuilder;
+import static java.lang.String.format;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static org.raml.model.ActionType.GET;
 import static org.raml.model.ActionType.POST;
@@ -14,6 +15,7 @@ import static uk.gov.justice.services.adapters.rest.generator.Names.buildResourc
 import static uk.gov.justice.services.adapters.rest.generator.Names.resourceInterfaceNameOf;
 
 import uk.gov.justice.raml.core.GeneratorConfig;
+import uk.gov.justice.services.adapter.rest.BasicActionMapper;
 import uk.gov.justice.services.adapter.rest.RestProcessor;
 import uk.gov.justice.services.adapter.rest.ValidParameterMapBuilder;
 import uk.gov.justice.services.core.annotation.Adapter;
@@ -30,6 +32,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -57,7 +60,8 @@ class JaxRsImplementationGenerator {
     private static final String VARIABLE_MAP_BUILDER = "validParameterMapBuilder";
     private static final String PARAMS_PUT_REQUIRED_STATEMENT_FORMAT = "$L.putRequired($S, $N)";
     private static final String PARAMS_PUT_OPTIONAL_STATEMENT_FORMAT = "$L.putOptional($S, $N)";
-    private static final String SYNCHRONOUS_METHOD_STATEMENT = "return restProcessor.processSynchronously(syncDispatcher::dispatch, \"\", headers, $L.validateAndBuildMap())";
+    private static final String MESSAGE_MEDIA_TYPE_MAPPING_VARIABLE = "actionMapper";
+    private static final String SYNCHRONOUS_METHOD_STATEMENT = "return restProcessor.processSynchronously(syncDispatcher::dispatch, $L.actionOf($S, \"GET\", headers), headers, $L.validateAndBuildMap())";
     private static final String ASYNCHRONOUS_METHOD_STATEMENT = "return restProcessor.processAsynchronously(asyncDispatcher::dispatch, \"\", entity, headers, $L.validateAndBuildMap())";
 
     private final GeneratorConfig configuration;
@@ -110,7 +114,8 @@ class JaxRsImplementationGenerator {
      * @return a {@link TypeSpec.Builder} that represents the implementation class
      */
     private TypeSpec.Builder classSpecFor(final Resource resource, final Component component) {
-        return classBuilder("Default" + resourceInterfaceNameOf(resource))
+        String className = format("Default%s", resourceInterfaceNameOf(resource));
+        return classBuilder(className)
                 .addSuperinterface(interfaceClassNameFor(resource))
                 .addModifiers(PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(Adapter.class)
@@ -118,6 +123,11 @@ class JaxRsImplementationGenerator {
                         .build())
                 .addField(FieldSpec.builder(RestProcessor.class, "restProcessor")
                         .addAnnotation(Inject.class)
+                        .build())
+                .addField(FieldSpec.builder(BasicActionMapper.class, MESSAGE_MEDIA_TYPE_MAPPING_VARIABLE)
+                        .addAnnotation(Inject.class)
+                        .addAnnotation(AnnotationSpec.builder(Named.class)
+                                .addMember(DEFAULT_ANNOTATION_PARAMETER, "$S", className + "ActionMapper").build())
                         .build())
                 .addField(FieldSpec.builder(HttpHeaders.class, "headers")
                         .addAnnotation(Context.class)
@@ -191,7 +201,7 @@ class JaxRsImplementationGenerator {
         } else if (actionType == POST) {
             return asynchronousDispatcherField();
         } else {
-            throw new IllegalStateException(String.format("Unsupported httpAction type %s", actionType));
+            throw new IllegalStateException(format("Unsupported httpAction type %s", actionType));
         }
     }
 
@@ -244,11 +254,11 @@ class JaxRsImplementationGenerator {
         final CodeBlock methodBody;
 
         if (actionType == GET) {
-            methodBody = methodBody(pathParams, () -> methodBodyForGet(queryParams));
+            methodBody = methodBody(pathParams, () -> methodBodyForGet(queryParams, resourceMethodName));
         } else if (actionType == POST) {
             methodBody = methodBody(pathParams, this::methodBodyForPost);
         } else {
-            throw new IllegalStateException(String.format("Unsupported httpAction type %s", actionType));
+            throw new IllegalStateException(format("Unsupported httpAction type %s", actionType));
         }
 
         return methodBuilder(resourceMethodName)
@@ -266,10 +276,11 @@ class JaxRsImplementationGenerator {
      * @param queryParams the query parameters to add to a map
      * @return the {@link CodeBlock} representing the GET specific code
      */
-    private CodeBlock methodBodyForGet(final Map<String, QueryParameter> queryParams) {
+    private CodeBlock methodBodyForGet(final Map<String, QueryParameter> queryParams, String resourceMethodName) {
         return CodeBlock.builder()
                 .add(putAllQueryParamsInMap(queryParams))
-                .addStatement(SYNCHRONOUS_METHOD_STATEMENT, VARIABLE_MAP_BUILDER)
+                .addStatement(SYNCHRONOUS_METHOD_STATEMENT,
+                        MESSAGE_MEDIA_TYPE_MAPPING_VARIABLE, resourceMethodName, VARIABLE_MAP_BUILDER)
                 .build();
     }
 
