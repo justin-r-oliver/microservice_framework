@@ -1,15 +1,22 @@
 package uk.gov.justice.services.clients.core;
 
 import static java.lang.String.format;
+import static java.util.UUID.randomUUID;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.OK;
+import static uk.gov.justice.services.messaging.JsonEnvelope.METADATA;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.ID;
+import static uk.gov.justice.services.messaging.JsonObjectMetadata.NAME;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 
 import uk.gov.justice.services.common.converter.StringToJsonObjectConverter;
 import uk.gov.justice.services.core.enveloper.Enveloper;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.justice.services.messaging.JsonObjectEnvelopeConverter;
+import uk.gov.justice.services.messaging.Metadata;
 
 import javax.inject.Inject;
+import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -65,6 +72,7 @@ public class RestClientProcessor {
         }
 
         final Invocation.Builder builder = target.request(format(MEDIA_TYPE_PATTERN, envelope.metadata().name()));
+
         final Response response = builder.get();
         final int status = response.getStatus();
         if (status == NOT_FOUND.getStatusCode()) {
@@ -74,7 +82,23 @@ public class RestClientProcessor {
                     response.getStatusInfo().getReasonPhrase()));
         }
 
-        return jsonObjectEnvelopeConverter.asEnvelope(stringToJsonObjectConverter.convert(response.readEntity(String.class)));
+        final JsonObject responseAsJsonObject = stringToJsonObjectConverter.convert(response.readEntity(String.class));
+
+        return jsonObjectEnvelopeConverter.asEnvelope(addMetadataIfMissing(responseAsJsonObject, envelope.metadata()));
+    }
+
+    private JsonObject addMetadataIfMissing(final JsonObject responseAsJsonObject, final Metadata requestMetadata) {
+        if (responseAsJsonObject.containsKey(METADATA)) {
+            return responseAsJsonObject;
+        }
+
+        final JsonObject metadata = Json.createObjectBuilder()
+                .add(ID, randomUUID().toString())
+                .add(NAME, requestMetadata.name())
+                .build();
+
+        return createObjectBuilder(responseAsJsonObject)
+                .add(METADATA, metadata).build();
     }
 
 }
