@@ -91,6 +91,10 @@ public class RestClientProcessor {
             return responseAsJsonObject;
         }
 
+        if (cppId == null) {
+            throw new IllegalStateException(format("%s required in Header", CPPID));
+        }
+
         final JsonObject metadata = JsonObjects.createObjectBuilderWithFilter(requestMetadata.asJsonObject(), x -> !ID.equals(x))
                 .add(ID, cppId)
                 .build();
